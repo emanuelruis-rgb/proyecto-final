@@ -1,0 +1,50 @@
+body {
+    background-color: #75C3E8;
+    margin: 0;
+    font-family: sans-serif;
+}
+
+h1 {
+    color: #000000;
+    text-align: center;
+    font-size: 30px;
+    font-weight: 350;
+}
+
+.login-container {
+    padding: 100px;
+    margin: 100px;
+    margin-top: 150px;
+    margin-bottom: 100px;
+    text-align: center;
+    border-radius: 30px;
+    background-color: white;
+    height: 500px;
+    width: 1300px;
+}
+
+.formulario {
+    display: block;
+    align-items: center;
+    width: 100%;
+    height: 60px;
+    margin-top: 40px;
+    margin-bottom: 40px;
+    border-radius: 15px;
+    border: solid 1px rgb(0, 0, 0);
+}
+
+.botonlogin {
+    display: block;
+    align-items: center;
+    width: 10%;
+    height: 60px;
+    border-radius: 15px;
+    /*border: solid 1px rgb(255, 255, 255);*/
+    background-color: #3096c5;
+    color: rgb(255, 255, 255);
+    font-size: 18px;
+    justify-content: center;
+    padding: 10px;
+    margin: 0 auto;
+}
