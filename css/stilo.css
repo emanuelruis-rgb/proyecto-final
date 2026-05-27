@@ -40,7 +40,7 @@ h1 {
     width: 10%;
     height: 60px;
     border-radius: 15px;
-    /*border: solid 1px rgb(255, 255, 255);*/
+    border: solid 1px rgb(255, 255, 255);
     background-color: #3096c5;
     color: rgb(255, 255, 255);
     font-size: 18px;
