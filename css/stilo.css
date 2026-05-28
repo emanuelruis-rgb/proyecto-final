@@ -1,7 +1,12 @@
 body {
-    background-color: #75C3E8;
+    background-color: #75C3E8;    
     margin: 0;
     font-family: sans-serif;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+    box-sizing: border-box;
 }
 
 h1 {
@@ -12,32 +17,28 @@ h1 {
 }
 
 .login-container {
-    padding: 100px;
-    margin: 100px;
-    margin-top: 150px;
-    margin-bottom: 100px;
     text-align: center;
     border-radius: 30px;
     background-color: white;
-    height: 500px;
-    width: 1300px;
+    min-height: 500px;
+    width: 100%;
+    padding: 40px;
 }
 
 .formulario {
     display: block;
-    align-items: center;
     width: 100%;
     height: 60px;
     margin-top: 40px;
     margin-bottom: 40px;
     border-radius: 15px;
     border: solid 1px rgb(0, 0, 0);
+    padding: 10px;
 }
 
 .botonlogin {
     display: block;
-    align-items: center;
-    width: 10%;
+    width: 25%;
     height: 60px;
     border-radius: 15px;
     border: solid 1px rgb(255, 255, 255);
@@ -47,4 +48,5 @@ h1 {
     justify-content: center;
     padding: 10px;
     margin: 0 auto;
+    margin-bottom: 20px;
 }
