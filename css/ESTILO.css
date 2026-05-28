@@ -58,3 +58,28 @@ h1 {
     margin: 0 auto;
     margin-bottom: 20px;
 }
+
+body {
+    margin: 0;
+    font-family: sans-serif;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+
+    background: linear-gradient(to right, #4242df, #75C3E8, white);
+
+    background-size: 200% 200%;
+
+    animation: moverFondo 5s infinite alternate;
+}
+
+@keyframes moverFondo {
+    from {
+        background-position: left;
+    }
+
+    to {
+        background-position: right;
+    }
+}
