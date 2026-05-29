@@ -26,4 +26,6 @@ header {
     min-height: 100vh;
     background-color: #3E7FA1;
     border-top: 2px rgb(255, 255, 255) solid;
+    background-color: #75C3E8;
+    border-top: 2px rgb(0, 0, 0) solid;
 }
