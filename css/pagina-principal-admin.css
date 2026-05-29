@@ -23,5 +23,6 @@ header {
 .sidebar-container {
     width: 180px;
     min-height: 100vh;
-    background-color: red;
+    background-color: #75C3E8;
+    border-top: 2px rgb(255, 255, 255) solid;
 }
