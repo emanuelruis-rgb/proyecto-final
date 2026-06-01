@@ -1,11 +1,10 @@
 @startuml Final
 
-class logueo {
-    -Usuario: String
+class Usuario {
+    -Nombre: String
     -Contraseña: String
 
-    -Registrar(): void
-    -IniciarSesion(): void
+    -Logueo(): void
     -CerrarSesion(): void
 
 }
@@ -44,7 +43,9 @@ class Jugador {
     -Posicion: String
 
 }
-Administrador "1" -- "0..*" Club : gestiona
-Administrador "1" -- "0..*" Jugador : gestiona
-Administrador "1" -- "0..*" logueo : IniciaSesion
+Usuario <|-- Administrador: Loguea
+Usuario <|-- Club: Loguea
+Administrador "1" -right- "0..*" Club: Gestiona
+Club "1" -down- "0..*" Jugador: Tiene
+
 @enduml
