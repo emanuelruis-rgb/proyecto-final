@@ -28,3 +28,62 @@ header {
     background-color: #11658b;
 }
 
+.sidebar-container {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.sidebar-buttons {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 12px;
+}
+
+.sidebar-btn {
+    width: 140px;
+    height: 40px;
+    background: #ffffff;
+    border: 1px solid rgba(0,0,0,0.12);
+    border-radius: 6px;
+    cursor: pointer;
+    font-size: 15px;
+}
+
+.sidebar-btn:hover {
+    filter: brightness(0.98);
+}
+
+.sidebar-container {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding-top: 20px;
+    padding-bottom: 20px;
+}
+
+.sidebar-buttons {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    align-items: center;
+}
+
+.sidebar-btn {
+    width: 130px;
+    padding: 10px 12px;
+    border: none;
+    background-color: #ffffff;
+    color: #11658b;
+    border-radius: 6px;
+    cursor: pointer;
+    font-weight: 600;
+}
+
+.sidebar-btn:active,
+.sidebar-btn:focus {
+    outline: none;
+    box-shadow: 0 0 0 3px rgba(17,101,139,0.15);
+}
+
