@@ -1,0 +1,50 @@
+@startuml Final
+
+class logueo {
+    -Usuario: String
+    -Contraseña: String
+
+    -Registrar(): void
+    -IniciarSesion(): void
+    -CerrarSesion(): void
+
+}
+
+class Administrador {
+    -Nombre: String
+    -Cedula: String
+
+    -GestionarClubes(): void
+    -GestionarJugadores(): void
+    -GestionarEntrenadores(): void
+    -GestionarPartidos(): void
+    -GestionarHorarios(): void
+    -GestionarFechasPartidos(): void
+    -GestionarResultadosPartidos(): void
+    -GestionarSanciones(): void
+
+}
+
+class Club {
+    -NombreClub: String
+    -NombrePresidente: String
+    -NombreEntrenador: String
+    -NombresJugadores: String
+
+    -GestionarJugadores(): void
+    -GestionarEntrenador(): void
+    
+    
+}
+
+class Jugador {
+    -Nombre: String
+    -Apellido: String
+    -Cedula: String
+    -Posicion: String
+
+}
+Administrador "1" -- "0..*" Club : gestiona
+Administrador "1" -- "0..*" Jugador : gestiona
+Administrador "1" -- "0..*" logueo : IniciaSesion
+@enduml
