@@ -3,18 +3,20 @@ session_start();
 include 'conexion.php';
 
 if ($_SERVER['REQUEST_METHOD'] == 'POST') {
-    $nombre = $_POST['usuario'];
+    $nombre   = $_POST['username'];
     $password = $_POST['password'];
 
-    $query = "SELECT * FROM usuarios WHERE nombre='$nombre' AND contraseña='$password'";
-    $resultado = $conexion->query($query);
+    $stmt = $conexion->prepare("SELECT * FROM administrador WHERE nombre = ? AND contraseña = ?");
+    $stmt->bind_param("ss", $nombre, $password);
+    $stmt->execute();
+    $resultado = $stmt->get_result();
 
     if ($resultado->num_rows > 0) {
         $_SESSION['usuario'] = $nombre;
-        header('Location: indexadmin.php'); // cambiá por tu página principal
+        header('Location: indexadmin.php');
         exit();
     } else {
-        echo "<script>alert('Usuario o contraseña incorrectos');</script>";
+        $error = true;
     }
 }
 ?>
