@@ -25,10 +25,18 @@
     </header>
 
     <div class="sidebar-container">
+        <button type="button" class="sidebar-btn">Dashboard</button>
+        <hr class="divisores-sidebar">
         <button type="button" class="sidebar-btn">Jugadores</button>
-        <button type="button" class="sidebar-btn">Club</button>
-        <button type="button" class="sidebar-btn">Faltas</button>
-        <button type="button" class="sidebar-btn">Expulsiones</button>
+        <button type="button" class="sidebar-btn">Clubes</button>
+        <button type="button" class="sidebar-btn">Fixtures</button>
+        <button type="button" class="sidebar-btn">Tabla Posiciones</button>
+        <hr class="divisores-sidebar">
+        <button type="button" class="sidebar-btn">Tarjetas</button>
+        <button type="button" class="sidebar-btn">Sanciones</button>
+        <hr class="divisores-sidebar">
+        <button type="button" class="sidebar-btn">Boletines</button>
+        <button type="button" class="sidebar-btn">formulario(? xd)</button>
     </div>
 </body>     
 </html>
