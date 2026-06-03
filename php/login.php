@@ -13,7 +13,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 
     if ($resultado->num_rows > 0) {
         $_SESSION['usuario'] = $nombre;
-        header('Location: indexadmin.php');
+        header('Location: ../indexadmin.php');
         exit();
     } else {
         $error = true;
