@@ -2,10 +2,11 @@ body {
     min-height: 100vh;
     margin: 0;
     font-family: sans-serif;
+    background-color: #d8dfe2;
 }
 
 header {
-    background-color: #75C3E8;
+    background-color: #11658b;
     width: 100%;
     height:80px;
 }
@@ -24,8 +25,43 @@ header {
 .sidebar-container {
     width: 180px;
     min-height: 100vh;
-    background-color: #3E7FA1;
-    border-top: 2px rgb(255, 255, 255) solid;
-    background-color: #75C3E8;
-    border-top: 2px rgb(0, 0, 0) solid;
+    background-color: #498faf;
+    display: flex;
+    align-items: flex-start;
+    flex-direction: column;
+    gap: 0px;
 }
+
+.sidebar-btn {
+    width: 100%;
+    height: 40px;
+    border: 0px;
+    cursor: pointer;
+    font-size: 15px; 
+    background-color: #498faf;
+    color: #d8dfe2;
+    font-weight: 600;
+    text-align: left;
+    padding: 10px 12px;
+}
+
+.divisores-sidebar {
+    color: #f1f1f1;
+    border: 1px solid #f1f1f1;
+    width: 100%;
+    margin-top: 3px;
+    margin-bottom: 3px;
+}
+
+/*
+.sidebar-btn:hover {
+    filter: brightness(0.98);
+}
+
+.sidebar-btn:active,
+.sidebar-btn:focus {
+    outline: none;
+    box-shadow: 0 0 0 3px rgba(17,101,139,0.15);
+}
+
+*/

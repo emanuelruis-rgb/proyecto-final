@@ -25,9 +25,18 @@
     </header>
 
     <div class="sidebar-container">
-        <section class="sidebar-button">
-            <p>Abajo la utu</p>
-        </section>
+        <button type="button" class="sidebar-btn">Dashboard</button>
+        <hr class="divisores-sidebar">
+        <button type="button" class="sidebar-btn">Jugadores</button>
+        <button type="button" class="sidebar-btn">Clubes</button>
+        <button type="button" class="sidebar-btn">Fixtures</button>
+        <button type="button" class="sidebar-btn">Tabla Posiciones</button>
+        <hr class="divisores-sidebar">
+        <button type="button" class="sidebar-btn">Tarjetas</button>
+        <button type="button" class="sidebar-btn">Sanciones</button>
+        <hr class="divisores-sidebar">
+        <button type="button" class="sidebar-btn">Boletines</button>
+        <button type="button" class="sidebar-btn">formulario(? xd)</button>
     </div>
 </body>     
 </html>
