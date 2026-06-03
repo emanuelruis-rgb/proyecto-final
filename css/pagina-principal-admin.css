@@ -25,8 +25,7 @@ header {
 .sidebar-container {
     width: 180px;
     min-height: 100vh;
-    background-color: #11658b;
-    border-top: 2px solid #d8dfe2;
+    background-color: #498faf;
     display: flex;
     align-items: flex-start;
     flex-direction: column;
@@ -39,7 +38,7 @@ header {
     border: 0px;
     cursor: pointer;
     font-size: 15px; 
-    background-color: #11658b;
+    background-color: #498faf;
     color: #d8dfe2;
     font-weight: 600;
     text-align: left;
