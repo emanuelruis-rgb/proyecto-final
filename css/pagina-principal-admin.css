@@ -45,6 +45,14 @@ header {
     padding: 10px 12px;
 }
 
+.divisores-sidebar {
+    color: #f1f1f1;
+    border: 1px solid #f1f1f1;
+    width: 100%;
+    margin-top: 3px;
+    margin-bottom: 3px;
+}
+
 /*
 .sidebar-btn:hover {
     filter: brightness(0.98);
