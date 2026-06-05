@@ -1,6 +1,6 @@
 <?php
 session_start();
-include 'conexion.php';
+include '../conexion-bd/conexion.php';
 
 if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     $nombre   = $_POST['username'];
@@ -13,7 +13,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 
     if ($resultado->num_rows > 0) {
         $_SESSION['usuario'] = $nombre;
-        header('Location: ../indexadmin.php');
+        header('Location: ../admin/indexadmin.php');
         exit();
     } else {
         $error = true;

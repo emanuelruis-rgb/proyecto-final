@@ -6,15 +6,15 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Página principal admins</title>
-    <link rel="stylesheet" href="css/pagina-principal-admin.css">
-    <link rel="icon" type="image/png" href="img/copa.png">
+    <link rel="stylesheet" href="pagina-principal-admin.css">
+    <link rel="icon" type="image/png" href="../img/copa.png">
 </head>
 <body>
     <header> 
         
         <nav>
             <a href="/">
-                <img src="img/logo.png" alt="Logo" class="logo-empresa">
+                <img src="../img/logo.png" alt="Logo" class="logo-empresa">
             </a>
             <!--
             <ul>

@@ -17,7 +17,7 @@
         <img src="img/logo-empresa.png" alt="Logo" class="logos">
         <h1><b>Login al sistema de control de la liga</b></h1>
         <p class="nombre">Atrivia Enterprises</p>
-        <form action="php/login.php" method="post">
+        <form action="logueo/login.php" method="post">
             <input class="formulario" type="text" name="username" placeholder="Usuario" required>
             <input class="formulario" type="password" name="password" placeholder="Contraseña" required>
             <button class="botonlogin" type="submit">Login</button>
