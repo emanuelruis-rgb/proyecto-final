@@ -58,6 +58,26 @@ class Categoria {
     AnioCategoria: int
 }
 
+class Partido {
+    -FechaPartido: Date
+    -HoraPartido: String
+    -DuracionPartido: String
+    -NombreEstadio: String
+    -ResultadoPartido: String
+    -NombreArbitro: String
+}
+
+class Sancion {
+    -TipoSancion: String
+    -Motivo: String
+    -CantidadFechas: int
+}
+
+class CarnetAptitudFisica {
+    -Vigente: Boolean
+    -FechaVencimiento: Date
+}
+
 UsuarioLogin <|-- Administrador: Loguea
 UsuarioLogin <|-- Club: Loguea
 Administrador "1" -right- "1..*" Club: Gestiona
