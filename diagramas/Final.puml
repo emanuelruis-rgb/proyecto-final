@@ -16,7 +16,7 @@ class Administrador {
     -GestionarClubes(): void
     -GestionarJugadores(): void
     -GestionarEntrenadores(): void
-    -GestionarPartidos(): void
+    -GestionarDatosPartidos(): void
     -GestionarCategorias(): void
     -GestionarFechasPartidos(): void
     -GestionarResultadosPartidos(): void
@@ -48,7 +48,6 @@ class Jugador {
     -Cedula: String
     -FechaNacimiento: Date
     -NombreClub: String
-    -IdEntrenador: String
     -Posicion: String
     -Sancionado: Boolean
     -RecuentoTarjetasAmarillas: int
@@ -76,11 +75,21 @@ class Sancion {
 class CarnetAptitudFisica {
     -Vigente: Boolean
     -FechaVencimiento: Date
+    -CarnetJugador: String
 }
 
 UsuarioLogin <|-- Administrador: Loguea
 UsuarioLogin <|-- Club: Loguea
+
 Administrador "1" -right- "1..*" Club: Gestiona
+Administrador "1" -left- "1..*" Partido: Gestiona 
+Administrador "1" -- "1..*" Jugador: Gestiona
+Administrador "1" -- "1..*" Categoria: Gestiona
+
 Club "1" -down- "1..*" Jugador: Tiene
 
+Jugador "1" -right- "1" Categoria: Pertenece
+Jugador "1" -down- "0..*" Sancion: Puede Recibir
+Jugador "1" -down- "1" CarnetAptitudFisica: Posee
+Jugador "1" -left- "0..*" Partido: Participa
 @enduml
