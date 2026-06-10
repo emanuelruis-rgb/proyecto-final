@@ -46,6 +46,6 @@ class Jugador {
 Usuario <|-- Administrador: Loguea
 Usuario <|-- Club: Loguea
 Administrador "1" -right- "1..*" Club: Gestiona
-Club "1" -down- "0..*" Jugador: Tiene
+Club "1" -down- "1..*" Jugador: Tiene
 
 @enduml
