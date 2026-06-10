@@ -1,6 +1,6 @@
 @startuml Final
 
-class Usuario {
+class UsuarioLogin {
     -Nombre: String
     -Contraseña: String
 
@@ -17,11 +17,13 @@ class Administrador {
     -GestionarJugadores(): void
     -GestionarEntrenadores(): void
     -GestionarPartidos(): void
-    -GestionarHorarios(): void
+    -GestionarCategorias(): void
     -GestionarFechasPartidos(): void
     -GestionarResultadosPartidos(): void
+    -SubirBoletin(): void
     -GestionarSanciones(): void
-
+    -GestionarTarjetas(): void
+    -ModificarTablaLiga(): void
 }
 
 class Club {
@@ -32,19 +34,32 @@ class Club {
 
     -GestionarJugadores(): void
     -GestionarEntrenador(): void
-    
-    
+    -VerPartidosProgramados(): void
+    -SubirCarnets(): void
+    -AccederCarnetOtrosEquipos(): void
+    -RellenarFormulario(): void
+    -ImprimirFormulario(): void
+    -VerBoletin(): void
 }
 
 class Jugador {
     -Nombre: String
     -Apellido: String
     -Cedula: String
+    -FechaNacimiento: Date
+    -NombreClub: String
+    -IdEntrenador: String
     -Posicion: String
-
+    -Sancionado: Boolean
+    -RecuentoTarjetasAmarillas: int
 }
-Usuario <|-- Administrador: Loguea
-Usuario <|-- Club: Loguea
+
+class Categoria {
+    AnioCategoria: int
+}
+
+UsuarioLogin <|-- Administrador: Loguea
+UsuarioLogin <|-- Club: Loguea
 Administrador "1" -right- "1..*" Club: Gestiona
 Club "1" -down- "1..*" Jugador: Tiene
 
