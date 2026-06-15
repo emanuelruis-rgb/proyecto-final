@@ -15,14 +15,10 @@ class Administrador {
 
     -GestionarClubes(): void
     -GestionarJugadores(): void
-    -GestionarEntrenadores(): void
-    -GestionarDatosPartidos(): void
+    -GestionarPartidos(): void
     -GestionarCategorias(): void
-    -GestionarFechasPartidos(): void
-    -GestionarResultadosPartidos(): void
-    -SubirBoletin(): void
+    -GestionarFixture(): void
     -GestionarSanciones(): void
-    -GestionarTarjetas(): void
     -ModificarTablaLiga(): void
 }
 
@@ -30,9 +26,7 @@ class Club {
     -NombreClub: String
     -NombrePresidente: String
     -NombreEntrenador: String
-    -NombresJugadores: String
 
-    -GestionarJugadores(): void
     -GestionarEntrenador(): void
     -VerPartidosProgramados(): void
     -SubirCarnets(): void
@@ -46,6 +40,7 @@ class Jugador {
     -Nombre: String
     -Apellido: String
     -Cedula: String
+    -Categoria: int
     -FechaNacimiento: Date
     -NombreClub: String
     -Posicion: String
@@ -70,10 +65,12 @@ class Sancion {
     -TipoSancion: String
     -Motivo: String
     -CantidadFechas: int
+    -JugadorSancionado: String
 }
 
 class CarnetAptitudFisica {
     -Vigente: Boolean
+    -FechaSubida: date
     -FechaVencimiento: Date
     -CarnetJugador: String
 }
