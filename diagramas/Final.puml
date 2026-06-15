@@ -22,6 +22,11 @@ class Administrador {
     -ModificarTablaLiga(): void
 }
 
+class Categoria-Administrador {
+    -NombreCategoria: String
+    -AnioCategoria: int
+}
+
 class Club {
     -NombreClub: String
     -NombrePresidente: String
@@ -36,6 +41,12 @@ class Club {
     -VerBoletin(): void
 }
 
+class Categoria-Club {
+    -NombreSubCategoria: String
+    -AnioSubCategoria: int
+    -
+}
+
 class Jugador {
     -Nombre: String
     -Apellido: String
@@ -46,10 +57,6 @@ class Jugador {
     -Posicion: String
     -Sancionado: Boolean
     -RecuentoTarjetasAmarillas: int
-}
-
-class Categoria {
-    AnioCategoria: int
 }
 
 class Partido {
@@ -80,12 +87,10 @@ UsuarioLogin <|-- Club: Loguea
 
 Administrador "1" -right- "1..*" Club: Gestiona
 Administrador "1" -left- "1..*" Partido: Gestiona 
-Administrador "1" -- "1..*" Jugador: Gestiona
 Administrador "1" -- "1..*" Categoria: Gestiona
 
 Club "1" -down- "1..*" Jugador: Tiene
 
-Jugador "1" -right- "1" Categoria: Pertenece
 Jugador "1" -down- "0..*" Sancion: Puede Recibir
 Jugador "1" -down- "1" CarnetAptitudFisica: Posee
 Jugador "1" -left- "0..*" Partido: Participa
