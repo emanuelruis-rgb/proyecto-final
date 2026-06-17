@@ -15,23 +15,27 @@ class Administrador {
 
     -GestionarClubes(): void
     -GestionarJugadores(): void
-    -GestionarEntrenadores(): void
-    -GestionarDatosPartidos(): void
+    -GestionarPartidos(): void
     -GestionarCategorias(): void
-    -GestionarFechasPartidos(): void
-    -GestionarResultadosPartidos(): void
-    -SubirBoletin(): void
+    -GestionarFixture(): void
     -GestionarSanciones(): void
-    -GestionarTarjetas(): void
     -ModificarTablaLiga(): void
+}
+
+class Categoria-Administrador {
+    -NombreCategoria: String
+    -AnioCategoria: int
 }
 
 class Club {
     -NombreClub: String
     -NombrePresidente: String
     -NombreEntrenador: String
-    -NombresJugadores: String
 
+<<<<<<< HEAD
+=======
+    -GestionarEntrenador(): void
+>>>>>>> 6c72877423fed297f5aa3b87e9aa13e7363c9a77
     -VerPartidosProgramados(): void
     -SubirCarnets(): void
     -AccederCarnetOtrosEquipos(): void
@@ -40,19 +44,22 @@ class Club {
     -VerBoletin(): void
 }
 
+class Categoria-Club {
+    -NombreSubCategoria: String
+    -AnioSubCategoria: int
+    -
+}
+
 class Jugador {
     -Nombre: String
     -Apellido: String
     -Cedula: String
+    -Categoria: int
     -FechaNacimiento: Date
     -NombreClub: String
     -Posicion: String
     -Sancionado: Boolean
     -RecuentoTarjetasAmarillas: int
-}
-
-class Categoria {
-    AnioCategoria: int
 }
 
 class Partido {
@@ -68,10 +75,12 @@ class Sancion {
     -TipoSancion: String
     -Motivo: String
     -CantidadFechas: int
+    -JugadorSancionado: String
 }
 
 class CarnetAptitudFisica {
     -Vigente: Boolean
+    -FechaSubida: date
     -FechaVencimiento: Date
     -CarnetJugador: String
 }
@@ -81,12 +90,10 @@ UsuarioLogin <|-- Club: Loguea
 
 Administrador "1" -right- "1..*" Club: Gestiona
 Administrador "1" -left- "1..*" Partido: Gestiona 
-Administrador "1" -- "1..*" Jugador: Gestiona
 Administrador "1" -- "1..*" Categoria: Gestiona
 
 Club "1" -down- "1..*" Jugador: Tiene
 
-Jugador "1" -right- "1" Categoria: Pertenece
 Jugador "1" -down- "0..*" Sancion: Puede Recibir
 Jugador "1" -down- "1" CarnetAptitudFisica: Posee
 Jugador "1" -left- "0..*" Partido: Participa
