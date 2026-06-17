@@ -3,23 +3,25 @@
 class UsuarioLogin {
     -Nombre: String
     -Contraseña: String
-
-    -Logueo(): void
-    -CerrarSesion(): void
+    
+    +Logueo(): void
+    +CerrarSesion(): void
 
 }
 
 class Administrador {
     -Id: int
 
-    -GestionarClubes(): void
-    -GestionarJugadores(): void
-    -GestionarFixtures(): void
-    -SubirBoletin(): void
-    -GestionarSanción(): void
-    -ResultadoPartido(): void
+    +GestionarClub(): void
+    +GestionarJugador(): void
+    +GestionarFixture(): void
+    +SubirBoletin(): void
+    +GestionarSanción(): void
+    +ResultadoPartido(): void
+    +GestionarPartidos(): void
 
 }
+
 
 class Club {
     -NombrePresidente: String
@@ -27,25 +29,26 @@ class Club {
     -NombresJugadores: String
     -Categoria: String
 
-    -VerFixture(): void
-    -SuberCarnet(): void
-    -AccederCarnetOtroEquipo(): void
-    -ImprimirFormulario(): void
-    -VerBoletin(): void
+    +VerFixture(): void
+    +SuberCarnet(): void
+    +AccederCarnetOtroEquipo(): void
+    +ImprimirFormulario(): void
+    +VerBoletin(): void
 }
+
 
 class Jugador {
     -Nombre: String
     -Apellido: String
     -Cedula: String
     -FechaNacimiento: Date
-
-    -RecuentoTarjetas(): int  
+    
+    +RecuentoTarjetas(): int  
 }
 
 class Partido {
     -FechaPartido: Date
-    -HoraPartido: String
+    -HorarioPartido: String
     -DuracionPartido: String
     -ClubLocal: String
     -ClubVisitante: String
@@ -59,7 +62,7 @@ class Sancion {
     -CantidadFechas: int
 }
 
-class CarnetAptitudFisica {
+class CarnetAptitud {
     -Vigente: Boolean
     -FechaVencimiento: Date
     -CarnetJugador: String
