@@ -10,34 +10,26 @@ class UsuarioLogin {
 }
 
 class Administrador {
-    -Nombre: String
-    -Cedula: String
+    -Id: int
 
     -GestionarClubes(): void
     -GestionarJugadores(): void
-    -GestionarEntrenadores(): void
-    -GestionarDatosPartidos(): void
-    -GestionarCategorias(): void
-    -GestionarFechasPartidos(): void
-    -GestionarResultadosPartidos(): void
+    -GestionarFixtures(): void
     -SubirBoletin(): void
-    -GestionarSanciones(): void
-    -GestionarTarjetas(): void
-    -ModificarTablaLiga(): void
+    -GestionarSanción(): void
+    -ResultadoPartido(): void
+
 }
 
 class Club {
-    -NombreClub: String
     -NombrePresidente: String
     -NombreEntrenador: String
     -NombresJugadores: String
+    -Categoria: String
 
-    -GestionarJugadores(): void
-    -GestionarEntrenador(): void
-    -VerPartidosProgramados(): void
-    -SubirCarnets(): void
-    -AccederCarnetOtrosEquipos(): void
-    -RellenarFormulario(): void
+    -VerFixture(): void
+    -SuberCarnet(): void
+    -AccederCarnetOtroEquipo(): void
     -ImprimirFormulario(): void
     -VerBoletin(): void
 }
@@ -47,22 +39,17 @@ class Jugador {
     -Apellido: String
     -Cedula: String
     -FechaNacimiento: Date
-    -NombreClub: String
-    -Posicion: String
-    -Sancionado: Boolean
-    -RecuentoTarjetasAmarillas: int
-}
 
-class Categoria {
-    AnioCategoria: int
+    -RecuentoTarjetas(): int  
 }
 
 class Partido {
     -FechaPartido: Date
     -HoraPartido: String
     -DuracionPartido: String
+    -ClubLocal: String
+    -ClubVisitante: String
     -NombreEstadio: String
-    -ResultadoPartido: String
     -NombreArbitro: String
 }
 
@@ -78,18 +65,4 @@ class CarnetAptitudFisica {
     -CarnetJugador: String
 }
 
-UsuarioLogin <|-- Administrador: Loguea
-UsuarioLogin <|-- Club: Loguea
-
-Administrador "1" -right- "1..*" Club: Gestiona
-Administrador "1" -left- "1..*" Partido: Gestiona 
-Administrador "1" -- "1..*" Jugador: Gestiona
-Administrador "1" -- "1..*" Categoria: Gestiona
-
-Club "1" -down- "1..*" Jugador: Tiene
-
-Jugador "1" -right- "1" Categoria: Pertenece
-Jugador "1" -down- "0..*" Sancion: Puede Recibir
-Jugador "1" -down- "1" CarnetAptitudFisica: Posee
-Jugador "1" -left- "0..*" Partido: Participa
 @enduml
