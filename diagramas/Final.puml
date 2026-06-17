@@ -32,8 +32,6 @@ class Club {
     -NombreEntrenador: String
     -NombresJugadores: String
 
-    -GestionarJugadores(): void
-    -GestionarEntrenador(): void
     -VerPartidosProgramados(): void
     -SubirCarnets(): void
     -AccederCarnetOtrosEquipos(): void
