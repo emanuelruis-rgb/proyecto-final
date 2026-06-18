@@ -51,6 +51,7 @@
                     <img src="img1.jpg" alt="Imagen 1">
                     <img src="img2.jpg" alt="Imagen 2">
                     <img src="img3.jpg" alt="Imagen 3">
+                    <img src="img4.jpg" alt="Imagen 4">
                 </div>
             </div>
         </div>
