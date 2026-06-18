@@ -29,7 +29,7 @@
     
     
 
-    <div class="page-layout">
+    <div class="layout-abajo-header">
         <div class="sidebar-container">
             <button type="button" class="sidebar-btn">Dashboard</button>
             <hr class="divisores-sidebar">
@@ -45,7 +45,7 @@
             <button type="button" class="sidebar-btn">formulario(? xd)</button>
         </div>
 
-        <div class="dashboard">
+        <div class="dashboard-container">
             <div class="carrusel">
                 <div class="slides">
                     <img src="img1.jpg" alt="Imagen 1">

@@ -24,7 +24,7 @@ header {
     margin-left: 20px;
 }
 
-.page-layout {
+.layout-abajo-header {
     display: flex;
     min-height: calc(100vh - 80px);
 }
@@ -60,7 +60,7 @@ header {
     margin-bottom: 3px;
 }
 
-.dashboard {
+.dashboard-container {
     flex: 1;
     display: flex;
     justify-content: center;
