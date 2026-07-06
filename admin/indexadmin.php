@@ -48,10 +48,9 @@
         <div class="dashboard-container">
             <div class="carrusel">
                 <div class="slides">
-                    <img src="img1.jpg" alt="Imagen 1">
-                    <img src="img2.jpg" alt="Imagen 2">
-                    <img src="img3.jpg" alt="Imagen 3">
-                    <img src="img4.jpg" alt="Imagen 4">
+                    <img src="../img/images1.jpg" alt="Imagen 1">
+                    <img src="../img/images2.jpg" alt="Imagen 2">
+                    <img src="../img/images3.jpg" alt="Imagen 3">
                 </div>
             </div>
         </div>
