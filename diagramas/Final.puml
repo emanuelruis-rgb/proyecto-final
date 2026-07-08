@@ -3,35 +3,33 @@
 class UsuarioLogin {
     -Nombre: String
     -Contraseña: String
-
-    -Logueo(): void
-    -CerrarSesion(): void
+    
+    +Logueo(): void
+    +CerrarSesion(): void
 
 }
 
 class Administrador {
-    -Nombre: String
-    -Cedula: String
+    -Id: int
 
-    -GestionarClubes(): void
-    -GestionarJugadores(): void
-    -GestionarPartidos(): void
-    -GestionarCategorias(): void
-    -GestionarFixture(): void
-    -GestionarSanciones(): void
-    -ModificarTablaLiga(): void
+    +GestionarClub(): void
+    +GestionarJugador(): void
+    +GestionarFixture(): void
+    +SubirBoletin(): void
+    +GestionarSanción(): void
+    +ResultadoPartido(): void
+    +GestionarPartidos(): void
+
 }
 
-class Categoria-Administrador {
-    -NombreCategoria: String
-    -AnioCategoria: int
-}
 
 class Club {
-    -NombreClub: String
     -NombrePresidente: String
     -NombreEntrenador: String
+    -NombresJugadores: String
+    -Categoria: String
 
+<<<<<<< HEAD
 <<<<<<< HEAD
 =======
     -GestionarEntrenador(): void
@@ -42,32 +40,32 @@ class Club {
     -RellenarFormulario(): void
     -ImprimirFormulario(): void
     -VerBoletin(): void
+=======
+    +VerFixture(): void
+    +SuberCarnet(): void
+    +AccederCarnetOtroEquipo(): void
+    +ImprimirFormulario(): void
+    +VerBoletin(): void
+>>>>>>> 6a88a79feef2c7b0e86068393d8a0066c8b968fc
 }
 
-class Categoria-Club {
-    -NombreSubCategoria: String
-    -AnioSubCategoria: int
-    -
-}
 
 class Jugador {
     -Nombre: String
     -Apellido: String
     -Cedula: String
-    -Categoria: int
     -FechaNacimiento: Date
-    -NombreClub: String
-    -Posicion: String
-    -Sancionado: Boolean
-    -RecuentoTarjetasAmarillas: int
+    
+    +RecuentoTarjetas(): int  
 }
 
 class Partido {
     -FechaPartido: Date
-    -HoraPartido: String
+    -HorarioPartido: String
     -DuracionPartido: String
+    -ClubLocal: String
+    -ClubVisitante: String
     -NombreEstadio: String
-    -ResultadoPartido: String
     -NombreArbitro: String
 }
 
@@ -75,26 +73,12 @@ class Sancion {
     -TipoSancion: String
     -Motivo: String
     -CantidadFechas: int
-    -JugadorSancionado: String
 }
 
-class CarnetAptitudFisica {
+class CarnetAptitud {
     -Vigente: Boolean
-    -FechaSubida: date
     -FechaVencimiento: Date
     -CarnetJugador: String
 }
 
-UsuarioLogin <|-- Administrador: Loguea
-UsuarioLogin <|-- Club: Loguea
-
-Administrador "1" -right- "1..*" Club: Gestiona
-Administrador "1" -left- "1..*" Partido: Gestiona 
-Administrador "1" -- "1..*" Categoria: Gestiona
-
-Club "1" -down- "1..*" Jugador: Tiene
-
-Jugador "1" -down- "0..*" Sancion: Puede Recibir
-Jugador "1" -down- "1" CarnetAptitudFisica: Posee
-Jugador "1" -left- "0..*" Partido: Participa
 @enduml
