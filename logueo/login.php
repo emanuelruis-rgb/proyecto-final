@@ -1,22 +1,34 @@
 <?php
+include "../conexion-bd/conexion.php";
+
 session_start();
-include '../conexion-bd/conexion.php';
 
-if ($_SERVER['REQUEST_METHOD'] == 'POST') {
-    $nombre   = $_POST['username'];
-    $password = $_POST['password'];
+$nombre = $_POST['nombre'];
+$contraseña = $_POST['contraseña'];
 
-    $stmt = $conexion->prepare("SELECT * FROM administrador WHERE nombre = ? AND contraseña = ?");
-    $stmt->bind_param("ss", $nombre, $password);
-    $stmt->execute();
-    $resultado = $stmt->get_result();
+$_SESSION['nombre'] = $nombre;
 
-    if ($resultado->num_rows > 0) {
-        $_SESSION['usuario'] = $nombre;
-        header('Location: ../admin/indexadmin.php');
+$consulta = "SELECT * FROM usuario WHERE nombre='$nombre' AND contraseña='$contraseña'";
+$resultado = mysqli_query($conexion, $consulta);
+
+$filas = mysqli_fetch_array($resultado);
+
+if ($filas) {
+
+    if ($filas['rol'] == "administrador") {
+        header("Location: ../admin/indexadmin.php");
         exit();
-    } else {
-        $error = true;
+    } elseif ($filas['rol'] == "club") {
+        header("Location: ../usuario/indexusuario.php");
+        exit();
     }
+
+} else {
+    $_SESSION['error'] = "Usuario o contraseña incorrectos.";
+    header("Location: ../index.php");
+    exit();
 }
+
+mysqli_free_result($resultado);
+mysqli_close($conexion);
 ?>
