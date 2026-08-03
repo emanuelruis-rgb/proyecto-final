@@ -1,0 +1,84 @@
+@startuml Final
+
+class UsuarioLogin {
+    -Nombre: String
+    -Contraseña: String
+    
+    +Logueo(): void
+    +CerrarSesion(): void
+
+}
+
+class Administrador {
+    -Id: int
+
+    +GestionarClub(): void
+    +GestionarJugador(): void
+    +GestionarFixture(): void
+    +SubirBoletin(): void
+    +GestionarSanción(): void
+    +ResultadoPartido(): void
+    +GestionarPartidos(): void
+
+}
+
+
+class Club {
+    -NombrePresidente: String
+    -NombreEntrenador: String
+    -NombresJugadores: String
+    -Categoria: String
+
+<<<<<<< HEAD
+<<<<<<< HEAD
+=======
+    -GestionarEntrenador(): void
+>>>>>>> 6c72877423fed297f5aa3b87e9aa13e7363c9a77
+    -VerPartidosProgramados(): void
+    -SubirCarnets(): void
+    -AccederCarnetOtrosEquipos(): void
+    -RellenarFormulario(): void
+    -ImprimirFormulario(): void
+    -VerBoletin(): void
+=======
+    +VerFixture(): void
+    +SuberCarnet(): void
+    +AccederCarnetOtroEquipo(): void
+    +ImprimirFormulario(): void
+    +VerBoletin(): void
+>>>>>>> 6a88a79feef2c7b0e86068393d8a0066c8b968fc
+}
+
+
+class Jugador {
+    -Nombre: String
+    -Apellido: String
+    -Cedula: String
+    -FechaNacimiento: Date
+    
+    +RecuentoTarjetas(): int  
+}
+
+class Partido {
+    -FechaPartido: Date
+    -HorarioPartido: String
+    -DuracionPartido: String
+    -ClubLocal: String
+    -ClubVisitante: String
+    -NombreEstadio: String
+    -NombreArbitro: String
+}
+
+class Sancion {
+    -TipoSancion: String
+    -Motivo: String
+    -CantidadFechas: int
+}
+
+class CarnetAptitud {
+    -Vigente: Boolean
+    -FechaVencimiento: Date
+    -CarnetJugador: String
+}
+
+@enduml

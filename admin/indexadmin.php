@@ -1,0 +1,139 @@
+<?php
+?>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js" integrity="sha384-FKyoEForCGlyvwx9Hj09JcYn3nv7wiPVlz7YYwJrWVcXK/BmnVDxM+D2scQbITxI" crossorigin="anonymous"></script>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-sRIl4kxILFvY47J16cr9ZwB07vP4J8+LH7qKQnuqkuIAvNWLzeN8tE5YBujZqJLB" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.13.1/font/bootstrap-icons.min.css">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Página principal admins</title>
+    <link rel="stylesheet" href="pagina-principal-admin.css">
+    <link rel="icon" type="image/png" href="../img/copa.png">
+    <style>
+        .slide-item {
+            position: relative;
+            display: inline-block;
+        }
+
+        .btn-eliminar-img {
+            position: absolute;
+            top: 8px;
+            right: 8px;
+            background: rgba(0,0,0,0.6);
+            color: white;
+            border-radius: 50%;
+            width: 28px;
+            height: 28px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-decoration: none;
+        }
+    </style>
+</head>
+<body>
+    <header> 
+        <nav>
+            <a href="/">
+                <img src="../img/logo-premier.png" alt="Logo" class="logo-empresa">
+                
+            </a>
+            <!--
+            <ul>
+                <li><a href="gestion-usuarios.html">Gestión de Usuarios</a></li>
+            </ul>
+            -->
+        </nav>
+        <div class = "header-izquierda">
+            
+        </div>
+
+        <div class="header-derecha">
+            <a href="#" class="header-item">
+            <i class="bi bi-bell"></i>
+            </a>
+
+            <a href="#" class="header-item"></a>
+            <i class="bi bi-person-circle"></i>
+            <span>Usuario</span>
+            </a>
+
+            <a href="login.php" class="header-item"></a>
+            <i class="bi bi-box-arrow-right"></i>
+            <span>Cerrar sesión</span>
+            </a>
+        </div>
+        
+    
+
+
+    </header>
+
+    <div class="layout-abajo-header">
+        <div class="sidebar-container">
+            <button type="button" class="sidebar-btn">Dashboard</button>
+            <hr class="divisores-sidebar">
+            <button type="button" class="sidebar-btn">Jugadores</button>
+            <button type="button" class="sidebar-btn">Clubes</button>
+            <button type="button" class="sidebar-btn">Fixtures</button>
+            <button type="button" class="sidebar-btn">Tabla Posiciones</button>
+            <hr class="divisores-sidebar">
+            <button type="button" class="sidebar-btn">Tarjetas</button>
+            <button type="button" class="sidebar-btn">Sanciones</button>
+            <hr class="divisores-sidebar">
+            <button type="button" class="sidebar-btn">Boletines</button>
+        </div>
+
+        
+
+        <div class="dashboard-container">
+
+            <h1> Bienvenido a la Página Principal de Admins!</h1>
+
+            <div class="carrusel-wrapper">
+                <div class="carrusel">
+                    <div class="slides">
+                        <?php
+                        // Carpeta donde viven las imágenes del carrusel.
+                        // Tiene que existir: img/carrusel/ (al lado de tu carpeta img actual)
+                        $carpetaImg = "../img/carrusel/";
+                        $imagenes = glob($carpetaImg . "*.{jpg,jpeg,png,webp,gif}", GLOB_BRACE);
+
+                        if (empty($imagenes)) {
+                            echo "<p>No hay imágenes cargadas todavía.</p>";
+                        }
+
+                        foreach ($imagenes as $ruta) {
+                            $nombreArchivo = basename($ruta);
+                            echo '<div class="slide-item">';
+                            echo '  <img src="' . htmlspecialchars($ruta) . '" alt="Imagen carrusel">';
+                            echo '  <a href="eliminar_imagen.php?archivo=' . urlencode($nombreArchivo) . '"
+                                       class="btn-eliminar-img"
+                                       onclick="return confirm(\'¿Eliminar esta imagen?\');">🗑</a>';
+                            echo '</div>';
+                        }
+                        ?>
+                    </div>
+                </div>
+
+                <<form action="subir_imagen.php" method="POST" enctype="multipart/form-data" id="formCarrusel">
+    <input type="file" name="nuevaImagen[]" id="carruselb" accept="image/*" multiple style="display:none;">
+    <button type="button" class="carruselb" onclick="document.getElementById('carruselb').click();">
+        Agregar / Cambiar imágenes
+    </button>
+</form>
+
+<script>
+    document.getElementById('carruselb').addEventListener('change', function() {
+        if (this.files.length > 0) {
+            document.getElementById('formCarrusel').submit();
+        }
+    });
+</script>
+            </div>
+        </div>
+    </div>
+</body>
+</html>
