@@ -168,30 +168,51 @@ h1{
 
 .slides {
     display: flex;
-    width: 300%;
-    animation: deslizar 9s infinite;
+    width: 900%; /* Límite: 9 diapositivas. Cambia a 1000%/1100%/... si deseas admitir aún más imágenes. */
+    animation: deslizar 18s infinite;
 }
 
 .slides img {
-    width: 600px;
+    width: 600px; /* Cada imagen tiene ancho fijo 600px. */
     height: 350px;
     object-fit: cover;
 }
 
 @keyframes deslizar {
-    0%, 30% {
-        transform: translateX(0);
+    0%, 11% {
+        transform: translateX(0); /* Primera imagen: sin desplazamiento */
     }
-    33%, 63% {
-        transform: translateX(-600px);
+    13%, 22% {
+        transform: translateX(-600px); /* Segunda imagen: un ancho de imagen hacia la izquierda */
     }
-    66%, 96% {
-        transform: translateX(-1200px);
+    24%, 33% {
+        transform: translateX(-1200px); /* Tercera imagen: dos anchos de imagen hacia la izquierda */
+    }
+    35%, 44% {
+        transform: translateX(-1800px); /* Cuarta imagen: tres anchos de imagen hacia la izquierda */
+    }
+    46%, 55% {
+        transform: translateX(-2400px); /* Quinta imagen: cuatro anchos de imagen hacia la izquierda */
+    }
+    57%, 66% {
+        transform: translateX(-3000px); /* Sexta imagen: cinco anchos de imagen hacia la izquierda */
+    }
+    68%, 77% {
+        transform: translateX(-3600px); /* Séptima imagen: seis anchos de imagen hacia la izquierda */
+    }
+    79%, 88% {
+        transform: translateX(-4200px); /* Octava imagen: siete anchos de imagen hacia la izquierda */
+    }
+    90%, 99% {
+        transform: translateX(-4800px); /* Novena imagen: ocho anchos de imagen hacia la izquierda */
     }
     100% {
-        transform: translateX(0);
+        transform: translateX(0); /* Vuelve a la primera imagen al final del ciclo */
     }
 }
+
+/* Nota: ahora el carrusel tiene 9 posiciones fijas en la animación.
+   Si quieres más imágenes, incrementa la anchura de .slides y añade más pasos en @keyframes. */
 
 .sidebar-btn:hover {
     background-color: #4F7090;

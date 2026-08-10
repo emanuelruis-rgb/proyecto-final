@@ -75,7 +75,7 @@
         <div class="sidebar-container">
             <button type="button" class="sidebar-btn">Dashboard</button>
             <hr class="divisores-sidebar">
-            <button type="button" class="sidebar-btn">Jugadores</button>
+            <a href="Jugadores_admin_(función).php" class="sidebar-btn">Jugadores</a>
             <button type="button" class="sidebar-btn">Clubes</button>
             <button type="button" class="sidebar-btn">Fixtures</button>
             <button type="button" class="sidebar-btn">Tabla Posiciones</button>
@@ -84,6 +84,10 @@
             <button type="button" class="sidebar-btn">Sanciones</button>
             <hr class="divisores-sidebar">
             <button type="button" class="sidebar-btn">Boletines</button>
+        </div>
+
+        <div>
+            
         </div>
 
         
@@ -101,6 +105,9 @@
                         $carpetaImg = "../img/carrusel/";
                         $imagenes = glob($carpetaImg . "*.{jpg,jpeg,png,webp,gif}", GLOB_BRACE);
 
+                        // Nota: el carrusel actual está diseñado para mostrar solo 3 imágenes
+                        // correctamente porque la animación CSS usa tres posiciones fijas.
+                        // Si hay más de 3 imágenes, las adicionales no entrarán bien en el bucle.
                         if (empty($imagenes)) {
                             echo "<p>No hay imágenes cargadas todavía.</p>";
                         }
