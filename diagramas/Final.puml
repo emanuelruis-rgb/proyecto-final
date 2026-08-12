@@ -1,84 +1,78 @@
 @startuml Final
 
-class UsuarioLogin {
-    -Nombre: String
-    -Contraseña: String
-    
-    +Logueo(): void
-    +CerrarSesion(): void
-
-}
-
 class Administrador {
-    -Id: int
-
-    +GestionarClub(): void
-    +GestionarJugador(): void
-    +GestionarFixture(): void
-    +SubirBoletin(): void
-    +GestionarSanción(): void
-    +ResultadoPartido(): void
-    +GestionarPartidos(): void
-
+    -IdAdmin: int
+    -NombreCompleto: String
+    -NombreUsuario: String
+    -Contraseña: String
 }
-
-
+       
 class Club {
+    -IdClub: String
+    -NombreClub: String
+    -ContraseñaClub: String
     -NombrePresidente: String
-    -NombreEntrenador: String
-    -NombresJugadores: String
-    -Categoria: String
-
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
-    -GestionarEntrenador(): void
->>>>>>> 6c72877423fed297f5aa3b87e9aa13e7363c9a77
-    -VerPartidosProgramados(): void
-    -SubirCarnets(): void
-    -AccederCarnetOtrosEquipos(): void
-    -RellenarFormulario(): void
-    -ImprimirFormulario(): void
-    -VerBoletin(): void
-=======
-    +VerFixture(): void
-    +SuberCarnet(): void
-    +AccederCarnetOtroEquipo(): void
-    +ImprimirFormulario(): void
-    +VerBoletin(): void
->>>>>>> 6a88a79feef2c7b0e86068393d8a0066c8b968fc
+    -AñoCreacion: Date
+    -Estadio: String
 }
-
 
 class Jugador {
     -Nombre: String
     -Apellido: String
-    -Cedula: String
+    -Cedula: Int
+    -IdClub: String
     -FechaNacimiento: Date
-    
-    +RecuentoTarjetas(): int  
+    -Género: String
+    -IdCategoria: String
 }
 
-class Partido {
-    -FechaPartido: Date
-    -HorarioPartido: String
-    -DuracionPartido: String
-    -ClubLocal: String
-    -ClubVisitante: String
-    -NombreEstadio: String
-    -NombreArbitro: String
+class Boletin {
+    -IdBoletín: String
+    -FechaSubida: Date
+    -IdAdmin: String
+    -Título: String
 }
 
 class Sancion {
+    -IdSancion: String
     -TipoSancion: String
-    -Motivo: String
-    -CantidadFechas: int
+    -CedulaJugadorAfectado: Int
+    -MotivoSancion: String
+    -FechasSuspension: Int
 }
 
-class CarnetAptitud {
-    -Vigente: Boolean
+class Categoria {
+    -IdCategoria: String
+    -Anio: Int
+}
+
+class Formulario {
+    -IdFormulario: String
+    -ClubSubida: String
+    -FechaSubida: Date
+}
+
+class CarnetAptitudFisica {
+    -IdCarnet: String
+    -FechaSubida: Date
     -FechaVencimiento: Date
-    -CarnetJugador: String
+    -CedulaJugador: Int
 }
 
+class Partido {
+    -IdPartido: String
+    -IdClubLocal: String
+    -IdClubVisitante: String
+    -GolesLocal: Int
+    -GolesVisitante: Int
+    -DuracionPartido: Int
+    -Arbitro: String
+    -Estadio: String
+    -FechaPartido: Date
+    -HoraPartido: String
+}
+
+Administrador "1" -- "0..*" Boletin: Sube
+Categoria "1" -- "1..*" Jugador: Tiene
+Jugador "1" -- !
 @enduml
