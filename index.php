@@ -6,15 +6,15 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Login</title>
-    <link rel="stylesheet" href="/proyecto-final/css/style.css">
-    <link rel="icon" type="image/png" href="/proyecto-final/img/copa.png">
+    <link rel="stylesheet" href="/proyecto-final-main/css/style.css">
+    <link rel="icon" type="image/png" href="/proyecto-final-main/img/copa.png">
 </head>
 
 <body>
     
     <div class="login-container">
-        <img src="/proyecto-final/img/logo.png" alt="Logo" class="logos">
-        <img src="/proyecto-final/img/log.png" alt="Logo" class="logos">
+        <img src="/proyecto-final-main/img/logo.png" alt="Logo" class="logos">
+        <img src="/proyecto-final-main/img/log.png" alt="Logo" class="logos">
         <h1><b>Login al sistema de control de la liga</b></h1>
         <p class="nombre">Atrivia Enterprises</p>
 

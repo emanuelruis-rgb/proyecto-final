@@ -51,18 +51,16 @@
         </div>
 
         <div class="header-derecha">
-            <a href="#" class="header-item">
-            <i class="bi bi-bell"></i>
+            <a href="#" class="header-item" aria-label="Notificaciones">
+                <i class="bi bi-bell"></i>
             </a>
 
-            <a href="#" class="header-item"></a>
-            <i class="bi bi-person-circle"></i>
-            <span>Usuario</span>
+            <a href="#" class="header-item" aria-label="Perfil">
+                <i class="bi bi-person-circle"></i>
             </a>
 
-            <a href="login.php" class="header-item"></a>
-            <i class="bi bi-box-arrow-right"></i>
-            <span>Cerrar sesión</span>
+            <a href="../index.php" class="header-item" aria-label="Volver al login">
+                <i class="bi bi-box-arrow-right"></i>
             </a>
         </div>
         
@@ -100,8 +98,8 @@
                 <div class="carrusel">
                     <div class="slides">
                         <?php
-                        // Carpeta donde viven las imágenes del carrusel.
-                        // Tiene que existir: img/carrusel/ (al lado de tu carpeta img actual)
+                        // Carpeta donde están las imágenes del carrusel.
+                        // Tiene que existir: img/carrusel/ (al lado de la carpeta img actual)
                         $carpetaImg = "../img/carrusel/";
                         $imagenes = glob($carpetaImg . "*.{jpg,jpeg,png,webp,gif}", GLOB_BRACE);
 
@@ -125,7 +123,7 @@
                     </div>
                 </div>
 
-                <<form action="subir_imagen.php" method="POST" enctype="multipart/form-data" id="formCarrusel">
+                <form action="subir_imagen.php" method="POST" enctype="multipart/form-data" id="formCarrusel">
     <input type="file" name="nuevaImagen[]" id="carruselb" accept="image/*" multiple style="display:none;">
     <button type="button" class="carruselb" onclick="document.getElementById('carruselb').click();">
         Agregar / Cambiar imágenes
