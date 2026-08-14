@@ -26,7 +26,7 @@
             }
         ?>
 
-        <form action="/proyecto-final/logueo/login.php" method="post">
+        <form action="/proyecto-final-main/admin/indexadmin.php" method="post">
             <input class="formulario" type="text" name="nombre" placeholder="Usuario" required>
             <input class="formulario" type="password" name="contraseña" placeholder="Contraseña" required>
             <button class="botonlogin" type="submit">Login</button>
