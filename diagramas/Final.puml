@@ -1,7 +1,7 @@
 @startuml Final
 
 class Administrador {
-    -IdAdmin: int
+    -IdAdmin: String
     -NombreCompleto: String
     -NombreUsuario: String
     -Contraseña: String
@@ -73,6 +73,12 @@ class Partido {
 }
 
 Administrador "1" -- "0..*" Boletin: Sube
-Categoria "1" -- "1..*" Jugador: Tiene
-Jugador "1" -- !
+Categoria "1" -- "0..*" Jugador: Tiene
+Jugador "1" -- "1" CarnetAptitudFisica: Tiene
+Jugador "1" -- "0..*" Sancion: Recibe
+Club "1" -- "0..*" Jugador: Tiene
+Club "1" -- "0..*" Formulario: Sube
+Club "1" -- "0..*" Partido : Local
+Club "1" -- "0..*" Partido : Visitante
+
 @enduml

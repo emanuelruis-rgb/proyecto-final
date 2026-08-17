@@ -8,27 +8,24 @@ $contraseña = $_POST['contraseña'];
 
 $_SESSION['nombre'] = $nombre;
 
-$consulta = "SELECT * FROM usuario WHERE nombre='$nombre' AND contraseña='$contraseña'";
-$resultado = mysqli_query($conexion, $consulta);
+$consultaadmin = "SELECT * FROM administrador WHERE nombreUsuario='$nombre' AND contraseña='$contraseña'";
+$resultadoadmin = mysqli_query($conexion, $consultaadmin);
 
-$filas = mysqli_fetch_array($resultado);
+$consultaclub = "SELECT * FROM club WHERE nombreClub='$nombre' AND contraseñaClub='$contraseña'";
+$resultadoclub = mysqli_query($conexion, $consultaclub);
 
-if ($filas) {
-
-    if ($filas['rol'] == "administrador") {
-        header("Location: ../admin/indexadmin.php");
-        exit();
-    } elseif ($filas['rol'] == "club") {
+if (mysqli_num_rows($resultadoadmin) > 0) {
+    header("Location: ../admin/indexadmin.php");
+    exit();
+} else {
+    if (mysqli_num_rows($resultadoclub) > 0) {
         header("Location: ../usuario/indexusuario.php");
         exit();
+    } else {
+        $_SESSION["error"] = "Usuario o contraseña incorrectos.";
+        header("Location: ../index.php");
+        exit();
     }
-
-} else {
-    $_SESSION['error'] = "Usuario o contraseña incorrectos.";
-    header("Location: ../index.php");
-    exit();
 }
 
-mysqli_free_result($resultado);
-mysqli_close($conexion);
 ?>

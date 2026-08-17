@@ -2,7 +2,7 @@
 $servidor = "localhost"; 
 $usuario = "root";       
 $clave = "";  
-$basededatos = "liga"; 
+$basededatos = "liga-de-futbol"; 
 
 $conexion = new mysqli($servidor, $usuario, $clave, $basededatos);
 
