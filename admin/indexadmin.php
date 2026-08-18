@@ -75,7 +75,7 @@
         <div class="sidebar-container">
             <button type="button" class="sidebar-btn">Dashboard</button>
             <hr class="divisores-sidebar">
-            <a href="Jugadores_admin_(función).php" class="sidebar-btn">Jugadores</a>
+            <a href="Jugadores.php" class="sidebar-btn">Jugadores</a>
             <button type="button" class="sidebar-btn">Clubes</button>
             <a href="fixtures.php" class="sidebar-btn">Fixtures</a>
             <button type="button" class="sidebar-btn">Tabla Posiciones</button>
