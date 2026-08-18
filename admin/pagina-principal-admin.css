@@ -168,7 +168,7 @@ h1{
 
 .slides {
     display: flex;
-    width: 900%; /* Límite: 9 diapositivas. Cambia a 1000%/1100%/... si deseas admitir aún más imágenes. */
+    width: 900%; /* Límite: 9 diapositivas. */
     animation: deslizar 18s infinite;
 }
 
@@ -211,8 +211,8 @@ h1{
     }
 }
 
-/* Nota: ahora el carrusel tiene 9 posiciones fijas en la animación.
-   Si quieres más imágenes, incrementa la anchura de .slides y añade más pasos en @keyframes. */
+/* ahora el carrusel tiene 9 posiciones fijas en la animación.
+    */
 
 .sidebar-btn:hover {
     background-color: #4F7090;
