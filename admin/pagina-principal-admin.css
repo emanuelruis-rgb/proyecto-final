@@ -13,17 +13,45 @@ header {
     justify-content: space-between;
     align-items: center;      
     padding: 0 40px;          
-}
-
-.header-izquierda {
-    display:flex;
-    align-items: center;
     gap: 20px;
 }
 
-.header-izquierda h2 {
-    color: white;
-    margin: 0;
+.main-nav {
+    display: flex;
+    align-items: center;
+    gap: 18px;
+    flex: 1;
+    min-width: 0;
+}
+
+.nav-links {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    flex-wrap: wrap;
+}
+
+.header-nav-link {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    height: 40px;
+    padding: 0 18px;
+    background-color: #3E5C76;
+    color: #FFFFFF;
+    text-decoration: none;
+    font-size: 15px;
+    font-weight: 600;
+    border: 1px solid rgba(255,255,255,0.15);
+    transition: 0.3s;
+}
+
+.header-nav-link.active {
+    background-color: #005de7;
+}
+
+.header-nav-link:hover {
+    background-color: #0a0f14;
 }
 
 .header-derecha {
@@ -68,15 +96,10 @@ header {
 }
 
 .sidebar-container {
-    width: 130px;
-    min-height: calc(100vh - 90px);
-    background-color: #3E5C76;
-    display: flex;
-    align-items: flex-start;
-    flex-direction: column;
-    gap: 0px;
+    display: none;
 }
- .carruselb {
+
+.carruselb {
     color: white;
     background-color: #3E5C76;
     border: none;
@@ -102,31 +125,6 @@ header {
     border-radius: 8px;
     cursor: pointer;
  }
-
-
-
-.sidebar-btn {
-    width: 100%;
-    height: 40px;
-    border: 0px;
-    font-family:'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
-    font-size: 18px;
-    font-weight: 500;
-    cursor: pointer;
-    font-size: 15px; 
-    background-color: #3E5C76;
-    color: #FFFFFF;
-    font-weight: 600;
-    text-align: left;
-    padding: 10px 12px;
-}
-
-.divisores-sidebar {
-    border: 1px solid rgba(255,255,255,0.15);
-    width: 100%;
-    margin-top: 3px;
-    margin-bottom: 3px;
-}
 
 .dashboard-container {
     flex: 1;

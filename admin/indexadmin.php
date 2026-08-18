@@ -9,7 +9,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Página principal admins</title>
-    <link rel="stylesheet" href="pagina-principal-admin.css">
+    <link rel="stylesheet" href="../admin/pagina-principal-admin.css">
     <link rel="icon" type="image/png" href="../img/copa.png">
     <style>
         .slide-item {
@@ -35,29 +35,26 @@
 </head>
 <body>
     <header> 
-        <nav>
+        <nav class="main-nav">
             <a href="/">
                 <img src="../img/logo-premier.png" alt="Logo" class="logo-empresa">
-                
             </a>
-            <!--
-            <ul>
-                <li><a href="gestion-usuarios.html">Gestión de Usuarios</a></li>
-            </ul>
-            -->
+            <div class="nav-links">
+                <a href="Jugadores.php" class="header-nav-link">Jugadores</a>
+                <a href="#" class="header-nav-link">Clubes</a>
+                <a href="fixtures.php" class="header-nav-link active">Fixture</a>
+                <a href="#" class="header-nav-link">Sanciones</a>
+            </div>
         </nav>
-        <div class = "header-izquierda">
-            
-        </div>
 
         <div class="header-derecha">
             <a href="#" class="header-item">
-            <i class="bi bi-bell"></i>
+                <i class="bi bi-bell"></i>
             </a>
 
-            <a href="#" class="header-item"></a>
-            <i class="bi bi-person-circle"></i>
-            <span></span>
+            <a href="#" class="header-item">
+                <i class="bi bi-person-circle"></i>
+                <span></span>
             </a>
 
             <a href="../index.php" class="header-item">
@@ -65,33 +62,9 @@
                 <span>Cerrar sesión</span>
             </a>
         </div>
-        
-    
-
-
     </header>
 
     <div class="layout-abajo-header">
-        <div class="sidebar-container">
-            <button type="button" class="sidebar-btn">Dashboard</button>
-            <hr class="divisores-sidebar">
-            <a href="Jugadores.php" class="sidebar-btn">Jugadores</a>
-            <button type="button" class="sidebar-btn">Clubes</button>
-            <a href="fixtures.php" class="sidebar-btn">Fixtures</a>
-            <button type="button" class="sidebar-btn">Tabla Posiciones</button>
-            <hr class="divisores-sidebar">
-            <button type="button" class="sidebar-btn">Tarjetas</button>
-            <button type="button" class="sidebar-btn">Sanciones</button>
-            <hr class="divisores-sidebar">
-            <button type="button" class="sidebar-btn">Boletines</button>
-        </div>
-
-        <div>
-            
-        </div>
-
-        
-
         <div class="dashboard-container">
 
             <h1> Bienvenido a la Página Principal de Admins!</h1>
