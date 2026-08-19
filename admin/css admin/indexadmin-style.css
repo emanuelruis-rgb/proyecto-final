@@ -1,0 +1,24 @@
+/* Posiciona el botón de eliminación sobre cada imagen. */
+.slide-item {
+    position: relative;
+    display: inline-block;
+}
+
+.btn-eliminar-img {
+    position: absolute;
+    top: 8px;
+    right: 8px;
+    background: rgba(0,0,0,0.6);
+    color: white;
+    border-radius: 50%;
+    width: 28px;
+    height: 28px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-decoration: none;
+}
+
+.logo-empresa {
+    margin-left: 5%;
+}

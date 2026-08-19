@@ -1,5 +1,4 @@
 <?php
-// Esta vista presenta el panel de administración y el carrusel de imágenes.
 ?>
 <!DOCTYPE html>
 <html lang="es">
@@ -13,35 +12,13 @@
     <title>Página principal admins</title>
     <link rel="stylesheet" href="../admin/pagina-principal-admin.css">
     <link rel="icon" type="image/png" href="../img/copa.png">
-    <style>
-        /* Posiciona el botón de eliminación sobre cada imagen. */
-        .slide-item {
-            position: relative;
-            display: inline-block;
-        }
-
-        .btn-eliminar-img {
-            position: absolute;
-            top: 8px;
-            right: 8px;
-            background: rgba(0,0,0,0.6);
-            color: white;
-            border-radius: 50%;
-            width: 28px;
-            height: 28px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            text-decoration: none;
-        }
-    </style>
 </head>
 <body>
     <!-- Barra superior con navegación y acciones de sesión. -->
     <header> 
         <nav class="main-nav">
             <a href="/">
-                <img src="../img/logo-premier.png" alt="Logo" class="logo-empresa">
+                <img src="../img/logo-atrivia.png" alt="Logo" class="logo-empresa">
             </a>
             <div class="nav-links">
                 <a href="Jugadores.php" class="header-nav-link">Jugadores</a>
