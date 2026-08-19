@@ -1,3 +1,4 @@
+/' Modelo de clases de la liga de fútbol y sus relaciones principales. '/
 @startuml Final
 
 class Administrador {

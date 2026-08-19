@@ -1,12 +1,14 @@
 <?php
-
+// Esta vista muestra una tabla estática con los jugadores registrados.
 ?>
 <!DOCTYPE html>
 <html lang="es">
 <head>
-<meta charset="UTF-8">
-<title>Jugadores - Liga Amateur</title>
-<style>
+  <!-- Define metadatos y estilos de la tabla de jugadores. -->
+  <meta charset="UTF-8">
+  <title>Jugadores - Liga Amateur</title>
+  <style>
+  /* Variables de color reutilizadas en toda la vista. */
   :root {
     --azul: #14243f;
     --azul-claro: #1f3a63;
@@ -100,6 +102,7 @@
 </head>
 <body>
 
+<!-- Encabezado identificativo de la sección de jugadores. -->
 <header>
   <div class="logo">⚽</div>
   <h1>Atrivia — Jugadores</h1>
@@ -107,6 +110,7 @@
 
 <main>
 
+  <!-- Tabla con los datos resumidos de cada jugador. -->
   <table>
     <thead>
       <tr>

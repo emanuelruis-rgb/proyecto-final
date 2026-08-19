@@ -1,12 +1,14 @@
 <?php
-
+// Esta vista presenta los partidos agrupados por fecha de jornada.
 ?>
 <!DOCTYPE html>
 <html lang="es">
 <head>
-<meta charset="UTF-8">
-<title>Fixtures</title>
-<style>
+  <!-- Define metadatos y estilos propios de la tabla de fixtures. -->
+  <meta charset="UTF-8">
+  <title>Fixtures</title>
+  <style>
+  /* Variables de color reutilizadas en toda la vista. */
   :root {
     --azul: #14243f;
     --azul-claro: #1f3a63;
@@ -121,6 +123,7 @@
 </head>
 <body>
 
+<!-- Encabezado identificativo de la sección de fixtures. -->
 <header>
   <div class="logo">⚽</div>
   <h1>Atrivia — Fixtures</h1>
@@ -128,6 +131,7 @@
 
 <main>
 
+  <!-- Primera jornada con partidos ya finalizados. -->
   <h2 class="jornada">Fecha 1</h2>
   <div class="partidos">
     <div class="partido">
@@ -146,6 +150,7 @@
     </div>
   </div>
 
+  <!-- Segunda jornada con partidos programados. -->
   <h2 class="jornada">Fecha 2</h2>
   <div class="partidos">
     <div class="partido">
@@ -167,6 +172,7 @@
 </main>
 
 <footer>
+  <!-- Identifica la aplicación y el año de la vista. -->
   Atrivia © 2026
 </footer>
 

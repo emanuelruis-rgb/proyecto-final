@@ -1,15 +1,18 @@
+/* Distribuye el contenido principal de la vista del club. */
 .contenido-club{
     flex:1;
     padding:40px;
 }
 
 .contenido-club h1{
+    /* Destaca el saludo principal. */
     color:#2C3E50;
     margin-bottom:35px;
     font-size:40px;
 }
 
 .cards{
+    /* Organiza los indicadores en una cuadrícula adaptable. */
     display:grid;
     grid-template-columns:repeat(auto-fit,minmax(220px,1fr));
     gap:25px;
@@ -17,6 +20,7 @@
 }
 
 .card-info{
+    /* Presenta cada indicador dentro de una tarjeta visual. */
     background:white;
     border-radius:12px;
     padding:25px;
@@ -37,6 +41,7 @@
 }
 
 .acciones{
+    /* Agrupa las acciones rápidas disponibles para el club. */
     background:white;
     border-radius:12px;
     padding:30px;
@@ -49,6 +54,7 @@
 }
 
 .acciones button{
+    /* Define el tamaño y el estado base de los botones. */
     width:220px;
     height:50px;
     border:none;
@@ -63,5 +69,6 @@
 }
 
 .acciones button:hover{
+    /* Cambia el color del botón al pasar el cursor. */
     background:#4F7090;
 }

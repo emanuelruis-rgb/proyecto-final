@@ -1,3 +1,4 @@
+/* Define la estructura visual general del panel administrativo. */
 body {
     min-height: 100vh;
     margin: 0;
@@ -7,6 +8,7 @@ body {
 }
 
 header {
+    /* Construye la barra superior del panel. */
     height: 90px;
     background-color: #0B2545;
     display: flex;
@@ -17,6 +19,7 @@ header {
 }
 
 .main-nav {
+    /* Alinea el logotipo y los enlaces principales. */
     display: flex;
     align-items: center;
     gap: 18px;
@@ -32,6 +35,7 @@ header {
 }
 
 .header-nav-link {
+    /* Estiliza cada enlace de navegación. */
     display: inline-flex;
     align-items: center;
     justify-content: center;
@@ -55,6 +59,7 @@ header {
 }
 
 .header-derecha {
+    /* Alinea las acciones del lado derecho del encabezado. */
     display: flex;
     align-items: center;
     gap: 25px;
@@ -91,6 +96,7 @@ header {
 }
 
 .layout-abajo-header {
+    /* Ocupa el espacio disponible debajo del encabezado. */
     display: flex;
     min-height: calc(100vh - 90px);
 }
@@ -100,6 +106,7 @@ header {
 }
 
 .carruselb {
+    /* Da formato al botón para seleccionar imágenes. */
     color: white;
     background-color: #3E5C76;
     border: none;
@@ -114,6 +121,7 @@ header {
  }
 
  .BOTONCARRUSEL {
+    /* Define el botón alternativo del carrusel. */
     display: flex;
     align-items: center;
     justify-content: center;
@@ -127,6 +135,7 @@ header {
  }
 
 .dashboard-container {
+    /* Centra el contenido principal del panel. */
     flex: 1;
     display: flex;
     flex-direction: column;
@@ -138,6 +147,7 @@ header {
 }
 
 .carrusel-wrapper {
+    /* Centra el carrusel y sus controles. */
     display: flex;
     align-items: center;
     justify-content: center;
@@ -153,6 +163,7 @@ h1{
 }
 
 .carrusel{
+    /* Limita el área visible de las diapositivas. */
     margin: 0 auto;
     width: 100%;
     max-width: 600px;
@@ -165,18 +176,21 @@ h1{
 }
 
 .slides {
+    /* Coloca las imágenes en fila y activa la animación. */
     display: flex;
     width: 900%; /* Límite: 9 diapositivas. */
     animation: deslizar 18s infinite;
 }
 
 .slides img {
+    /* Mantiene una medida uniforme para cada imagen. */
     width: 600px; /* Cada imagen tiene ancho fijo 600px. */
     height: 350px;
     object-fit: cover;
 }
 
 @keyframes deslizar {
+    /* Desplaza el carrusel por sus posiciones predeterminadas. */
     0%, 11% {
         transform: translateX(0); /* Primera imagen: sin desplazamiento */
     }
@@ -213,12 +227,14 @@ h1{
     */
 
 .sidebar-btn:hover {
+    /* Resalta botones laterales al pasar el cursor. */
     background-color: #4F7090;
     transition: 0.3s;
 }
 
 .sidebar-btn:active,
 .sidebar-btn:focus {
+    /* Muestra el estado de interacción del botón lateral. */
     outline: none;
     box-shadow: 0 0 0 3px rgba(17,101,139,0.15);
 }
