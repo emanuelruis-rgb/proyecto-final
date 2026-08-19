@@ -3,7 +3,7 @@
 $servidor = "localhost";
 $usuario = "root";
 $clave = "";
-$basededatos = "liga";
+$basededatos = "liga-de-futbol";
 
 // Abre la conexión con el servidor MySQL.
 $conexion = new mysqli($servidor, $usuario, $clave, $basededatos);
