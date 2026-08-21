@@ -7,105 +7,14 @@
   <!-- Define metadatos y estilos de la tabla de jugadores. -->
   <meta charset="UTF-8">
   <title>Jugadores - Liga Amateur</title>
-  <style>
-  /* Variables de color reutilizadas en toda la vista. */
-  :root {
-    --azul: #14243f;
-    --azul-claro: #1f3a63;
-    --fondo: #eef1f4;
-    --texto: #14243f;
-    --gris: #6b7280;
-  }
-
-  * { box-sizing: border-box; }
-
-  body {
-    margin: 0;
-    font-family: Georgia, 'Times New Roman', serif;
-    background: var(--fondo);
-    color: var(--texto);
-  }
-
-  header {
-    background: var(--azul);
-    color: #fff;
-    padding: 22px 30px;
-    display: flex;
-    align-items: center;
-    gap: 14px;
-  }
-
-  header .logo {
-    width: 40px;
-    height: 40px;
-    border: 2px solid #fff;
-    border-radius: 50%;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    font-weight: bold;
-  }
-
-  header h1 {
-    font-size: 22px;
-    margin: 0;
-    font-weight: normal;
-  }
-
-  main {
-    max-width: 900px;
-    margin: 40px auto;
-    padding: 0 20px;
-  }
-
-  table {
-    width: 100%;
-    border-collapse: collapse;
-    background: #fff;
-    border-radius: 6px;
-    overflow: hidden;
-    box-shadow: 0 1px 4px rgba(0,0,0,0.08);
-  }
-
-  thead {
-    background: var(--azul-claro);
-  }
-
-  th {
-    color: #fff;
-    text-align: left;
-    padding: 12px 16px;
-    font-weight: normal;
-    font-size: 15px;
-  }
-
-  td {
-    padding: 12px 16px;
-    border-bottom: 1px solid #e5e7eb;
-    font-size: 15px;
-  }
-
-  tr:last-child td {
-    border-bottom: none;
-  }
-
-  tr:hover td {
-    background: #f4f6f8;
-  }
-
-  .club {
-    color: var(--gris);
-    font-size: 13px;
-  }
-
-</style>
+  <link rel="stylesheet" href="css admin/jugadores-style.css">
 </head>
 <body>
 
 <!-- Encabezado identificativo de la sección de jugadores. -->
 <header>
-  <div class="logo">⚽</div>
-  <h1>Atrivia — Jugadores</h1>
+  <img alt="logo-atrivia" src="../img/logo-atrivia.png" class="logo">
+  <h1>Jugadores</h1>
 </header>
 
 <main>
