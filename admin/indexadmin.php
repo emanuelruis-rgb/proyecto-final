@@ -17,12 +17,12 @@
     <!-- Barra superior con navegación y acciones de sesión. -->
     <header> 
         <nav class="main-nav">
-            <a href="/">
-                <img src="../img/logo-atrivia.png" alt="Logo" class="logo-empresa">
+            <a href="/proyecto-final/admin/indexadmin.php">
+                <img src="/proyecto-final/img/logo-empresa/logo-empresa-blanco.png" alt="Logo" class="logo-empresa">
             </a>
             <div class="nav-links">
                 <a href="Jugadores.php" class="header-nav-link">Jugadores</a>
-                <a href="#" class="header-nav-link">Clubes</a>
+                <a href="/proyecto-final/gest-club/club.php" class="header-nav-link">Clubes</a>
                 <a href="fixtures.php" class="header-nav-link active">Fixture</a>
                 <a href="#" class="header-nav-link">Sanciones</a>
             </div>
@@ -38,7 +38,7 @@
                 <span></span>
             </a>
 
-            <a href="../index.php" class="header-item">
+            <a href="/proyecto-final/index.php" class="header-item">
                 <i class="bi bi-box-arrow-right"></i>
                 <span>Cerrar sesión</span>
             </a>

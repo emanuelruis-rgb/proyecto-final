@@ -13,7 +13,7 @@
     <!-- Agrupa los elementos visibles del formulario de inicio de sesión. -->
     <div class="login-container">
         <img src="/proyecto-final/img/logo.png" alt="Logo" class="logos">
-        <img src="/proyecto-final/img/logo-atrivia.png" alt="Logo" class="logos">
+        <img src="/proyecto-final/img/logo-empresa/logo-empresa-azul.png" alt="Logo" class="logos">
         <h1><b>Login al sistema de control de la liga</b></h1>
         <p class="nombre">Atrivia Enterprises</p>
 

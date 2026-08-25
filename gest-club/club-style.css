@@ -13,9 +13,7 @@ body {
     flex-direction: column;
 }
 
-/* ==========================================================================
-   1. NAVBAR (Intacto)
-   ========================================================================== */
+/* NAVBAR (Intacto) */
 header {
     height: 90px;
     background-color: #0B2545;
@@ -105,9 +103,7 @@ header {
     display: none;
 }
 
-/* ==========================================================================
-   2. CONTENEDOR PRINCIPAL (Estructura Vertical)
-   ========================================================================== */
+/* CONTENEDOR PRINCIPAL (Estructura Vertical)*/
 .main-container {
     display: flex;
     flex-direction: column; /* Apila el formulario y la tabla verticalmente */
@@ -119,9 +115,7 @@ header {
     padding: 0 20px;
 }
 
-/* ==========================================================================
-   3. FORMULARIOS (Crear y Editar)
-   ========================================================================== */
+/*  FORMULARIOS (Crear y Editar) */
 .users-form {
     background-color: #ffffff;
     padding: 30px;
@@ -162,7 +156,7 @@ header {
 }
 
 .users-form input[type="submit"] {
-    background-color: #3E5C76;
+    background-color: #0B2545;
     color: #ffffff;
     border: none;
     padding: 12px;
@@ -178,9 +172,7 @@ header {
     background-color: #0B2545;
 }
 
-/* ==========================================================================
-   4. TABLA DE CLUBES REGISTRADOS
-   ========================================================================== */
+/* TABLA DE CLUBES REGISTRADOS */
 .users-table {
     background-color: #ffffff;
     padding: 30px;
@@ -203,7 +195,7 @@ header {
 }
 
 .users-table thead tr {
-    background-color: #3E5C76;
+    background-color: #0B2545;
     color: #ffffff;
     text-align: left;
 }
@@ -230,7 +222,7 @@ header {
 }
 
 .users-table--edit {
-    background-color: #3E5C76;
+    background-color: #0B2545;
     color: #ffffff;
 }
 

@@ -1,6 +1,7 @@
 <?php
 // Carga la conexión compartida con la base de datos.
 include "../conexion-bd/conexion.php";
+$conexion = connection();
 
 // Inicia la sesión para conservar el usuario y los mensajes de error.
 session_start();
