@@ -1,0 +1,121 @@
+body {
+    min-height: 100vh;
+    margin: 0;
+    font-family: sans-serif;
+    background-color: #EEF2F5;
+    color: #2C3E50;
+}
+
+/* Header en general */
+header {
+    height: 90px;
+    background-color: #0B2545;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;      
+    padding: 0 40px;          
+    gap: 20px;
+}
+
+/* izquierda del header, donde van el logo y botones para cambiar de sección */
+.nav-izquierda-container {
+    /* Alinea el logotipo y los enlaces principales a la izquierda del header */
+    display: flex;
+    align-items: center;
+    gap: 18px;
+    flex: 1;
+    min-width: 0;
+}
+
+.logo-empresa {
+    height: 60px;
+    width: auto;
+}
+
+.nav-izquierda-botones {
+    /* Estiliza cada enlace de navegación. */
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    height: 40px;
+    padding: 0 18px;
+    background-color: #3E5C76;
+    color: #FFFFFF;
+    text-decoration: none;
+    font-size: 15px;
+    font-weight: 600;
+    border: 1px solid rgba(255,255,255,0.15);
+    transition: 0.3s;
+}
+
+.nav-izquierda-botones-container {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    flex-wrap: wrap;
+}
+
+.nav-izquierda-botones.active {
+    background-color: #005de7;
+}
+
+.nav-izquierda-botones:hover {
+    background-color: #0a0f14;
+}
+/* termina el header de la izquierda */
+
+/* Header de la derecha donde van los botones de usuario cerrar sesión y eso */
+.nav-derecha-container {
+    /* Alinea las acciones del lado derecho del encabezado. */
+    display: flex;
+    align-items: center;
+    gap: 25px;
+    color: white;
+    font-size: 18px;
+}
+
+/* Items uno por uno del header a la derecha */
+/* el nav derecha item es el boton especifico individual */
+.nav-derecha-container, .nav-derecha-item {
+    display:flex;
+    align-items: center;
+    gap: 14px;
+    color:white;
+    text-decoration: none;
+    font-size:18px;
+    transition: 0.3s;
+}
+
+.cerrar-sesion {
+    border: none;
+    background: #3E5C76;
+    color: white;
+    padding: 10px 18px;
+    border-radius: 8px;
+    cursor: pointer;
+}
+
+.cerrar-sesion:hover {
+    background-color: #4F7090;
+}
+/* termina el header a la derecha */
+
+
+/* todo lo de debajo del header */
+.layout-abajo-header {
+    display: flex;
+    min-height: calc(100vh - 90px);
+    text-align: center;
+}
+
+.dashboard-container {
+    /* Centra el contenido principal del panel. */
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: center;
+    padding: 20px;
+    color: black;
+    font-family: Georgia, 'Times New Roman', Times, serif;
+}

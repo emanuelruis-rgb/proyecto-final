@@ -26,7 +26,7 @@ if (mysqli_num_rows($resultadoAdmin) > 0) {
     exit();
 } else {
     if (mysqli_num_rows($resultadoClub) > 0) {
-        header("Location: ../usuario/indexusuario.php");
+        header("Location: ../club/indexclub.php");
         exit();
     } else {
         // Informa del acceso fallido y devuelve al formulario de inicio.
