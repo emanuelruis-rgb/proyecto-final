@@ -23,7 +23,8 @@
                 <a href="/proyecto-final/gest-jugador/jugador.php" class="nav-izquierda-botones">Jugadores</a>
                 <a href="/proyecto-final/gest-club/club.php" class="nav-izquierda-botones">Clubes</a>
                 <a href="fixtures.php" class="nav-izquierda-botones">Fixture</a>
-                <a href="#" class="nav-izquierda-botones">Sanciones</a>
+                <!-- URL MANUAL PORQUE NO ANDA DE FORMA NINGUNA QUE NO SEA ESTA" -->
+                <a href="http://localhost/proyecto-final/gest-sanciones/sanciones.php" class="nav-izquierda-botones">Sanciones</a>
             </div>
         </nav>
 
