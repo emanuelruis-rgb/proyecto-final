@@ -1,0 +1,267 @@
+/* Define la estructura visual general del panel administrativo. */
+body {
+    min-height: 100vh;
+    margin: 0;
+    font-family: sans-serif;
+    background-color: #EEF2F5;
+    color: #2C3E50;
+}
+
+header {
+    /* Construye la barra superior del panel. */
+    height: 90px;
+    background-color: #0B2545;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;      
+    padding: 0 40px;          
+    gap: 20px;
+}
+
+.main-nav {
+    /* Alinea el logotipo y los enlaces principales. */
+    display: flex;
+    align-items: center;
+    gap: 18px;
+    flex: 1;
+    min-width: 0;
+}
+
+.nav-links {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    flex-wrap: wrap;
+}
+
+.header-nav-link {
+    /* Estiliza cada enlace de navegación. */
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    height: 40px;
+    padding: 0 18px;
+    background-color: #3E5C76;
+    color: #FFFFFF;
+    text-decoration: none;
+    font-size: 15px;
+    font-weight: 600;
+    border: 1px solid rgba(255,255,255,0.15);
+    transition: 0.3s;
+}
+
+.header-nav-link.active {
+    background-color: #005de7;
+}
+
+.header-nav-link:hover {
+    background-color: #0a0f14;
+}
+
+.header-derecha {
+    /* Alinea las acciones del lado derecho del encabezado. */
+    display: flex;
+    align-items: center;
+    gap: 25px;
+    color: white;
+    font-size: 18px;
+}
+
+.header-derecha, .header-item {
+    display:flex;
+    align-items: center;
+    gap: 14px;
+    color:white;
+    text-decoration: none;
+    font-size:18px;
+    transition: 0.3s;
+}
+
+.cerrar-sesion {
+    border: none;
+    background: #3E5C76;
+    color: white;
+    padding: 10px 18px;
+    border-radius: 8px;
+    cursor: pointer;
+}
+
+.cerrar-sesion:hover {
+    background-color: #4F7090;
+}
+
+.logo-empresa {
+    height: 60px;
+    width: auto;
+}
+
+.layout-abajo-header {
+    /* Ocupa el espacio disponible debajo del encabezado. */
+    display: flex;
+    min-height: calc(100vh - 90px);
+}
+
+.sidebar-container {
+    display: none;
+}
+
+/* ==========================================================================
+   Estilos del Formulario
+   ========================================================================== */
+.users-form {
+    background-color: #ffffff;
+    padding: 35px 40px;
+    border-radius: 12px;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.05);
+    width: 100%;
+    max-width: 460px;
+    margin: 40px auto; /* Centra la tarjeta horizontalmente */
+    box-sizing: border-box;
+}
+
+.users-form h1 {
+    font-size: 1.5rem;
+    color: #0B2545; /* Azul oscuro de tu header */
+    margin-bottom: 25px;
+    text-align: center;
+    font-weight: 700;
+}
+
+.users-form form {
+    display: flex;
+    flex-direction: column;
+    gap: 14px;
+}
+
+/* Campos de entrada y desplegables (<select>) */
+.users-form input[type="text"],
+.users-form input[type="password"],
+.users-form select {
+    width: 100%;
+    padding: 12px 16px;
+    border: 1px solid #dcdfe6;
+    border-radius: 6px;
+    font-size: 0.95rem;
+    color: #2C3E50;
+    background-color: #ffffff;
+    outline: none;
+    box-sizing: border-box;
+    transition: border-color 0.2s ease-in-out, box-shadow 0.2s ease-in-out;
+}
+
+.users-form input[type="text"]:focus,
+.users-form input[type="password"]:focus,
+.users-form select:focus {
+    border-color: #005de7; /* Azul activo de tu navbar */
+    box-shadow: 0 0 0 3px rgba(0, 93, 231, 0.15);
+}
+
+/* Formato para la opción por defecto en las listas desplegables */
+.users-form select option[value=""] {
+    color: #888888;
+}
+
+/* Botón principal */
+.users-form input[type="submit"] {
+    background-color: #0B2545; /* Coincide con el tono de la interfaz */
+    color: #ffffff;
+    border: none;
+    padding: 14px;
+    border-radius: 6px;
+    font-size: 0.95rem;
+    font-weight: 700;
+    cursor: pointer;
+    margin-top: 10px;
+    transition: background-color 0.2s ease;
+}
+
+.users-form input[type="submit"]:hover {
+    background-color: #3E5C76;
+}
+
+/* ==========================================================================
+   Estilos de la Tabla de Jugadores Registrados
+   ========================================================================== */
+.users-table {
+    background-color: #ffffff;
+    padding: 30px;
+    border-radius: 12px;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.05);
+    width: 100%;
+    max-width: 1300px;
+    margin: 0 auto 40px auto; /* Centra la tabla horizontalmente */
+    box-sizing: border-box;
+    overflow-x: auto; /* Permite desplazamiento si la pantalla es muy pequeña */
+}
+
+.users-table h2 {
+    font-size: 1.4rem;
+    color: #0B2545; /* Azul oscuro matching con tu header */
+    margin-bottom: 20px;
+    font-weight: 700;
+}
+
+.users-table table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 0.9rem;
+    white-space: nowrap;
+}
+
+/* Encabezado Azul Oscuro */
+.users-table thead tr {
+    background-color: #0B2545;
+    color: #ffffff;
+    text-align: left;
+}
+
+.users-table th {
+    padding: 14px 16px;
+    font-weight: 600;
+}
+
+.users-table td {
+    padding: 14px 16px;
+    border-bottom: 1px solid #eef2f5;
+    color: #2C3E50;
+}
+
+.users-table tbody tr:hover {
+    background-color: #f8fafc;
+}
+
+/* Botón Editar (Azul Oscuro / Coincide con la imagen) */
+.users-table--edit {
+    background-color: #0B2545;
+    color: #ffffff;
+    padding: 7px 16px;
+    border-radius: 6px;
+    text-decoration: none;
+    font-weight: 600;
+    font-size: 0.85rem;
+    display: inline-block;
+    text-align: center;
+    transition: background-color 0.2s ease;
+}
+
+.users-table--edit:hover {
+    background-color: #3E5C76;
+}
+
+/* Botón Eliminar (Rojo / Coincide con la imagen) */
+.users-table--delete {
+    background-color: #dc3545;
+    color: #ffffff;
+    padding: 7px 16px;
+    border-radius: 6px;
+    text-decoration: none;
+    font-weight: 600;
+    font-size: 0.85rem;
+    display: inline-block;
+    text-align: center;
+    transition: background-color 0.2s ease;
+}
+
+.users-table--delete:hover {
+    background-color: #bd2130;
+}

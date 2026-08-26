@@ -20,9 +20,9 @@ $query = mysqli_query($con, "SELECT * FROM club");
                 <img src="/proyecto-final/img/logo-empresa/logo-empresa-blanco.png" alt="Logo" class="logo-empresa">
             </a>
             <div class="nav-links">
-                <a href="Jugadores.php" class="header-nav-link">Jugadores</a>
-                <a href="#" class="header-nav-link">Clubes</a>
-                <a href="fixtures.php" class="header-nav-link active">Fixture</a>
+                <a href="/proyecto-final/gest-jugador/jugador.php" class="header-nav-link">Jugadores</a>
+                <a href="/proyecto-final/gest-club/club.php" class="header-nav-link">Clubes</a>
+                <a href="/proyecto-final/admin/fixtures.php" class="header-nav-link active">Fixture</a>
                 <a href="#" class="header-nav-link">Sanciones</a>
             </div>
         </nav>
@@ -81,7 +81,7 @@ $query = mysqli_query($con, "SELECT * FROM club");
                         <th><?= $row['nombrePresidente'] ?></th>
                         <th><?= $row['añoCreacion'] ?></th>
                         <th><?= $row['estadio'] ?></th>
-                        <th><a href="actualizar.php?id=<?= $row['idClub'] ?>" class="users-table--edit">Editar</a></th>
+                        <th><a href="actualizar-club.php?id=<?= $row['idClub'] ?>" class="users-table--edit">Editar</a></th>
                         <th><a href="eliminar-club.php?id=<?= $row['idClub'] ?>" class="users-table--delete" >Eliminar</a></th>
                     </tr>
                 <?php endwhile; ?>
