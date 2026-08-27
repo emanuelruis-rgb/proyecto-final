@@ -1,0 +1,209 @@
+/* Variables de color reutilizadas en toda la vista. */
+:root {
+  --azul: #14243f;
+  --azul-claro: #1f3a63;
+  --fondo: #eef1f4;
+  --texto: #14243f;
+  --gris: #6b7280;
+}
+
+* { box-sizing: border-box; }
+
+body {
+  margin: 0;
+  font-family: Georgia, 'Times New Roman', serif;
+  background: var(--fondo);
+  color: var(--texto);
+}
+
+header {
+  background: var(--azul);
+  color: #fff;
+  min-height: 90px;
+  display: flex;
+  align-items: center;
+  gap: 20px;
+}
+
+header .logo {
+  height: 60px;
+  width: auto;
+  margin-left: 40px;
+}
+
+header h1 {
+  font-size: 22px;
+  margin: 0;
+  font-weight: normal;
+}
+
+main {
+  max-width: 800px;
+  margin: 40px auto;
+  padding: 0 20px;
+}
+
+h2.jornada {
+  background: var(--azul-claro);
+  color: #fff;
+  padding: 10px 16px;
+  border-radius: 6px 6px 0 0;
+  font-size: 17px;
+  font-weight: normal;
+  margin: 30px 0 0 0;
+}
+
+.partidos {
+  background: #fff;
+  border-radius: 0 0 6px 6px;
+  box-shadow: 0 1px 4px rgba(0,0,0,0.08);
+  overflow: hidden;
+}
+
+.partido {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 16px 20px;
+  border-bottom: 1px solid #e5e7eb;
+  position: relative;
+}
+
+.partido:last-child {
+  border-bottom: none;
+}
+
+.equipo {
+  flex: 1;
+  font-size: 16px;
+}
+
+.equipo.local { text-align: right; }
+.equipo.visita { text-align: left; }
+
+.centro {
+  width: 90px;
+  text-align: center;
+  flex-shrink: 0;
+  padding: 0 10px;
+}
+
+.resultado {
+  font-size: 18px;
+  font-weight: bold;
+  color: var(--azul);
+}
+
+.hora {
+  font-size: 13px;
+  color: var(--gris);
+}
+
+footer {
+  text-align: center;
+  padding: 20px;
+  color: var(--gris);
+  font-size: 13px;
+}
+
+/* ===== Link "Agregar partido" ===== */
+.btn-agregar {
+  display: inline-block;
+  background: var(--azul);
+  color: #fff;
+  text-decoration: none;
+  padding: 10px 18px;
+  border-radius: 6px;
+  font-size: 15px;
+  margin-bottom: 10px;
+}
+
+.btn-agregar:hover {
+  background: var(--azul-claro);
+}
+
+/* ===== Botón eliminar dentro de cada tarjeta de partido ===== */
+.eliminar {
+  color: var(--gris);
+  text-decoration: none;
+  font-size: 16px;
+  margin-left: 12px;
+  flex-shrink: 0;
+}
+
+.eliminar:hover {
+  color: #b91c1c;
+}
+
+/* ===== Mensajes de error ===== */
+.mensaje-error {
+  background: #fde8e8;
+  color: #b91c1c;
+  border: 1px solid #f5b5b5;
+  padding: 10px 16px;
+  border-radius: 6px;
+  margin-bottom: 20px;
+  font-size: 15px;
+}
+
+/* ===== Formulario (crear-partido.php) ===== */
+form {
+  background: #fff;
+  border-radius: 6px;
+  box-shadow: 0 1px 4px rgba(0,0,0,0.08);
+  padding: 24px;
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+  margin-top: 20px;
+}
+
+form label {
+  font-size: 14px;
+  color: var(--gris);
+  margin-bottom: -8px;
+}
+
+form input,
+form select {
+  font-family: inherit;
+  font-size: 15px;
+  padding: 10px 12px;
+  border: 1px solid #d1d5db;
+  border-radius: 4px;
+  background: #fff;
+  color: var(--texto);
+}
+
+form input:focus,
+form select:focus {
+  outline: none;
+  border-color: var(--azul-claro);
+}
+
+form button {
+  font-family: inherit;
+  font-size: 15px;
+  background: var(--azul);
+  color: #fff;
+  border: none;
+  padding: 12px;
+  border-radius: 6px;
+  cursor: pointer;
+  margin-top: 10px;
+}
+
+form button:hover {
+  background: var(--azul-claro);
+}
+
+/* Link "Volver al fixture" debajo del formulario */
+main > p > a {
+  color: var(--azul-claro);
+  text-decoration: none;
+  font-size: 14px;
+}
+
+main > p > a:hover {
+  text-decoration: underline;
+}

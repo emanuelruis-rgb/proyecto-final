@@ -23,7 +23,7 @@
             <div class="nav-links">
                 <a href="/proyecto-final/gest-jugador/jugador.php" class="header-nav-link">Jugadores</a>
                 <a href="/proyecto-final/gest-club/club.php" class="header-nav-link">Clubes</a>
-                <a href="fixtures.php" class="header-nav-link active">Fixture</a>
+                <a href="/proyecto-final/gest-fixture/fixtures.php" class="header-nav-link active">Fixture</a>
                 <a href="#" class="header-nav-link">Sanciones</a>
             </div>
         </nav>
