@@ -1,19 +1,26 @@
 <?php
-// Devuelve los partidos agrupados por jornada, listos para pintar.
+// Devuelve los partidos agrupados por fecha, que es la columna disponible en la BD actual.
 function obtenerFixture($con) {
-    $sql = "SELECT p.idPartido, p.jornada, p.horaPartido,
-                   p.golesLocal, p.golesVisitante,
-                   cl.nombreClub AS local, cv.nombreClub AS visitante
+    $sql = "SELECT p.idPartido,
+                   p.fechaPartido,
+                   p.horaPartido,
+                   p.golesLocal,
+                   p.golesVisitante,
+                   cl.nombreClub AS local,
+                   cv.nombreClub AS visitante
             FROM partido p
             JOIN club cl ON p.idClubLocal = cl.idClub
             JOIN club cv ON p.idClubVisitante = cv.idClub
-            ORDER BY p.jornada, p.fechaPartido, p.horaPartido";
+            ORDER BY p.fechaPartido, p.horaPartido";
 
     $result = mysqli_query($con, $sql);
-    $fixture = [];
+    if (!$result) {
+        return [];
+    }
 
+    $fixture = [];
     while ($row = mysqli_fetch_assoc($result)) {
-        $fixture[$row['jornada']][] = $row;
+        $fixture[$row['fechaPartido']][] = $row;
     }
 
     return $fixture;
@@ -34,22 +41,24 @@ function obtenerClubes($con) {
 
 // Inserta un partido nuevo. Devuelve true si salió bien.
 function crearPartido($con, $datos) {
-    $sql = "INSERT INTO partido 
-                (idClubLocal, idClubVisitante, fechaPartido, horaPartido, 
-                 estadio, arbitro, jornada)
-            VALUES (?, ?, ?, ?, ?, ?, ?)";
+    $sql = "INSERT INTO partido
+                (idClubLocal, idClubVisitante, golesLocal, golesVisitante,
+                 duracionPartido, arbitro, estadio, fechaPartido, horaPartido)
+            VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)";
 
     $stmt = mysqli_prepare($con, $sql);
     mysqli_stmt_bind_param(
         $stmt,
-        "iisisis",
+        "iiiiisssi",
         $datos['idClubLocal'],
         $datos['idClubVisitante'],
-        $datos['fechaPartido'],
-        $datos['horaPartido'],
-        $datos['estadio'],
+        $datos['golesLocal'],
+        $datos['golesVisitante'],
+        $datos['duracionPartido'],
         $datos['arbitro'],
-        $datos['jornada']
+        $datos['estadio'],
+        $datos['fechaPartido'],
+        $datos['horaPartido']
     );
 
     return mysqli_stmt_execute($stmt);
