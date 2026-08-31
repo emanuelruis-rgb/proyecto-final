@@ -10,35 +10,43 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Página principal admins</title>
-    <link rel="stylesheet" href="/proyecto-final/admin/pagina-principal-admin.css">
+    <link rel="stylesheet" href="pagina-principal-admin.css">
     <link rel="icon" type="image/png" href="../img/copa.png">
 </head>
 <body>
-    <!-- Barra superior con navegación y acciones de sesión. -->
     <header> 
-        <nav class="main-nav">
+        <nav class="nav-izquierda-container">
             <a href="/proyecto-final/admin/indexadmin.php">
                 <img src="/proyecto-final/img/logo-empresa/logo-empresa-blanco.png" alt="Logo" class="logo-empresa">
             </a>
+<<<<<<< HEAD
             <div class="nav-links">
                 <a href="/proyecto-final/gest-jugador/jugador.php" class="header-nav-link">Jugadores</a>
                 <a href="/proyecto-final/gest-club/club.php" class="header-nav-link">Clubes</a>
                 <a href="/proyecto-final/gest-fixture/fixtures.php" class="header-nav-link active">Fixture</a>
                 <a href="#" class="header-nav-link">Sanciones</a>
+=======
+            <div class="nav-izquierda-botones-container">
+                <a href="/proyecto-final/gest-jugador/jugador.php" class="nav-izquierda-botones">Jugadores</a>
+                <a href="/proyecto-final/gest-club/club.php" class="nav-izquierda-botones">Clubes</a>
+                <a href="fixtures.php" class="nav-izquierda-botones">Fixture</a>
+                <!-- URL MANUAL PORQUE NO ANDA DE FORMA NINGUNA QUE NO SEA ESTA" -->
+                <a href="http://localhost/proyecto-final/gest-sanciones/sanciones.php" class="nav-izquierda-botones">Sanciones</a>
+>>>>>>> 8c668e4e13ca4e14feb238303e79f2be35433057
             </div>
         </nav>
 
-        <div class="header-derecha">
-            <a href="#" class="header-item">
+        <div class="nav-derecha-container">
+            <a href="#" class="nav-derecha-item">
                 <i class="bi bi-bell"></i>
             </a>
 
-            <a href="#" class="header-item">
+            <a href="#" class="nav-derecha-item">
                 <i class="bi bi-person-circle"></i>
                 <span></span>
             </a>
 
-            <a href="/proyecto-final/index.php" class="header-item">
+            <a href="/proyecto-final/index.php" class="nav-derecha-item">
                 <i class="bi bi-box-arrow-right"></i>
                 <span>Cerrar sesión</span>
             </a>
@@ -49,7 +57,7 @@
         <div class="dashboard-container">
             <h1> Bienvenido a la Página Principal de Admins!</h1>
 
-            <!-- Muestra las imágenes disponibles y el control de carga. -->
+            <!-- DE ACA EN DELANTE ES CARRUSEL. -->
             <div class="carrusel-wrapper">
                 <div class="carrusel">
                     <div class="slides">
@@ -94,6 +102,7 @@
                     });
                 </script>
             </div>
+            <!-- TERMINA CARRUSEL -->
         </div>
     </div>
 </body>

@@ -1,4 +1,3 @@
-/* Define la estructura visual general del panel administrativo. */
 body {
     min-height: 100vh;
     margin: 0;
@@ -7,8 +6,8 @@ body {
     color: #2C3E50;
 }
 
+/* Header en general */
 header {
-    /* Construye la barra superior del panel. */
     height: 90px;
     background-color: #0B2545;
     display: flex;
@@ -18,8 +17,9 @@ header {
     gap: 20px;
 }
 
-.main-nav {
-    /* Alinea el logotipo y los enlaces principales. */
+/* izquierda del header, donde van el logo y botones para cambiar de sección */
+.nav-izquierda-container {
+    /* Alinea el logotipo y los enlaces principales a la izquierda del header */
     display: flex;
     align-items: center;
     gap: 18px;
@@ -27,14 +27,12 @@ header {
     min-width: 0;
 }
 
-.nav-links {
-    display: flex;
-    align-items: center;
-    gap: 10px;
-    flex-wrap: wrap;
+.logo-empresa {
+    height: 60px;
+    width: auto;
 }
 
-.header-nav-link {
+.nav-izquierda-botones {
     /* Estiliza cada enlace de navegación. */
     display: inline-flex;
     align-items: center;
@@ -50,15 +48,24 @@ header {
     transition: 0.3s;
 }
 
-.header-nav-link.active {
+.nav-izquierda-botones-container {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    flex-wrap: wrap;
+}
+
+.nav-izquierda-botones.active {
     background-color: #005de7;
 }
 
-.header-nav-link:hover {
+.nav-izquierda-botones:hover {
     background-color: #0a0f14;
 }
+/* termina el header de la izquierda */
 
-.header-derecha {
+/* Header de la derecha donde van los botones de usuario cerrar sesión y eso */
+.nav-derecha-container {
     /* Alinea las acciones del lado derecho del encabezado. */
     display: flex;
     align-items: center;
@@ -67,7 +74,9 @@ header {
     font-size: 18px;
 }
 
-.header-derecha, .header-item {
+/* Items uno por uno del header a la derecha */
+/* el nav derecha item es el boton especifico individual */
+.nav-derecha-container, .nav-derecha-item {
     display:flex;
     align-items: center;
     gap: 14px;
@@ -89,20 +98,14 @@ header {
 .cerrar-sesion:hover {
     background-color: #4F7090;
 }
+/* termina el header a la derecha */
 
-.logo-empresa {
-    height: 60px;
-    width: auto;
-}
+/* DE ACA PARA ABAJO NO TOQUE NADA MAS(felipe) */
 
 .layout-abajo-header {
     /* Ocupa el espacio disponible debajo del encabezado. */
     display: flex;
     min-height: calc(100vh - 90px);
-}
-
-.sidebar-container {
-    display: none;
 }
 
 .carruselb {
