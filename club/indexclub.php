@@ -13,14 +13,14 @@
 <body>
     <header> 
         <nav class="nav-izquierda-container">
-            <a href="/proyecto-final/admin/indexadmin.php">
+            <a href="/proyecto-final/club/indexclub.php">
                 <img src="/proyecto-final/img/logo-empresa/logo-empresa-blanco.png" alt="Logo" class="logo-empresa">
             </a>
             <div class="nav-izquierda-botones-container">
-                <a href="/proyecto-final/gest-jugador/jugador.php" class="nav-izquierda-botones">Jugadores</a>
-                <a href="/proyecto-final/gest-club/club.php" class="nav-izquierda-botones">Clubes</a>
-                <a href="fixtures.php" class="nav-izquierda-botones">Fixture</a>
-                <a href="#" class="nav-izquierda-botones">Sanciones</a>
+                <!-- aca van los jugadores propios y despues da la opcion de seleccionar los ajenos-->
+                <a href="#" class="nav-izquierda-botones">Jugadores</a>
+                <!-- apartado boletines para poder ver los boletines y noticias del admin-->
+                <a href="#" class="nav-izquierda-botones">Boletines</a>
             </div>
         </nav>
 

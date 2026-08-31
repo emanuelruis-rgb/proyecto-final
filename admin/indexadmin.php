@@ -19,11 +19,11 @@
             <a href="/proyecto-final/admin/indexadmin.php">
                 <img src="/proyecto-final/img/logo-empresa/logo-empresa-blanco.png" alt="Logo" class="logo-empresa">
             </a>
-            <div class="nav-links">
-                <a href="/proyecto-final/gest-jugador/jugador.php" class="header-nav-link">Jugadores</a>
-                <a href="/proyecto-final/gest-club/club.php" class="header-nav-link">Clubes</a>
-                <a href="/proyecto-final/gest-fixture/fixtures.php" class="header-nav-link active">Fixture</a>
-                <a href="#" class="header-nav-link">Sanciones</a>
+            <div class="nav-izquierda-botones-container">
+                <a href="/proyecto-final/gest-jugador/jugador.php" class="nav-izquierda-botones">Jugadores</a>
+                <a href="/proyecto-final/gest-club/club.php" class="nav-izquierda-botones">Clubes</a>
+                <a href="/proyecto-final/gest-fixture/fixtures.php" class="nav-izquierda-botones">Fixture</a>
+                <a href="/proyecto-final/gest-sanciones/sanciones.php" class="nav-izquierda-botones">Sanciones</a>
             </div>
         </nav>
 

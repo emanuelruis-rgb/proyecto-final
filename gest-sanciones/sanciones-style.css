@@ -102,20 +102,139 @@ header {
 
 
 /* todo lo de debajo del header */
-.layout-abajo-header {
+
+/* CONTENEDOR PRINCIPAL (Estructura Vertical)*/
+.main-container {
     display: flex;
-    min-height: calc(100vh - 90px);
+    flex-direction: column; /* Apila el formulario y la tabla verticalmente */
+    align-items: center;
+    gap: 30px;
+    width: 100%;
+    max-width: 1000px;
+    margin: 40px auto;
+    padding: 0 20px;
+}
+
+/*  FORMULARIOS (Crear y Editar) */
+.formulario {
+    background-color: #ffffff;
+    padding: 30px;
+    border-radius: 8px;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.05);
+    width: 100%;
+    max-width: 500px;
+    margin: 0 auto; /* Para centrar cuando esté solo en la vista de edición */
+}
+
+.formulario h1 {
+    font-size: 1.4rem;
+    color: #0B2545;
+    margin-bottom: 20px;
     text-align: center;
 }
 
-.dashboard-container {
-    /* Centra el contenido principal del panel. */
-    flex: 1;
+.formulario form {
     display: flex;
     flex-direction: column;
-    justify-content: flex-start;
-    align-items: center;
-    padding: 20px;
-    color: black;
-    font-family: Georgia, 'Times New Roman', Times, serif;
+    gap: 12px;
+}
+
+.formulario input[type="text"],
+.formulario input[type="password"] {
+    width: 100%;
+    padding: 11px 14px;
+    border: 1px solid #dcdfe6;
+    border-radius: 6px;
+    font-size: 0.9rem;
+    outline: none;
+    transition: border-color 0.2s;
+}
+
+.formulario input[type="text"]:focus,
+.formulario input[type="password"]:focus {
+    border-color: #005de7;
+}
+
+.formulario input[type="submit"] {
+    background-color: #0B2545;
+    color: #ffffff;
+    border: none;
+    padding: 12px;
+    border-radius: 6px;
+    font-size: 0.95rem;
+    font-weight: 600;
+    cursor: pointer;
+    margin-top: 10px;
+    transition: background-color 0.2s;
+}
+
+.formulario input[type="submit"]:hover {
+    background-color: #0B2545;
+}
+
+/* TABLA DE CLUBES REGISTRADOS */
+.tabla {
+    background-color: #ffffff;
+    padding: 30px;
+    border-radius: 8px;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.05);
+    width: 100%;
+    overflow-x: auto;
+}
+
+.tabla h2 {
+    font-size: 1.4rem;
+    color: #0B2545;
+    margin-bottom: 20px;
+}
+
+.tabla table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 0.9rem;
+}
+
+.tabla thead tr {
+    background-color: #0B2545;
+    color: #ffffff;
+    text-align: left;
+}
+
+.tabla th, 
+.tabla td {
+    padding: 12px 15px;
+    border-bottom: 1px solid #eef2f5;
+}
+
+.tabla tbody tr:hover {
+    background-color: #f8fafc;
+}
+
+/* Acciones en la tabla */
+.tabla--edit,
+.tabla--delete {
+    padding: 6px 12px;
+    border-radius: 4px;
+    text-decoration: none;
+    font-weight: 600;
+    font-size: 0.8rem;
+    display: inline-block;
+}
+
+.tabla--edit {
+    background-color: #0B2545;
+    color: #ffffff;
+}
+
+.tabla--edit:hover {
+    background-color: #0B2545;
+}
+
+.tabla--delete {
+    background-color: #dc3545;
+    color: #ffffff;
+}
+
+.tabla--delete:hover {
+    background-color: #bd2130;
 }
