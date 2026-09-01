@@ -40,7 +40,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 <body>
 
 <header>
-  <img alt="logo-atrivia" src="../img/logo-atrivia.png" class="logo">
   <h1>Nuevo partido</h1>
 </header>
 
