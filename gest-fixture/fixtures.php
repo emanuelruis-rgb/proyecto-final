@@ -46,29 +46,59 @@ $fixture = obtenerFixture($con);
 
 
 <main>
-  <p><a href="crear-partido.php" class="btn-agregar">+ Agregar partido</a></p> // Botón para abrir la pantalla de crear partido
+  <?php
+    // Botón para abrir la pantalla de crear partido
+  ?>
+  <p><a href="crear-partido.php" class="btn-agregar">+ Agregar partido</a></p>
 
-  <?php if (!$fixture): ?> // Si no hay partidos cargados
-    <p>No hay partidos cargados todavía.</p> // Muestra un mensaje vacío
+  <?php
+    // Si no hay partidos cargados
+    if (!$fixture):
+  ?>
+    <p>No hay partidos cargados todavía.</p>
   <?php endif; ?>
 
-  <?php foreach ($fixture as $fecha => $partidos): ?> // Recorre los partidos agrupados por fecha
-    <h2 class="jornada">Fecha: <?= date('d/m/Y', strtotime($fecha)) ?></h2> // Muestra la fecha del partido
+  <?php
+    // Recorre los partidos agrupados por fecha
+    foreach ($fixture as $fecha => $partidos):
+  ?>
+    <?php
+      // Muestra la fecha del partido
+    ?>
+    <h2 class="jornada">Fecha: <?= date('d/m/Y', strtotime($fecha)) ?></h2>
     <div class="partidos">
-      <?php foreach ($partidos as $p): ?> // Recorre cada partido de esa fecha
+      <?php
+        // Recorre cada partido de esa fecha
+        foreach ($partidos as $p):
+      ?>
         <div class="partido">
-          <div class="equipo local"><?= htmlspecialchars($p['local']) ?></div> // Muestra el equipo local
+          <?php
+            // Muestra el equipo local
+          ?>
+          <div class="equipo local"><?= htmlspecialchars($p['local']) ?></div>
           <div class="centro">
-            <?php if ($p['golesLocal'] === null || ((int)$p['golesLocal'] === 0 && (int)$p['golesVisitante'] === 0)): ?> // Si el partido aún no se jugó
-              <div class="hora"><?= htmlspecialchars((string)$p['horaPartido']) ?></div> // Muestra la hora del partido
-            <?php else: ?> // Si ya se jugó
-              <div class="resultado"><?= (int)$p['golesLocal'] ?> - <?= (int)$p['golesVisitante'] ?></div> // Muestra el marcador final
+            <?php if ($p['golesLocal'] === null || ((int)$p['golesLocal'] === 0 && (int)$p['golesVisitante'] === 0)): ?>
+              <?php
+                // Muestra la hora del partido
+              ?>
+              <div class="hora"><?= htmlspecialchars((string)$p['horaPartido']) ?></div>
+            <?php else: ?>
+              <?php
+                // Muestra el marcador final
+              ?>
+              <div class="resultado"><?= (int)$p['golesLocal'] ?> - <?= (int)$p['golesVisitante'] ?></div>
             <?php endif; ?>
           </div>
-          <div class="equipo visita"><?= htmlspecialchars($p['visitante']) ?></div> // Muestra el equipo visitante
-          <a href="eliminar-partido.php?id=<?= $p['idPartido'] ?>" // Enlace para eliminar el partido
+          <?php
+            // Muestra el equipo visitante
+          ?>
+          <div class="equipo visita"><?= htmlspecialchars($p['visitante']) ?></div>
+          <?php
+            // Enlace para eliminar el partido
+          ?>
+          <a href="eliminar-partido.php?id=<?= $p['idPartido'] ?>"
              class="eliminar"
-             onclick="return confirm('¿Eliminar este partido?')">🗑</a> // Confirma antes de borrar
+             onclick="return confirm('¿Eliminar este partido?')">🗑</a>
         </div>
       <?php endforeach; ?>
     </div>
