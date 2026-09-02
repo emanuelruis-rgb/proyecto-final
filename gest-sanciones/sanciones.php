@@ -1,3 +1,9 @@
+<?php
+    include(__DIR__ . "/../conexion-bd/conexion.php");
+    $conexion = connection();
+    $queryClubes = mysqli_query($conexion, "SELECT * FROM club");
+?>
+
 <!DOCTYPE html>
 <html lang="es">
 <head>
@@ -9,6 +15,7 @@
     <title>Sanciones</title>
     <link rel="stylesheet" href="sanciones-style.css">
     <link rel="icon" type="image/png" href="../img/copa.png">
+    <script src="sanciones.js" defer></script>
 </head>
 <body>
     <header> 
@@ -41,18 +48,46 @@
         </div>
     </header>
 
-    <div class="formulario">
-        <h1>Crear club</h1>
-        <form action="agregar-club.php" method="POST">
-            <input type="text" name="nombre" placeholder="Nombre">
-            <input type="password" name="contraseña" placeholder="Contraseña">
-            <input type="text" name="presidente" placeholder="Presidente">
-            <input type="text" name="año-fundacion" placeholder="Año de fundación">
-            <input type="text" name="estadio" placeholder="Estadio">
+    <div class="formulario-container">
+        <h1>Crear sanción</h1>
+        <!-- aca el admin pone los datos de la sancion.
+         en base al club seleccionado, despliega los jugadores del club y ahi se selecciona,
+         autocompleta la cédula en base al jugador. la sancion agregada va a agregar-sancion.php -->
+        <form action="agregar-sancion.php" method="POST">
+            <!-- se selecciona club, y de aca a la BD va el id club -->
+            <select name="id-club-sancion" id="select-club" class="select-formulario">
+                <option value="" disabled selected>Seleccionar club del sancionado</option>
+                <!-- este php itera por los clubes y pone un option mas por cada club, con el value siendo el idclub y
+                  $club es el array del club y el fetch array busca cada fila con la query de allá arriba-->
+                <?php while ($club = mysqli_fetch_array($queryClubes)): ?>
+                    <option value="<?= $club['idClub'] ?>">
+                <?= $club['nombreClub'] ?>
+                    </option>
+                <?php endwhile; ?>
+            </select>
+
+            <!-- se selecciona jugador de los disponibles en el club, y a la BD va su cedula-->
+            <select name="ci-jugador-sancion" id="select-jugador" class="select-formulario">
+                <option value="" disabled selected>Seleccionar jugador sancionado</option>ç
+
+            </select>
+
+            <select name="tipo-sancion" class="select-formulario">
+                <option value="" disabled selected>Tipo de sanción</option>
+                <option value="amarilla">Tarjeta amarilla</option>
+                <option value="roja">Tarjeta roja</option>
+                <option value="disciplinaria">Sanción disciplinaria</option>
+            </select>
+
+            <input type="text" name="motivo-sancion" placeholder="Motivo de la sanción" required>
+            <input type="number" name="numero-fechas" placeholder="Cantidad de fechas de suspensión" min="0" required>
+            
             <input type="submit" value="Agregar">
         </form>
     </div>
 <br><br>
+
+
     <div class="tabla">
         <h2>Clubes registrados</h2>
         <table>
@@ -62,8 +97,8 @@
                      EL SISTEMA DE RECUPERACION PARA PONER LAS SANCIONES EN LA TABLA INFERIOR LO HAGO DE CERO -->
                     <th>ID</th>
                     <th>Nombre</th>
-                    <th>Contraseña</th>
-                    <th>Presidente</th>
+                    <th>Cédula</th>
+                    <th></th>
                     <th>Año de fundación</th>
                     <th>Estadio</th>
                     <th></th>

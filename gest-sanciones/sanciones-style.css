@@ -116,7 +116,7 @@ header {
 }
 
 /*  FORMULARIOS (Crear y Editar) */
-.formulario {
+.formulario-container {
     background-color: #ffffff;
     padding: 30px;
     border-radius: 8px;
@@ -124,23 +124,35 @@ header {
     width: 100%;
     max-width: 500px;
     margin: 0 auto; /* Para centrar cuando esté solo en la vista de edición */
+    margin-top: 43px;
 }
 
-.formulario h1 {
+.formulario-container h1 {
     font-size: 1.4rem;
     color: #0B2545;
     margin-bottom: 20px;
     text-align: center;
+    font-weight: 600;
 }
 
-.formulario form {
+.formulario-container form {
     display: flex;
     flex-direction: column;
     gap: 12px;
 }
 
-.formulario input[type="text"],
-.formulario input[type="password"] {
+.select-formulario {
+    height: 40px;
+    border: 1px solid #dcdfe6;
+    border-radius: 6px;
+    padding-left: 9px;
+    font-size: 0.95rem;
+    color: #2C3E50;
+    outline: none;
+}
+
+.formulario-container input[type="text"],
+.formulario-container input[type="number"] {
     width: 100%;
     padding: 11px 14px;
     border: 1px solid #dcdfe6;
@@ -150,12 +162,11 @@ header {
     transition: border-color 0.2s;
 }
 
-.formulario input[type="text"]:focus,
-.formulario input[type="password"]:focus {
+.formulario-container input[type="text"]:focus {
     border-color: #005de7;
 }
 
-.formulario input[type="submit"] {
+.formulario-container input[type="submit"] {
     background-color: #0B2545;
     color: #ffffff;
     border: none;
@@ -168,7 +179,7 @@ header {
     transition: background-color 0.2s;
 }
 
-.formulario input[type="submit"]:hover {
+.formulario-container input[type="submit"]:hover {
     background-color: #0B2545;
 }
 
