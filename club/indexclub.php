@@ -42,6 +42,33 @@
     </header>
 
     <div class="layout-abajo-header">
+         <!-- DE ACA EN DELANTE ES CARRUSEL. -->
+            <div class="carrusel-wrapper">
+                <div class="carrusel">
+                    <div class="slides">
+                        <?php
+                        // Busca imágenes válidas en la carpeta del carrusel.
+                        $carpetaImg = "../img/carrusel/";
+                        $imagenes = glob($carpetaImg . "*.{jpg,jpeg,png,webp,gif}", GLOB_BRACE);
+
+                        // Informa si todavía no hay imágenes cargadas.
+                        if (empty($imagenes)) {
+                            echo "<p>No hay imágenes cargadas todavía.</p>";
+                        }
+
+                        // Genera una diapositiva por imagen encontrada.
+                        foreach ($imagenes as $ruta) {
+                            echo '<div class="slide-item">';
+                            echo '  <img src="' . htmlspecialchars($ruta) . '" alt="Imagen carrusel">';
+                            echo '</div>';
+                        }
+                        ?>
+                    </div>
+                </div>
+            </div>
+            <!-- TERMINA CARRUSEL -->
+        </div>
+    </div>
         
     </div>
 </body>
