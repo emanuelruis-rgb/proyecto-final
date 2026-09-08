@@ -2,6 +2,8 @@
     include(__DIR__ . "/../conexion-bd/conexion.php");
     $conexion = connection();
     $queryClubes = mysqli_query($conexion, "SELECT * FROM club");
+    /* join que junta las filas de acuerdo a idjugador(sancion) y cedula(jugador) */
+    $querySanciones = mysqli_query($conexion, "SELECT sancion.idSancion, jugador.cedula, jugador.nombre, jugador.apellido, sancion.tipo, sancion.motivo, sancion.fechaSuspencion FROM sancion INNER JOIN jugador ON sancion.cedulaJugador = jugador.cedula;");
 ?>
 
 <!DOCTYPE html>
@@ -68,7 +70,7 @@
 
             <!-- se selecciona jugador de los disponibles en el club, y a la BD va su cedula-->
             <select name="ci-jugador-sancion" id="select-jugador" class="select-formulario">
-                <option value="" disabled selected>Seleccionar jugador sancionado</option>ç
+                <option value="" disabled selected>Seleccionar jugador sancionado</option>
 
             </select>
 
@@ -87,37 +89,41 @@
     </div>
 <br><br>
 
-
     <div class="tabla">
-        <h2>Clubes registrados</h2>
+        <h2>Sanciones registradas</h2>
         <table>
             <thead>
                 <tr>
                     <!-- YA ESTAN CAMBIADOS LOS NOMBRES AHORA HAY QUE ADAPTAR EL FORMULARIO DE INTRODUCCION PARA Sanciones
                      EL SISTEMA DE RECUPERACION PARA PONER LAS SANCIONES EN LA TABLA INFERIOR LO HAGO DE CERO -->
-                    <th>ID</th>
+                    <th>ID Sanción</th>
+                    <th>CI</th>
                     <th>Nombre</th>
-                    <th>Cédula</th>
-                    <th></th>
-                    <th>Año de fundación</th>
-                    <th>Estadio</th>
-                    <th></th>
-                    <th></th>
+                    <th>Apellido</th>
+                    <th>Tipo de Sanción</th>
+                    <th>Motivo</th>
+                    <th>Fechas suspensión</th>
+                    <th>Editar</th>
+                    <th>Eliminar</th>
                 </tr>
             </thead>
             <tbody>
-                <?php while ($row = mysqli_fetch_array($query)): ?>
-                    <tr>
-                        <th><?= $row['idClub'] ?></th>
-                        <th><?= $row['nombreClub'] ?></th>
-                        <th><?= $row['contraseñaClub'] ?></th>
-                        <th><?= $row['nombrePresidente'] ?></th>
-                        <th><?= $row['añoCreacion'] ?></th>
-                        <th><?= $row['estadio'] ?></th>
-                        <th><a href="actualizar-club.php?id=<?= $row['idClub'] ?>" class="tabla--edit">Editar</a></th>
-                        <th><a href="eliminar-club.php?id=<?= $row['idClub'] ?>" class="tabla--delete" >Eliminar</a></th>
-                    </tr>
-                <?php endwhile; ?>
+                <!-- este while itera por las sanciones con el join de allá arriba
+                 y $sancion es una sancion invidual -->
+                <?php while ($sancion = mysqli_fetch_array($querySanciones)): ?>
+            <tr>
+                <!-- cada uno de estos td define una columna, y busca una columna en la bd, en orden -->
+                <td><?= $sancion['idSancion'] ?></td>
+                <td><?= $sancion['cedula'] ?></td>
+                <td><?= $sancion['nombre'] ?></td>
+                <td><?= $sancion['apellido'] ?></td>
+                <td><?= $sancion['tipo'] ?></td>
+                <td><?= $sancion['motivo'] ?></td>
+                <td><?= $sancion['fechaSuspencion'] ?></td>
+                <th><a href="actualizar-jug.php?id=<?= $sancion['cedula'] ?>" class="tabla--edit">Editar</a></th>
+                <th><a href="eliminar-sancion.php?idSancion=<?= $sancion['idSancion'] ?>" class="tabla--delete" >Eliminar</a></th>
+            </tr>
+            <?php endwhile; ?>
             </tbody>
         </table>
     </div>
