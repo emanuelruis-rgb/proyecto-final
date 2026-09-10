@@ -13,9 +13,11 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         'idClubVisitante' => (int)$_POST['idClubVisitante'],
         'fechaPartido'    => $_POST['fechaPartido'],
         'horaPartido'     => (int)$_POST['horaPartido'],
-        'estadio'         => $_POST['estadio'],
-        'arbitro'         => $_POST['arbitro'],
-        'jornada'         => (int)$_POST['jornada'],
+        'estadio'         => $_POST['estadio'] ?? '',
+        'arbitro'         => $_POST['arbitro'] ?? '',
+        'golesLocal'      => 0,
+        'golesVisitante'  => 0,
+        'duracionPartido' => 0,
     ];
 
     if ($datos['idClubLocal'] === $datos['idClubVisitante']) {
@@ -38,7 +40,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 <body>
 
 <header>
-  <img alt="logo-atrivia" src="../img/logo-atrivia.png" class="logo">
   <h1>Nuevo partido</h1>
 </header>
 
@@ -48,9 +49,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
   <?php endif; ?>
 
   <form method="POST">
-    <label>Jornada</label>
-    <input type="number" name="jornada" min="1" required>
-
     <label>Club local</label>
     <select name="idClubLocal" required>
       <option value="">-- Seleccionar --</option>
@@ -71,13 +69,13 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     <input type="date" name="fechaPartido" required>
 
     <label>Hora (formato 24h, ej: 1530 para 15:30)</label>
-    <input type="number" name="horaPartido" required>
+    <input type="number" name="horaPartido" min="0" max="2359" required>
 
     <label>Estadio</label>
-    <input type="text" name="estadio">
+    <input type="text" name="estadio" placeholder="Ej: Estadio Central">
 
     <label>Árbitro</label>
-    <input type="text" name="arbitro">
+    <input type="text" name="arbitro" placeholder="Ej: Pérez">
 
     <button type="submit">Guardar partido</button>
   </form>
