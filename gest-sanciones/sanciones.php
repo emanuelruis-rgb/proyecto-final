@@ -2,6 +2,7 @@
     include(__DIR__ . "/../conexion-bd/conexion.php");
     $conexion = connection();
     $queryClubes = mysqli_query($conexion, "SELECT * FROM club");
+    $querySanciones = mysqli_query($conexion, "SELECT * FROM sancion");
 ?>
 
 <!DOCTYPE html>
@@ -89,33 +90,25 @@
 
 
     <div class="tabla">
-        <h2>Clubes registrados</h2>
+        <h2>Sanciones registradas</h2>
         <table>
             <thead>
                 <tr>
-                    <!-- YA ESTAN CAMBIADOS LOS NOMBRES AHORA HAY QUE ADAPTAR EL FORMULARIO DE INTRODUCCION PARA Sanciones
-                     EL SISTEMA DE RECUPERACION PARA PONER LAS SANCIONES EN LA TABLA INFERIOR LO HAGO DE CERO -->
                     <th>ID</th>
-                    <th>Nombre</th>
-                    <th>Cédula</th>
-                    <th></th>
-                    <th>Año de fundación</th>
-                    <th>Estadio</th>
-                    <th></th>
-                    <th></th>
+                    <th>Tipo</th>
+                    <th>Cédula del jugador</th>
+                    <th>Motivo</th>
+                    <th>Fechas de suspensión</th>
                 </tr>
             </thead>
             <tbody>
-                <?php while ($row = mysqli_fetch_array($query)): ?>
+                <?php while ($row = mysqli_fetch_array($querySanciones)): ?>
                     <tr>
-                        <th><?= $row['idClub'] ?></th>
-                        <th><?= $row['nombreClub'] ?></th>
-                        <th><?= $row['contraseñaClub'] ?></th>
-                        <th><?= $row['nombrePresidente'] ?></th>
-                        <th><?= $row['añoCreacion'] ?></th>
-                        <th><?= $row['estadio'] ?></th>
-                        <th><a href="actualizar-club.php?id=<?= $row['idClub'] ?>" class="tabla--edit">Editar</a></th>
-                        <th><a href="eliminar-club.php?id=<?= $row['idClub'] ?>" class="tabla--delete" >Eliminar</a></th>
+                        <th><?= $row['idSancion'] ?></th>
+                        <th><?= $row['tipo'] ?></th>
+                        <th><?= $row['cedulaJugador'] ?></th>
+                        <th><?= $row['motivo'] ?></th>
+                        <th><?= $row['fechaSuspencion'] ?></th>
                     </tr>
                 <?php endwhile; ?>
             </tbody>
