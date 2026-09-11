@@ -6,7 +6,11 @@ $nombre = $_POST['nombre'] ?? '';
 $apellido = $_POST['apellido'] ?? '';
 $cedula = $_POST['cedula'] ?? '';
 $idClub = $_POST['idclub'] ?? '';
-$fechaNacimiento = $_POST['fecha-nacimiento'] ?? '';
+/* aca se pasa a un date time immutable, un objeto fecha, y se formatea pasandolo a string */
+$fechaNacimientoRaw = $_POST['fecha-nacimiento'] ?? '';
+$fechaNacimiento = new DateTimeImmutable($fechaNacimientoRaw);
+$fechaNacimiento = $fechaNacimiento->format('Y-m-d');
+
 $genero = $_POST['genero'] ?? '';
 $idCategoria = $_POST['idcategoria'] ?? '';
 
