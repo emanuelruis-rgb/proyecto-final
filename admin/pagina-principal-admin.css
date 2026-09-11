@@ -194,36 +194,16 @@ h1{
 
 @keyframes deslizar {
     /* Desplaza el carrusel por sus posiciones predeterminadas. */
-    0%, 11% {
+    0%, 20% {
         transform: translateX(0); /* Primera imagen: sin desplazamiento */
     }
-    13%, 22% {
+     30%, 50% {
         transform: translateX(-600px); /* Segunda imagen: un ancho de imagen hacia la izquierda */
     }
-    24%, 33% {
+     70%,100% {
         transform: translateX(-1200px); /* Tercera imagen: dos anchos de imagen hacia la izquierda */
     }
-    35%, 44% {
-        transform: translateX(-1800px); /* Cuarta imagen: tres anchos de imagen hacia la izquierda */
-    }
-    46%, 55% {
-        transform: translateX(-2400px); /* Quinta imagen: cuatro anchos de imagen hacia la izquierda */
-    }
-    57%, 66% {
-        transform: translateX(-3000px); /* Sexta imagen: cinco anchos de imagen hacia la izquierda */
-    }
-    68%, 77% {
-        transform: translateX(-3600px); /* Séptima imagen: seis anchos de imagen hacia la izquierda */
-    }
-    79%, 88% {
-        transform: translateX(-4200px); /* Octava imagen: siete anchos de imagen hacia la izquierda */
-    }
-    90%, 99% {
-        transform: translateX(-4800px); /* Novena imagen: ocho anchos de imagen hacia la izquierda */
-    }
-    100% {
-        transform: translateX(0); /* Vuelve a la primera imagen al final del ciclo */
-    }
+   
 }
 
 /* ahora el carrusel tiene 9 posiciones fijas en la animación.
