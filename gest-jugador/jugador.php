@@ -23,10 +23,10 @@ $queryClub = mysqli_query($con, "SELECT * FROM club");
                 <img src="/proyecto-final/img/logo-empresa/logo-empresa-blanco.png" alt="Logo" class="logo-empresa">
             </a>
             <div class="nav-links">
-                <a href="/proyecto-final/gest-jugador/jugador.php" class="header-nav-link">Jugadores</a>
+                <a href="/proyecto-final/gest-jugador/jugador.php" class="header-nav-link active">Jugadores</a>
                 <a href="/proyecto-final/gest-club/club.php" class="header-nav-link">Clubes</a>
-                <a href="/proyecto-final/gest-fixture/fixtures.php" class="header-nav-link active">Fixture</a>
-                <a href="#" class="header-nav-link">Sanciones</a>
+                <a href="/proyecto-final/gest-fixture/fixtures.php" class="header-nav-link">Fixture</a>
+                <a href="/proyecto-final/gest-sanciones/sanciones.php" class="header-nav-link">Sanciones</a>
             </div>
         </nav>
 

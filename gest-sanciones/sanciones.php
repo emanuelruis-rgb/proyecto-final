@@ -30,7 +30,7 @@
                 <a href="/proyecto-final/gest-jugador/jugador.php" class="nav-izquierda-botones">Jugadores</a>
                 <a href="/proyecto-final/gest-club/club.php" class="nav-izquierda-botones">Clubes</a>
                 <a href="/proyecto-final/gest-fixture/fixtures.php" class="nav-izquierda-botones">Fixture</a>
-                <a href="/proyecto-final/gest-sanciones/sanciones.php" class="nav-izquierda-botones">Sanciones</a>
+                <a href="/proyecto-final/gest-sanciones/sanciones.php" class="nav-izquierda-botones active">Sanciones</a>
             </div>
         </nav>
 
