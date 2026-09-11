@@ -19,6 +19,11 @@ body {
     background-size: cover;
     background-position: center;
     background-attachment: fixed;
+
+/* Estilos compartidos del panel */
+*, *::before, *::after {
+    box-sizing: border-box;
+}
     background-repeat: no-repeat;
 }
 
@@ -68,8 +73,14 @@ header {
 }
 
 
-.header-nav-link:hover {
+.header-nav-link:hover,
+.header-nav-link.active {
     color: #FFFFFF;
+    border-bottom-color: var(--gold);
+}
+
+.header-nav-link.active {
+    border-bottom-color: var(--gold);
 }
 
 .header-derecha {

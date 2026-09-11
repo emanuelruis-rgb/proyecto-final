@@ -12,12 +12,13 @@ $fixture = obtenerFixture($con);
   <title>Fixtures</title>
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.13.1/font/bootstrap-icons.min.css">
   <link rel="stylesheet" href="/proyecto-final/gest-fixture/fixtures-style.css">
+  <link rel="icon" type="image/png" href="../img/logo-liga/log-liga-b.png">
 </head>
 <body>
   <header class="main-header">
         <nav class="main-nav">
             <a href="/proyecto-final/admin/indexadmin.php" class="brand-link">
-                <img src="/proyecto-final/img/logo-empresa/logo-empresa-blanco.png" alt="Logo" class="logo-empresa">
+                <img src="/proyecto-final/img/logo-liga/log-liga-b.png" alt="Logo" class="logo-liga">
             </a>
             <div class="nav-links">
                 <a href="/proyecto-final/gest-jugador/jugador.php" class="header-nav-link">Jugadores</a>
@@ -28,9 +29,6 @@ $fixture = obtenerFixture($con);
         </nav>
 
         <div class="header-derecha">
-            <a href="#" class="header-item">
-                <i class="bi bi-bell"></i>
-            </a>
 
             <a href="#" class="header-item">
                 <i class="bi bi-person-circle"></i>

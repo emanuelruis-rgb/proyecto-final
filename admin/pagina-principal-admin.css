@@ -21,7 +21,7 @@ body {
 
 /* Header en general */
 header {
-    height: 90px;
+    height: 88px;
     background-color: var(--navy);
     border-bottom: 2px solid var(--gold);
     display: flex;
@@ -75,6 +75,12 @@ header {
 
 .nav-izquierda-botones:hover {
     color: #FFFFFF;
+}
+
+.nav-izquierda-botones:hover,
+.nav-izquierda-botones.active {
+    background: none;
+    border-bottom-color: var(--gold);
 }
 
 .nav-derecha-container {

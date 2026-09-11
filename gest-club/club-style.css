@@ -10,6 +10,11 @@
 
 body {
     min-height: 100vh;
+
+/* Estilos compartidos del panel */
+*, *::before, *::after {
+    box-sizing: border-box;
+}
     margin: 0;
     font-family: sans-serif;
     color: var(--text-main);
@@ -64,8 +69,14 @@ header {
 }
 
 
-.header-nav-link:hover {
+.header-nav-link:hover,
+.header-nav-link.active {
     color: #FFFFFF;
+    border-bottom-color: var(--gold);
+}
+
+.header-nav-link.active {
+    border-bottom-color: var(--gold);
 }
 
 .header-derecha {
@@ -196,7 +207,7 @@ h1 {
 }
 
 .users-form input[type="submit"]:hover {
-    background-color: #0B2545;
+    background-color: var(--pitch-green-hover);
 }
 
 /* TABLA DE CLUBES REGISTRADOS */
