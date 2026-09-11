@@ -1,7 +1,21 @@
 <?php
 include(__DIR__ . "/../conexion-bd/conexion.php");
 $con = connection();
-$query = mysqli_query($con, "SELECT * FROM jugador");
+
+/* esta query hace join de jugador y club para poder no solo tener todos los datos del jugador
+sino que también los del club. asi ponemos, en vez de idclub, ponemos nombreClub */
+$query = mysqli_query($con, "SELECT
+    jugador.idClub,
+    club.nombreClub,
+    jugador.cedula,
+    jugador.nombre,
+    jugador.apellido,
+    jugador.fechaNacimiento,
+    jugador.genero,
+    jugador.idCategoria
+FROM jugador
+INNER JOIN club
+    ON jugador.idClub = club.idClub;");
 $queryCategoria = mysqli_query($con, "SELECT * FROM categoria");
 $queryClub = mysqli_query($con, "SELECT * FROM club");
 ?>
@@ -24,10 +38,10 @@ $queryClub = mysqli_query($con, "SELECT * FROM club");
                 <img src="/proyecto-final/img/logo-liga/log-liga-b.png" alt="Logo" class="logo-liga">
             </a>
             <div class="nav-links">
-                <a href="/proyecto-final/gest-jugador/jugador.php" class="header-nav-link">Jugadores</a>
+                <a href="/proyecto-final/gest-jugador/jugador.php" class="header-nav-link active">Jugadores</a>
                 <a href="/proyecto-final/gest-club/club.php" class="header-nav-link">Clubes</a>
-                <a href="/proyecto-final/gest-fixture/fixtures.php" class="header-nav-link active">Fixture</a>
-                <a href="#" class="header-nav-link">Sanciones</a>
+                <a href="/proyecto-final/gest-fixture/fixtures.php" class="header-nav-link">Fixture</a>
+                <a href="/proyecto-final/gest-sanciones/sanciones.php" class="header-nav-link">Sanciones</a>
             </div>
         </nav>
 
@@ -70,7 +84,7 @@ $queryClub = mysqli_query($con, "SELECT * FROM club");
 
             <?php while ($categoria = mysqli_fetch_array($queryCategoria)): ?>
                 <option value="<?= $categoria['idCategoria'] ?>">
-                    <?= $categoria['nombreCategoria'] ?>
+                    <?= $categoria['año'] ?>
                 </option>
             <?php endwhile; ?>
 
@@ -102,7 +116,7 @@ $queryClub = mysqli_query($con, "SELECT * FROM club");
                         <th><?= $row['cedula'] ?></th>
                         <th><?= $row['nombre'] ?></th>
                         <th><?= $row['apellido'] ?></th>
-                        <th><?= $row['idClub'] ?></th>
+                        <th><?= $row['nombreClub'] ?></th>
                         <th><?= $row['fechaNacimiento'] ?></th>
                         <th><?= $row['genero'] ?></th>
                         <th><?= $row['idCategoria'] ?></th>

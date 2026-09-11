@@ -92,7 +92,7 @@ $queryCategoria = mysqli_query($con, "SELECT * FROM categoria");
                         value="<?= $categoria['idCategoria'] ?>"
                         <?= ($categoria['idCategoria'] == $row['idCategoria']) ? 'selected' : '' ?>
                     >
-                        <?= $categoria['nombreCategoria'] ?>
+                        <?= $categoria['año'] ?>
                     </option>
                 <?php endwhile; ?>
             </select>
