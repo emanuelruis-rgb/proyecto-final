@@ -4,20 +4,18 @@
 <html lang="es">
 <head>
     <!-- Carga Bootstrap, iconos, metadatos y estilos del panel. -->
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js" integrity="sha384-FKyoEForCGlyvwx9Hj09JcYn3nv7wiPVlz7YYwJrWVcXK/BmnVDxM+D2scQbITxI" crossorigin="anonymous"></script>
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-sRIl4kxILFvY47J16cr9ZwB07vP4J8+LH7qKQnuqkuIAvNWLzeN8tE5YBujZqJLB" crossorigin="anonymous">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.13.1/font/bootstrap-icons.min.css">
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Página principal admins</title>
     <link rel="stylesheet" href="pagina-principal-admin.css">
-    <link rel="icon" type="image/png" href="../img/copa.png">
+    <link rel="icon" type="image/png" href="../img/logo-liga/log-liga-b.png">
 </head>
 <body>
     <header> 
         <nav class="nav-izquierda-container">
             <a href="/proyecto-final/admin/indexadmin.php">
-                <img src="/proyecto-final/img/logo-empresa/logo-empresa-blanco.png" alt="Logo" class="logo-empresa">
+                <img src="/proyecto-final/img/logo-liga/log-liga-b.png" alt="Logo" class="logo-liga">
             </a>
             <div class="nav-izquierda-botones-container">
                 <a href="/proyecto-final/gest-jugador/jugador.php" class="nav-izquierda-botones">Jugadores</a>
