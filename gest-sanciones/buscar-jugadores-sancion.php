@@ -2,6 +2,9 @@
 include(__DIR__ . "/../conexion-bd/conexion.php");
 $conexion = connection();
 
+/* este get del idclub es el que recibe el id club de sanciones.js
+para ejecutar este archivo, se necesita primero el js, y ese js lo ejecuta en el fetch() mandando
+el idclub sacado del select de clubes de sanciones.php */
 $idClub = $_GET['idClub'];
 
 /* esta query busca la ci, nombre y apellido de los jugadores que tengan el idclub recibido */
