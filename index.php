@@ -7,14 +7,12 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Login</title>
     <link rel="stylesheet" href="/proyecto-final/css/style.css">
-    <link rel="icon" type="image/png" href="/proyecto-final/img/copa.png">
+    <link rel="icon" type="image/png" href="img/logo-liga/log-liga-b.png">
 </head>
 <body>
     <!-- Agrupa los elementos visibles del formulario de inicio de sesión. -->
     <div class="login-container">
-        <!--   saque el logo de la premier porque es blanco y no sirve de nada, si quieren pongan de nuevo
-        <img src="/proyecto-final/img/logo-premier.png" alt="Logo" class="logos">
-        -->
+        <img src="/proyecto-final/img/logo-liga/log-liga-n.png" alt="Logo" class="logos"> 
         <img src="/proyecto-final/img/logo-empresa/logo-empresa-azul.png" alt="Logo" class="logos">
         <h1><b>Login al sistema de control de la liga</b></h1>
         <p class="nombre">Atrivia Enterprises</p>

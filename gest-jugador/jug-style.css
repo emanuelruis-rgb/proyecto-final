@@ -1,16 +1,32 @@
+:root {
+    --navy: #0A1510;
+    --navy-soft: #3E5C76;
+    --pitch-green: #3C8A3E;
+    --pitch-green-hover: #2f6f31;
+    --gold: #C9A227;
+    --text-main: #2C3E50;
+    --danger: #dc3545;
+    --danger-hover: #bd2130;
+}
+
 /* Define la estructura visual general del panel administrativo. */
 body {
     min-height: 100vh;
     margin: 0;
     font-family: sans-serif;
-    background-color: #EEF2F5;
-    color: #2C3E50;
+    color: var(--text-main);
+    background-image: linear-gradient(180deg, rgba(11, 37, 69, 0.75) 0%, rgba(15, 61, 46, 0.7) 100%), url('../img/fondo.jpg');
+    background-size: cover;
+    background-position: center;
+    background-attachment: fixed;
+    background-repeat: no-repeat;
 }
 
 header {
     /* Construye la barra superior del panel. */
     height: 90px;
-    background-color: #0B2545;
+    background-color: var(--navy);
+    border-bottom: 2px solid var(--gold);
     display: flex;
     justify-content: space-between;
     align-items: center;      
@@ -22,7 +38,7 @@ header {
     /* Alinea el logotipo y los enlaces principales. */
     display: flex;
     align-items: center;
-    gap: 18px;
+    gap: 60px;
     flex: 1;
     min-width: 0;
 }
@@ -30,32 +46,30 @@ header {
 .nav-links {
     display: flex;
     align-items: center;
-    gap: 10px;
+    gap: 28px;
     flex-wrap: wrap;
 }
 
 .header-nav-link {
-    /* Estiliza cada enlace de navegación. */
+    /* Estiliza cada enlace de navegación: sin caja, con subrayado en hover/activo. */
     display: inline-flex;
     align-items: center;
     justify-content: center;
     height: 40px;
-    padding: 0 18px;
-    background-color: #3E5C76;
-    color: #FFFFFF;
+    padding: 0 6px;
+    background: none;
+    border: none;
+    border-bottom: 3px solid transparent;
+    color: rgba(255, 255, 255, 0.8);
     text-decoration: none;
     font-size: 15px;
     font-weight: 600;
-    border: 1px solid rgba(255,255,255,0.15);
     transition: 0.3s;
 }
 
-.header-nav-link.active {
-    background-color: #005de7;
-}
 
 .header-nav-link:hover {
-    background-color: #0a0f14;
+    color: #FFFFFF;
 }
 
 .header-derecha {
@@ -79,7 +93,7 @@ header {
 
 .cerrar-sesion {
     border: none;
-    background: #3E5C76;
+    background: var(--navy-soft);
     color: white;
     padding: 10px 18px;
     border-radius: 8px;
@@ -90,8 +104,8 @@ header {
     background-color: #4F7090;
 }
 
-.logo-empresa {
-    height: 60px;
+.logo-liga {
+    height: 50px;
     width: auto;
 }
 
@@ -105,14 +119,18 @@ header {
     display: none;
 }
 
-/* ==========================================================================
-   Estilos del Formulario
-   ========================================================================== */
+/* Título suelto sobre la foto de fondo (fuera de las tarjetas blancas) */
+h1 {
+    color: #FFFFFF;
+    text-shadow: 0 2px 8px rgba(0, 0, 0, 0.5);
+}
+
+/*Estilos del Formulario*/
 .users-form {
     background-color: #ffffff;
     padding: 35px 40px;
     border-radius: 12px;
-    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.05);
+    box-shadow: 0 8px 30px rgba(0, 0, 0, 0.25);
     width: 100%;
     max-width: 460px;
     margin: 40px auto; /* Centra la tarjeta horizontalmente */
@@ -121,10 +139,11 @@ header {
 
 .users-form h1 {
     font-size: 1.5rem;
-    color: #0B2545; /* Azul oscuro de tu header */
+    color: var(--navy);
     margin-bottom: 25px;
     text-align: center;
     font-weight: 700;
+    text-shadow: none; /* anula el text-shadow del h1 general: acá el fondo es blanco */
 }
 
 .users-form form {
@@ -152,8 +171,8 @@ header {
 .users-form input[type="text"]:focus,
 .users-form input[type="password"]:focus,
 .users-form select:focus {
-    border-color: #005de7; /* Azul activo de tu navbar */
-    box-shadow: 0 0 0 3px rgba(0, 93, 231, 0.15);
+    border-color: var(--pitch-green);
+    box-shadow: 0 0 0 3px rgba(60, 138, 62, 0.15);
 }
 
 /* Formato para la opción por defecto en las listas desplegables */
@@ -163,7 +182,7 @@ header {
 
 /* Botón principal */
 .users-form input[type="submit"] {
-    background-color: #0B2545; /* Coincide con el tono de la interfaz */
+    background-color: var(--pitch-green);
     color: #ffffff;
     border: none;
     padding: 14px;
@@ -176,7 +195,7 @@ header {
 }
 
 .users-form input[type="submit"]:hover {
-    background-color: #3E5C76;
+    background-color: var(--pitch-green-hover);
 }
 
 /* ==========================================================================
@@ -186,7 +205,7 @@ header {
     background-color: #ffffff;
     padding: 30px;
     border-radius: 12px;
-    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.05);
+    box-shadow: 0 8px 30px rgba(0, 0, 0, 0.25);
     width: 100%;
     max-width: 1300px;
     margin: 0 auto 40px auto; /* Centra la tabla horizontalmente */
@@ -196,7 +215,7 @@ header {
 
 .users-table h2 {
     font-size: 1.4rem;
-    color: #0B2545; /* Azul oscuro matching con tu header */
+    color: var(--navy);
     margin-bottom: 20px;
     font-weight: 700;
 }
@@ -208,9 +227,9 @@ header {
     white-space: nowrap;
 }
 
-/* Encabezado Azul Oscuro */
+/* Encabezado */
 .users-table thead tr {
-    background-color: #0B2545;
+    background-color: var(--navy);
     color: #ffffff;
     text-align: left;
 }
@@ -230,9 +249,9 @@ header {
     background-color: #f8fafc;
 }
 
-/* Botón Editar (Azul Oscuro / Coincide con la imagen) */
+/* Botón Editar */
 .users-table--edit {
-    background-color: #0B2545;
+    background-color: var(--navy);
     color: #ffffff;
     padding: 7px 16px;
     border-radius: 6px;
@@ -245,12 +264,12 @@ header {
 }
 
 .users-table--edit:hover {
-    background-color: #3E5C76;
+    background-color: var(--navy-soft);
 }
 
-/* Botón Eliminar (Rojo / Coincide con la imagen) */
+/* Botón Eliminar */
 .users-table--delete {
-    background-color: #dc3545;
+    background-color: var(--danger);
     color: #ffffff;
     padding: 7px 16px;
     border-radius: 6px;
@@ -263,5 +282,5 @@ header {
 }
 
 .users-table--delete:hover {
-    background-color: #bd2130;
+    background-color: var(--danger-hover);
 }

@@ -8,13 +8,13 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Sanciones</title>
     <link rel="stylesheet" href="sanciones-style.css">
-    <link rel="icon" type="image/png" href="../img/copa.png">
+    <link rel="icon" type="image/png" href="../img/logo-liga/log-liga-b.png">
 </head>
 <body>
     <header> 
         <nav class="nav-izquierda-container">
             <a href="/proyecto-final/admin/indexadmin.php">
-                <img src="/proyecto-final/img/logo-empresa/logo-empresa-blanco.png" alt="Logo" class="logo-empresa">
+                <img src="/proyecto-final/img/logo-liga/log-liga-b.png" alt="Logo" class="logo-empresa">
             </a>
             <div class="nav-izquierda-botones-container">
                 <a href="/proyecto-final/gest-jugador/jugador.php" class="nav-izquierda-botones">Jugadores</a>

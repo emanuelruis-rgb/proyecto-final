@@ -1,15 +1,29 @@
+:root {
+    --navy: #0A1510;
+    --navy-soft: #3E5C76;
+    --pitch-green: #3C8A3E;
+    --pitch-green-hover: #2f6f31;
+    --gold: #C9A227;
+    --text-main: #2C3E50;
+}
+
 body {
     min-height: 100vh;
     margin: 0;
     font-family: sans-serif;
-    background-color: #EEF2F5;
-    color: #2C3E50;
+    color: var(--text-main);
+    background-image: linear-gradient(180deg, rgba(11, 37, 69, 0.75) 0%, rgba(15, 61, 46, 0.7) 100%), url('../img/fondo.jpg');
+    background-size: cover;
+    background-position: center;
+    background-attachment: fixed;
+    background-repeat: no-repeat;
 }
 
 /* Header en general */
 header {
     height: 90px;
-    background-color: #0B2545;
+    background-color: var(--navy);
+    border-bottom: 2px solid var(--gold);
     display: flex;
     justify-content: space-between;
     align-items: center;      
@@ -19,54 +33,51 @@ header {
 
 /* izquierda del header, donde van el logo y botones para cambiar de sección */
 .nav-izquierda-container {
-    /* Alinea el logotipo y los enlaces principales a la izquierda del header */
     display: flex;
     align-items: center;
-    gap: 18px;
+    gap: 60px;
     flex: 1;
     min-width: 0;
 }
 
-.logo-empresa {
-    height: 60px;
+.logo-liga {
+    height: 50px;
     width: auto;
 }
 
 .nav-izquierda-botones {
-    /* Estiliza cada enlace de navegación. */
     display: inline-flex;
     align-items: center;
     justify-content: center;
     height: 40px;
-    padding: 0 18px;
-    background-color: #3E5C76;
-    color: #FFFFFF;
+    padding: 0 6px;
+    background: none;
+    border: none;
+    border-bottom: 3px solid transparent;
+    color: rgba(255, 255, 255, 0.8);
     text-decoration: none;
     font-size: 15px;
     font-weight: 600;
-    border: 1px solid rgba(255,255,255,0.15);
     transition: 0.3s;
 }
 
 .nav-izquierda-botones-container {
     display: flex;
     align-items: center;
-    gap: 10px;
+    gap: 28px;
     flex-wrap: wrap;
 }
 
 .nav-izquierda-botones.active {
-    background-color: #005de7;
+    color: #FFFFFF;
+    border-bottom-color: var(--gold);
 }
 
 .nav-izquierda-botones:hover {
-    background-color: #0a0f14;
+    color: #FFFFFF;
 }
-/* termina el header de la izquierda */
 
-/* Header de la derecha donde van los botones de usuario cerrar sesión y eso */
 .nav-derecha-container {
-    /* Alinea las acciones del lado derecho del encabezado. */
     display: flex;
     align-items: center;
     gap: 25px;
@@ -74,8 +85,6 @@ header {
     font-size: 18px;
 }
 
-/* Items uno por uno del header a la derecha */
-/* el nav derecha item es el boton especifico individual */
 .nav-derecha-container, .nav-derecha-item {
     display:flex;
     align-items: center;
@@ -88,7 +97,7 @@ header {
 
 .cerrar-sesion {
     border: none;
-    background: #3E5C76;
+    background: var(--navy-soft);
     color: white;
     padding: 10px 18px;
     border-radius: 8px;
@@ -98,18 +107,13 @@ header {
 .cerrar-sesion:hover {
     background-color: #4F7090;
 }
-/* termina el header a la derecha */
-
-/* DE ACA PARA ABAJO NO TOQUE NADA MAS(felipe) */
 
 .layout-abajo-header {
-    /* Ocupa el espacio disponible debajo del encabezado. */
     display: flex;
     min-height: calc(100vh - 90px);
 }
 
 .carruselb {
-    /* Da formato al botón para seleccionar imágenes. */
     color: white;
     background-color: #3E5C76;
     border: none;
@@ -124,7 +128,6 @@ header {
  }
 
  .BOTONCARRUSEL {
-    /* Define el botón alternativo del carrusel. */
     display: flex;
     align-items: center;
     justify-content: center;
@@ -138,19 +141,17 @@ header {
  }
 
 .dashboard-container {
-    /* Centra el contenido principal del panel. */
     flex: 1;
     display: flex;
     flex-direction: column;
     justify-content: flex-start;
     align-items: center;
-    padding: 20px;
-    color: black;
+    padding: 30px;
+    color: #FFFFFF;
     font-family: Georgia, 'Times New Roman', Times, serif;
 }
 
 .carrusel-wrapper {
-    /* Centra el carrusel y sus controles. */
     display: flex;
     align-items: center;
     justify-content: center;
@@ -163,10 +164,10 @@ header {
 h1{
     margin-bottom: 40px;
     text-align: center;
+    text-shadow: 0 2px 8px rgba(0, 0, 0, 0.5);
 }
 
 .carrusel{
-    /* Limita el área visible de las diapositivas. */
     margin: 0 auto;
     width: 100%;
     max-width: 600px;
@@ -179,65 +180,57 @@ h1{
 }
 
 .slides {
-    /* Coloca las imágenes en fila y activa la animación. */
     display: flex;
-    width: 900%; /* Límite: 9 diapositivas. */
+    width: 900%;
     animation: deslizar 18s infinite;
 }
 
 .slides img {
-    /* Mantiene una medida uniforme para cada imagen. */
-    width: 600px; /* Cada imagen tiene ancho fijo 600px. */
+    width: 600px;
     height: 350px;
     object-fit: cover;
 }
 
 @keyframes deslizar {
-    /* Desplaza el carrusel por sus posiciones predeterminadas. */
     0%, 11% {
-        transform: translateX(0); /* Primera imagen: sin desplazamiento */
+        transform: translateX(0);
     }
     13%, 22% {
-        transform: translateX(-600px); /* Segunda imagen: un ancho de imagen hacia la izquierda */
+        transform: translateX(-600px);
     }
     24%, 33% {
-        transform: translateX(-1200px); /* Tercera imagen: dos anchos de imagen hacia la izquierda */
+        transform: translateX(-1200px);
     }
     35%, 44% {
-        transform: translateX(-1800px); /* Cuarta imagen: tres anchos de imagen hacia la izquierda */
+        transform: translateX(-1800px);
     }
     46%, 55% {
-        transform: translateX(-2400px); /* Quinta imagen: cuatro anchos de imagen hacia la izquierda */
+        transform: translateX(-2400px);
     }
     57%, 66% {
-        transform: translateX(-3000px); /* Sexta imagen: cinco anchos de imagen hacia la izquierda */
+        transform: translateX(-3000px);
     }
     68%, 77% {
-        transform: translateX(-3600px); /* Séptima imagen: seis anchos de imagen hacia la izquierda */
+        transform: translateX(-3600px);
     }
     79%, 88% {
-        transform: translateX(-4200px); /* Octava imagen: siete anchos de imagen hacia la izquierda */
+        transform: translateX(-4200px);
     }
     90%, 99% {
-        transform: translateX(-4800px); /* Novena imagen: ocho anchos de imagen hacia la izquierda */
+        transform: translateX(-4800px);
     }
     100% {
-        transform: translateX(0); /* Vuelve a la primera imagen al final del ciclo */
+        transform: translateX(0);
     }
 }
 
-/* ahora el carrusel tiene 9 posiciones fijas en la animación.
-    */
-
 .sidebar-btn:hover {
-    /* Resalta botones laterales al pasar el cursor. */
     background-color: #4F7090;
     transition: 0.3s;
 }
 
 .sidebar-btn:active,
 .sidebar-btn:focus {
-    /* Muestra el estado de interacción del botón lateral. */
     outline: none;
     box-shadow: 0 0 0 3px rgba(17,101,139,0.15);
 }

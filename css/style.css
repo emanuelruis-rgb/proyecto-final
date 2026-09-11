@@ -15,8 +15,7 @@ body {
     /* Ajusta el tamaño y la presentación de los logotipos. */
     height: 90px;
     width: auto;
-    margin-bottom: 15px;
-    border-radius: 15px;
+    margin: 0 15px 15px;
 }
 
 h1 {
