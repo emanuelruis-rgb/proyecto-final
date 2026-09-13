@@ -6,6 +6,9 @@
     --pitch-green-hover: #2f6f31;
     --gold: #C9A227;
     --text-main: #2C3E50;
+    /* Colores del botón de eliminar clubes. */
+    --danger: #dc3545;
+    --danger-hover: #bd2130;
 }
 
 body {

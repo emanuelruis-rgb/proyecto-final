@@ -99,8 +99,9 @@
                     <th>Tipo de Sanción</th>
                     <th>Motivo</th>
                     <th>Fechas suspensión</th>
-                    <th>Editar</th>
-                    <th>Eliminar</th>
+                    <!-- Celdas vacías para conservar el ancho de los botones. -->
+                    <th></th>
+                    <th></th>
                 </tr>
             </thead>
             <tbody>
