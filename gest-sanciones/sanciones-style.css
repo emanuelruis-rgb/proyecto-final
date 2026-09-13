@@ -113,11 +113,16 @@ header {
 }
 
 .formulario-container h1 {
+    /* Encabezado oscuro del formulario, igual que en la pantalla Fixture. */
     font-size: 1.5rem;
-    color: var(--navy);
-    margin: 0 0 25px;
+    color: #ffffff;
+    background: var(--navy);
+    margin: -35px -40px 25px;
+    padding: 14px 16px;
+    border-radius: 12px 12px 0 0;
     text-align: center;
     font-weight: 700;
+    text-shadow: none;
 }
 
 .formulario-container form {

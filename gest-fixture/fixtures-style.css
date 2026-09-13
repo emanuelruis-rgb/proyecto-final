@@ -135,6 +135,112 @@ main {
     padding: 0 20px;
 }
 
+/* Hace visible el aviso cuando todavía no existen partidos cargados. */
+main > p {
+    color: #ffffff;
+    font-weight: 600;
+    text-shadow: 0 2px 5px rgba(0, 0, 0, 0.65);
+}
+
+/* Tabla de carga que reemplaza el botón separado para agregar partidos. */
+.tabla-alta-fixture {
+    background: #fff;
+    border-radius: 6px;
+    box-shadow: 0 8px 30px rgba(0, 0, 0, 0.25);
+    overflow-x: auto;
+    margin-bottom: 30px;
+}
+
+.tabla-alta-fixture h1 {
+    background: var(--navy);
+    color: #fff;
+    font-size: 1.2rem;
+    margin: 0;
+    padding: 14px 16px;
+}
+
+.tabla-alta-fixture form {
+    background: transparent;
+    box-shadow: none;
+    padding: 24px;
+    margin: 0;
+}
+
+.tabla-alta-fixture label {
+    color: var(--navy);
+    font-size: 0.9rem;
+    font-weight: 600;
+    margin-bottom: -8px;
+}
+
+.tabla-alta-fixture input,
+.tabla-alta-fixture select {
+    width: 100%;
+    padding: 10px;
+    border: 1px solid #dcdfe6;
+    border-radius: 6px;
+    color: var(--text-main);
+    background: #fff;
+    box-sizing: border-box;
+}
+
+.tabla-alta-fixture button {
+    background: var(--pitch-green);
+    color: #fff;
+    border: none;
+    padding: 10px 14px;
+    border-radius: 6px;
+    cursor: pointer;
+    font-weight: 700;
+}
+
+.tabla-alta-fixture button:hover {
+    background: var(--pitch-green-hover);
+}
+
+/* Tabla general que aparece antes del detalle de partidos agrupado por fecha. */
+.tabla-fixture {
+    background: #fff;
+    border-radius: 6px;
+    box-shadow: 0 8px 30px rgba(0, 0, 0, 0.25);
+    overflow-x: auto;
+    margin-bottom: 30px;
+}
+
+.tabla-fixture h1 {
+    background: var(--navy);
+    color: #fff;
+    font-size: 1.2rem;
+    margin: 0;
+    padding: 14px 16px;
+}
+
+.tabla-fixture table {
+    width: 100%;
+    border-collapse: collapse;
+    white-space: nowrap;
+}
+
+.tabla-fixture th,
+.tabla-fixture td {
+    padding: 14px 16px;
+    text-align: left;
+    border-bottom: 1px solid #e5e7eb;
+}
+
+.tabla-fixture th {
+    color: var(--navy);
+    font-size: 0.9rem;
+}
+
+.tabla-fixture td {
+    font-size: 0.9rem;
+}
+
+.tabla-fixture tr:last-child td {
+    border-bottom: none;
+}
+
 h2.jornada {
     background: var(--navy);
     color: #fff;
@@ -196,24 +302,6 @@ footer {
     padding: 20px;
     color: #6b7280;
     font-size: 13px;
-}
-
-/* ===== Link "Agregar partido" ===== */
-.btn-agregar {
-    display: inline-block;
-    background-color: var(--pitch-green);
-    color: #ffffff;
-    text-decoration: none;
-    padding: 7px 16px;
-    border-radius: 6px;
-    font-size: 0.85rem;
-    font-weight: 600;
-    margin-bottom: 10px;
-    transition: background-color 0.2s ease;
-}
-
-.btn-agregar:hover {
-    background-color: var(--pitch-green-hover);
 }
 
 /* ===== Botón eliminar dentro de cada tarjeta de partido ===== */
