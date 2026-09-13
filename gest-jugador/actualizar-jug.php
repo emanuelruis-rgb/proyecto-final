@@ -58,6 +58,7 @@ $queryCategoria = mysqli_query($con, "SELECT * FROM categoria");
                     </option>
                 <?php endwhile; ?>
             </select>
+            <!-- Se editan las magnitudes físicas con las mismas unidades y límites del alta. -->
             <input 
                 type="date" 
                 name="fechaNacimiento"
@@ -96,6 +97,36 @@ $queryCategoria = mysqli_query($con, "SELECT * FROM categoria");
                     </option>
                 <?php endwhile; ?>
             </select>
+            <input
+                type="number"
+                name="masa"
+                placeholder="Masa (kg)"
+                value="<?= $row['masa'] ?>"
+                min="1"
+                max="500"
+                step="0.01"
+                required
+            >
+            <input
+                type="number"
+                name="altura"
+                placeholder="Altura (m)"
+                value="<?= $row['altura'] ?>"
+                min="0.5"
+                max="2.5"
+                step="0.01"
+                required
+            >
+            <input
+                type="number"
+                name="velocidad"
+                placeholder="Velocidad (m/s)"
+                value="<?= $row['velocidad'] ?>"
+                min="0"
+                max="15"
+                step="0.01"
+                required
+            >
             <input type="submit" value="Actualizar">
         </form>
     </div>

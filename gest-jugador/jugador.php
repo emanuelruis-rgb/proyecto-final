@@ -4,6 +4,11 @@ $con = connection();
 
 /* esta query hace join de jugador y club para poder no solo tener todos los datos del jugador
 sino que también los del club. asi ponemos, en vez de idclub, ponemos nombreClub */
+/*
+    Cálculo de la fuerza peso:
+    P = m x g, donde m es la masa en kg y g = 9,81 m/s².
+    El resultado se expresa en Newtons (N), por eso se muestra como fuerzaPeso.
+*/
 $query = mysqli_query($con, "SELECT
     jugador.idClub,
     club.nombreClub,
@@ -12,7 +17,12 @@ $query = mysqli_query($con, "SELECT
     jugador.apellido,
     jugador.fechaNacimiento,
     jugador.genero,
-    jugador.idCategoria
+    jugador.idCategoria,
+    -- La fuerza peso se calcula con la gravedad terrestre aproximada de 9,81 m/s².
+    jugador.masa,
+    jugador.altura,
+    jugador.velocidad,
+    jugador.masa * 9.81 AS fuerzaPeso
 FROM jugador
 INNER JOIN club
     ON jugador.idClub = club.idClub;");
@@ -90,6 +100,11 @@ $queryClub = mysqli_query($con, "SELECT * FROM club");
 
             </select>
 
+            <!-- Datos físicos usados para calcular la fuerza peso del jugador. -->
+            <input type="number" name="masa" placeholder="Masa (kg)" min="1" max="500" step="0.01" required>
+            <input type="number" name="altura" placeholder="Altura (m)" min="0.5" max="2.5" step="0.01" required>
+            <input type="number" name="velocidad" placeholder="Velocidad (m/s)" min="0" max="15" step="0.01" required>
+
             <input type="submit" value="Agregar">
         </form>
     </div>
@@ -106,6 +121,11 @@ $queryClub = mysqli_query($con, "SELECT * FROM club");
                     <th>Fecha de nacimiento</th>
                     <th>Género</th>
                     <th>Categoría</th>
+                    <!-- Magnitudes físicas registradas y resultado de fuerza peso. -->
+                    <th>Masa (kg)</th>
+                    <th>Altura (m)</th>
+                    <th>Velocidad (m/s)</th>
+                    <th>Fuerza peso (N)</th>
                     <th></th>
                     <th></th>
                 </tr>
@@ -120,6 +140,10 @@ $queryClub = mysqli_query($con, "SELECT * FROM club");
                         <th><?= $row['fechaNacimiento'] ?></th>
                         <th><?= $row['genero'] ?></th>
                         <th><?= $row['idCategoria'] ?></th>
+                        <th><?= $row['masa'] ?></th>
+                        <th><?= $row['altura'] ?></th>
+                        <th><?= $row['velocidad'] ?></th>
+                        <th><?= number_format($row['fuerzaPeso'], 2) ?></th>
                         <th><a href="actualizar-jug.php?id=<?= $row['cedula'] ?>" class="users-table--edit">Editar</a></th>
                         <th><a href="eliminar-jug.php?id=<?= $row['cedula'] ?>" class="users-table--delete" >Eliminar</a></th>
                     </tr>

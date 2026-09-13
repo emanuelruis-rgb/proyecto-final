@@ -164,9 +164,11 @@ h1 {
 }
 
 /* Campos de entrada y desplegables (<select>) */
+/* Los campos físicos usan el mismo diseño que el campo Nombre. */
 .users-form input[type="text"],
 .users-form input[type="password"],
 .users-form input[type="date"],
+.users-form input[type="number"],
 .users-form select {
     width: 100%;
     padding: 12px 16px;
@@ -182,6 +184,7 @@ h1 {
 
 .users-form input[type="text"]:focus,
 .users-form input[type="password"]:focus,
+.users-form input[type="number"]:focus,
 .users-form select:focus {
     border-color: var(--pitch-green);
     box-shadow: 0 0 0 3px rgba(60, 138, 62, 0.15);

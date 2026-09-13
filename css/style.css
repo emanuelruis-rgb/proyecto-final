@@ -73,11 +73,10 @@ body {
     align-items: center;
     min-height: 100vh;
 
-    background: linear-gradient(to right, #63b661, #004d00);
+    background: linear-gradient(to right, #67ac65, #033b03);
 
     background-size: 200% 200%;
 
-    animation: moverFondo 5s infinite alternate;
 }
 
 @keyframes moverFondo {

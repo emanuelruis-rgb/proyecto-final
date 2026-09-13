@@ -13,9 +13,14 @@ $fechaNacimiento = $fechaNacimiento->format('Y-m-d');
 
 $genero = $_POST['genero'] ?? '';
 $idCategoria = $_POST['idcategoria'] ?? '';
+// Se reciben las magnitudes físicas en kg, m y m/s, respectivamente.
+$masa = $_POST['masa'] ?? '';
+$altura = $_POST['altura'] ?? '';
+$velocidad = $_POST['velocidad'] ?? '';
 
-$sql = "INSERT INTO jugador (nombre, apellido, cedula, idClub, fechaNacimiento, genero, idCategoria)
-        VALUES ('$nombre', '$apellido', '$cedula', '$idClub', '$fechaNacimiento', '$genero', '$idCategoria')";
+// Se persisten los datos físicos junto con la información del jugador.
+$sql = "INSERT INTO jugador (nombre, apellido, cedula, idClub, fechaNacimiento, genero, idCategoria, masa, altura, velocidad)
+    VALUES ('$nombre', '$apellido', '$cedula', '$idClub', '$fechaNacimiento', '$genero', '$idCategoria', '$masa', '$altura', '$velocidad')";
 $query = mysqli_query($con, $sql);
 
 if($query){
