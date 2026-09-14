@@ -148,7 +148,7 @@ $fixture = obtenerFixture($con);
                 <td><?= htmlspecialchars($p['visitante']) ?></td>
                 <td>
                   <?php if ($p['golesLocal'] === null || ((int)$p['golesLocal'] === 0 && (int)$p['golesVisitante'] === 0)): ?>
-                    <?= htmlspecialchars((string)$p['horaPartido']) ?>
+                    <?= formatoHora($p['horaPartido']) ?>
                   <?php else: ?>
                     <?= (int)$p['golesLocal'] ?> - <?= (int)$p['golesVisitante'] ?>
                   <?php endif; ?>
@@ -157,7 +157,7 @@ $fixture = obtenerFixture($con);
                   <!-- Elimina el partido seleccionado sin mostrar un formulario de alta. -->
                   <a href="eliminar-partido.php?id=<?= $p['idPartido'] ?>"
                      class="eliminar"
-                     onclick="return confirm('¿Eliminar este partido?')">🗑</a>
+                     onclick="return confirm('¿Eliminar este partido?')">Eliminar</a>
                 </td>
               </tr>
             <?php endforeach; ?>
@@ -190,7 +190,7 @@ $fixture = obtenerFixture($con);
               <?php
                 // Muestra la hora del partido
               ?>
-              <div class="hora"><?= htmlspecialchars((string)$p['horaPartido']) ?></div>
+                <div class="hora"><?= formatoHora($p['horaPartido']) ?></div>
             <?php else: ?>
               <?php
                 // Muestra el marcador final
@@ -207,7 +207,7 @@ $fixture = obtenerFixture($con);
           ?>
           <a href="eliminar-partido.php?id=<?= $p['idPartido'] ?>"
              class="eliminar"
-             onclick="return confirm('¿Eliminar este partido?')">🗑</a>
+             onclick="return confirm('¿Eliminar este partido?')">Eliminar</a>
         </div>
       <?php endforeach; ?>
     </div>

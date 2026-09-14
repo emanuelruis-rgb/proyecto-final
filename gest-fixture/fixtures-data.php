@@ -1,4 +1,13 @@
 <?php
+// Convierte la hora numérica de la BD (por ejemplo, 1500) al formato 15:00.
+function formatoHora($hora) {
+    $hora = (int)$hora;
+    $horas = intdiv($hora, 100);
+    $minutos = $hora % 100;
+
+    return sprintf('%02d:%02d', $horas, $minutos);
+}
+
 // Devuelve los partidos agrupados por fecha, que es la columna disponible en la BD actual.
 function obtenerFixture($con) {
     $sql = "SELECT p.idPartido,
