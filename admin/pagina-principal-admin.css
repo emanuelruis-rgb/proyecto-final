@@ -120,34 +120,106 @@ header {
 }
 
 .carruselb {
-    color: white;
-    background-color: #3E5C76;
+    color: #ffffff;
+    background-color: var(--navy);
     border: none;
+    min-width: 150px;
+    min-height: 42px;
     padding: 10px 16px;
-    border-radius: 8px;
+    border-radius: 6px;
     cursor: pointer;
+    font: inherit;
+    font-size: 14px;
+    font-weight: 600;
+    transition: background-color 0.2s ease, color 0.2s ease;
  }
 
- .carruselb:hover {
-    background-color: #4F7090;
-    transition: 0.3s;
- }
-
- .BOTONCARRUSEL {
+/* Controles manuales para avanzar o retroceder entre imágenes. */
+.controles-carrusel {
     display: flex;
     align-items: center;
     justify-content: center;
-    margin: 10;
-    BACKGROUND-COLOR: #3E5C76;
-    color: white;
+    gap: 18px;
+    margin-top: 14px;
+}
+
+.controles-carrusel span {
+    min-width: 92px;
+    color: #ffffff;
+    font-size: 14px;
+    font-weight: 600;
+    text-align: center;
+}
+
+.btn-carrusel {
+    background-color: var(--navy);
+    color: #ffffff;
     border: none;
-    padding: 153px 16px;
-    border-radius: 8px;
+    min-width: 105px;
+    min-height: 42px;
+    padding: 9px 16px;
+    border-radius: 6px;
     cursor: pointer;
- }
+    font: inherit;
+    font-size: 14px;
+    font-weight: 600;
+    transition: background-color 0.2s ease, color 0.2s ease;
+}
+
+.carruselb:hover,
+.btn-carrusel:hover {
+    background-color: var(--gold);
+    color: var(--navy);
+}
+
+.acciones-carrusel {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 12px;
+    margin-top: 16px;
+    flex-wrap: wrap;
+}
+
+.acciones-carrusel form {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.acciones-carrusel form:last-child {
+    gap: 0;
+}
+
+.btn-eliminar-img {
+    background-color: #dc3545;
+    color: #ffffff;
+    border: none;
+    min-width: 150px;
+    min-height: 42px;
+    padding: 10px 14px;
+    border-radius: 6px;
+    cursor: pointer;
+    font: inherit;
+    font-size: 14px;
+    font-weight: 600;
+    text-decoration: none;
+    transition: background-color 0.2s ease;
+}
+
+.btn-eliminar-img:hover {
+    background-color: #bd2130;
+}
+
+.btn-eliminar-img:disabled {
+    background-color: #9ca3af;
+    cursor: not-allowed;
+}
 
 .dashboard-container {
     flex: 1;
+    width: 100%;
+    box-sizing: border-box;
     display: flex;
     flex-direction: column;
     justify-content: flex-start;
@@ -159,12 +231,14 @@ header {
 
 .carrusel-wrapper {
     display: flex;
+    /* Apila el carrusel y sus controles para evitar que la imagen se achique. */
+    flex-direction: column;
     align-items: center;
     justify-content: center;
-    gap: 1px;
+    gap: 14px;
     width: 100%;
     max-width: 900px;
-    margin-top: 5px;
+    margin: 5px auto 0;
 }
 
 h1{
@@ -174,9 +248,8 @@ h1{
 }
 
 .carrusel{
+    width: min(100%, 600px);
     margin: 0 auto;
-    width: 100%;
-    max-width: 600px;
     height: 350px;
     overflow: hidden;
     border-radius: 10px;
@@ -187,28 +260,24 @@ h1{
 
 .slides {
     display: flex;
-    width: 900%;
-    animation: deslizar 18s infinite;
+    width: 100%;
+    height: 100%;
 }
 
-.slides img {
-    width: 600px;
+.slide-item {
+    display: none;
+    width: 100%;
+    height: 100%;
+}
+
+.slide-item.activa {
+    display: block;
+}
+
+.slide-item img {
+    width: 100%;
     height: 350px;
     object-fit: cover;
-}
-
-@keyframes deslizar {
-    /* Desplaza el carrusel por sus posiciones predeterminadas. */
-    0%, 20% {
-        transform: translateX(0); /* Primera imagen: sin desplazamiento */
-    }
-     30%, 50% {
-        transform: translateX(-600px); /* Segunda imagen: un ancho de imagen hacia la izquierda */
-    }
-     70%,100% {
-        transform: translateX(-1200px); /* Tercera imagen: dos anchos de imagen hacia la izquierda */
-    }
-   
 }
 
 .sidebar-btn:hover {
