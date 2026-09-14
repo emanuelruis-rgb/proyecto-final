@@ -37,8 +37,7 @@
     <header> 
         <nav class="nav-izquierda-container">
             <a href="/proyecto-final/admin/indexadmin.php">
-                <!-- Usa el mismo tamaño de logo que la pantalla principal de sanciones. -->
-                <img src="/proyecto-final/img/logo-empresa/logo-empresa-blanco.png" alt="Logo" class="logo-liga">
+                <img src="/proyecto-final/img/logo-empresa/logo-empresa-blanco.png" alt="Logo" class="logo-empresa">
             </a>
             <div class="nav-izquierda-botones-container">
                 <a href="/proyecto-final/gest-jugador/jugador.php" class="nav-izquierda-botones">Jugadores</a>
