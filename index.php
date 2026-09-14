@@ -23,7 +23,7 @@
         session_start();
         if (isset($_SESSION['error'])) {
             // Muestra un aviso y evita que reaparezca en futuras visitas.
-            echo "<p style='color:red; text-align:center; font-weight:bold;'>Usuario o contraseña incorrectos.</p>";
+            echo "<p class='mensaje-error'>Usuario o contraseña incorrectos.</p>";
             unset($_SESSION['error']);
         }
         ?>
