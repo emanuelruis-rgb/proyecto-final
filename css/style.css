@@ -1,67 +1,105 @@
-/* Estilos generales y fondo animado de la pantalla de acceso. */
+/* Usa la misma cancha y la misma paleta principal que las pantallas de Admin. */
+:root {
+    --navy: #0A1510;
+    --navy-soft: #183b2a;
+    --gold: #C9A227;
+    --cyan: #20bfd0;
+    --text-main: #edf6ef;
+    --text-muted: #9bb3a3;
+}
+
 body {
-    background-color: #75C3E8;    
     margin: 0;
-    font-family: sans-serif;
+    font-family: Georgia, 'Times New Roman', serif;
     display: flex;
     justify-content: center;
     align-items: center;
     min-height: 100vh;
     box-sizing: border-box;
-    background: linear-gradient(to right, rgb(96, 96, 218),#75C3E8, white)
+    color: var(--text-main);
+    background-image: linear-gradient(135deg, rgba(3, 28, 17, 0.88), rgba(9, 54, 31, 0.68)), url('../img/fondo.jpg');
+    background-size: cover;
+    background-position: center;
+    background-attachment: fixed;
 }
 
 .logos {
-    /* Ajusta el tamaño y la presentación de los logotipos. */
-    height: 90px;
+    /* Conserva los logos existentes y solo ajusta su presentación. */
+    height: 58px;
     width: auto;
-    margin: 0 15px 15px;
+    margin: 0 8px 22px;
 }
 
 h1 {
-    /* Da formato al título principal del formulario. */
-    color: #000000;
+    /* Da formato al título con la jerarquía visual del panel Admin. */
+    color: var(--text-main);
     text-align: center;
-    font-size: 30px;
-    font-weight: 350;
+    font-size: 27px;
+    line-height: 1.15;
+    font-weight: 700;
+    margin: 0 auto 8px;
+    max-width: 300px;
 }
 
 .login-container {
-    /* Centra y enmarca el contenido del inicio de sesión. */
+    /* Tarjeta compacta y translúcida, coherente con la estética administrativa. */
     text-align: center;
-    border-radius: 30px;
-    background-color: white;
-    min-height: 500px;
-    width: 50%;
-    padding: 40px;
+    width: min(100% - 40px, 372px);
+    padding: 42px 36px 34px;
+    border: 1px solid rgba(203, 225, 208, 0.18);
+    border-radius: 14px;
+    background: rgba(9, 35, 22, 0.78);
+    box-shadow: 0 20px 60px rgba(0, 0, 0, 0.34);
+    backdrop-filter: blur(8px);
+    box-sizing: border-box;
 }
 
 .formulario {
-    /* Define la apariencia de los campos de usuario y contraseña. */
+    /* Campos oscuros con foco cian, como los acentos del login de referencia. */
     display: block;
     width: 100%;
-    height: 60px;
-    margin-top: 40px;
-    margin-bottom: 40px;
-    border-radius: 15px;
-    border: solid 1px rgb(0, 0, 0);
-    padding: 10px;
+    height: 48px;
+    margin-top: 18px;
+    margin-bottom: 0;
+    border-radius: 9px;
+    border: 1px solid rgba(191, 222, 201, 0.2);
+    padding: 10px 14px;
+    color: var(--text-main);
+    background: rgba(255, 255, 255, 0.04);
+    outline: none;
+    box-sizing: border-box;
+    font: inherit;
+    font-size: 15px;
+    transition: border-color 0.2s ease, box-shadow 0.2s ease, background 0.2s ease;
+}
+
+.formulario::placeholder {
+    color: var(--text-muted);
+}
+
+.formulario:focus {
+    border-color: var(--cyan);
+    background: rgba(255, 255, 255, 0.08);
+    box-shadow: 0 0 0 3px rgba(32, 191, 208, 0.16);
 }
 
 .botonlogin {
-    /* Da formato al botón que envía las credenciales. */
+    /* Acción principal con el cian usado como acento en la identidad visual. */
     display: block;
-    width: 25%;
-    height: 60px;
-    border-radius: 15px;
-    border: solid 1px rgb(255, 255, 255);
-    background-color: #3096c5;
-    color: rgb(255, 255, 255);
-    font-size: 18px;
-    justify-content: center;
+    width: 100%;
+    height: 48px;
+    border-radius: 9px;
+    border: none;
+    background: var(--cyan);
+    color: #06231b;
+    font: inherit;
+    font-size: 16px;
+    font-weight: 700;
     padding: 10px;
     margin: 0 auto;
-    margin-bottom: 20px;
+    margin-top: 24px;
+    cursor: pointer;
+    transition: background 0.2s ease, transform 0.2s ease;
 }
 
 /* Anima el desplazamiento del fondo de la pantalla. */
@@ -75,23 +113,21 @@ body {
 
     background: linear-gradient(to right, #67ac65, #033b03);
 
-    background-size: 200% 200%;
+.mensaje-error {
+    color: #ffb4b4;
+    font-size: 14px;
+    font-weight: 700;
+    margin: 18px 0 0;
+}
 
 }
 
-@keyframes moverFondo {
-    /* Cambia la posición del gradiente entre ambos extremos. */
-    from {
-        background-position: left;
+@media (max-width: 480px) {
+    .login-container {
+        padding: 34px 24px 28px;
     }
 
-    to {
-        background-position: right;
+    .logos {
+        height: 50px;
     }
-}
-
-.nombre {
-    /* Estiliza el nombre de la organización. */
-    color: #7e7575;
-    font-size: 20px;
 }

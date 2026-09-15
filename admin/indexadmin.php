@@ -46,7 +46,7 @@
         <div class="dashboard-container">
             <h1> Bienvenido a la Página Principal de Admins!</h1>
 
-            <!-- DE ACA EN DELANTE ES CARRUSEL. -->
+            <!-- Carrusel manual: el usuario cambia la imagen con los botones. -->
             <div class="carrusel-wrapper">
                 <div class="carrusel">
                     <div class="slides">
@@ -60,27 +60,39 @@
                             echo "<p>No hay imágenes cargadas todavía.</p>";
                         }
 
-                        // Genera una diapositiva y un enlace de eliminación por imagen.
+                        // Genera una diapositiva por cada imagen disponible.
                         foreach ($imagenes as $ruta) {
                             $nombreArchivo = basename($ruta);
-                            echo '<div class="slide-item">';
+                            echo '<div class="slide-item" data-archivo="' . htmlspecialchars($nombreArchivo) . '">';
                             echo '  <img src="' . htmlspecialchars($ruta) . '" alt="Imagen carrusel">';
-                            echo '  <a href="eliminar_imagen.php?archivo=' . urlencode($nombreArchivo) . '"
-                                       class="btn-eliminar-img"
-                                       onclick="return confirm(\'¿Eliminar esta imagen?\');">🗑</a>';
                             echo '</div>';
                         }
                         ?>
                     </div>
                 </div>
 
-                <!-- Permite seleccionar una o varias imágenes para el carrusel. -->
-                <form action="subir_imagen.php" method="POST" enctype="multipart/form-data" id="formCarrusel">
-                    <input type="file" name="nuevaImagen[]" id="carruselb" accept="image/*" multiple style="display:none;">
-                    <button type="button" class="carruselb" onclick="document.getElementById('carruselb').click();">
-                        Agregar / Cambiar imágenes
-                    </button>
-                </form>
+                <!-- Permite cambiar la imagen visible sin movimiento automático. -->
+                <div class="controles-carrusel">
+                    <button type="button" id="anteriorCarrusel" class="btn-carrusel">Anterior</button>
+                    <span id="indicadorCarrusel">Imagen 1</span>
+                    <button type="button" id="siguienteCarrusel" class="btn-carrusel">Siguiente</button>
+                </div>
+
+                <!-- Acciones de administración ubicadas debajo del carrusel. -->
+                <div class="acciones-carrusel">
+                    <form action="subir_imagen.php" method="POST" enctype="multipart/form-data" id="formCarrusel">
+                        <input type="file" name="nuevaImagen[]" id="carruselb" accept="image/*" multiple style="display:none;">
+                        <button type="button" class="carruselb" onclick="document.getElementById('carruselb').click();">
+                            Agregar imágenes
+                        </button>
+                    </form>
+
+                    <form action="eliminar_imagen.php" method="GET" onsubmit="return confirm('¿Eliminar la imagen que se está mostrando?');">
+                        <!-- El archivo se actualiza según la diapositiva visible. -->
+                        <input type="hidden" name="archivo" id="imagenAEliminar">
+                        <button type="submit" class="btn-eliminar-img" id="botonEliminarImagen">Eliminar imagen actual</button>
+                    </form>
+                </div>
 
                 <!-- Envía el formulario automáticamente después de seleccionar archivos. -->
                 <script>
@@ -89,6 +101,35 @@
                             document.getElementById('formCarrusel').submit();
                         }
                     });
+
+                    // Control manual del carrusel: solo se muestra una imagen a la vez.
+                    const diapositivas = document.querySelectorAll('.slide-item');
+                    const indicador = document.getElementById('indicadorCarrusel');
+                    const imagenAEliminar = document.getElementById('imagenAEliminar');
+                    const botonEliminarImagen = document.getElementById('botonEliminarImagen');
+                    let diapositivaActual = 0;
+
+                    function mostrarDiapositiva(indice) {
+                        if (diapositivas.length === 0) return;
+                        diapositivaActual = (indice + diapositivas.length) % diapositivas.length;
+                        diapositivas.forEach((diapositiva, posicion) => {
+                            diapositiva.classList.toggle('activa', posicion === diapositivaActual);
+                        });
+                        // El botón elimina exactamente la imagen que está visible.
+                        imagenAEliminar.value = diapositivas[diapositivaActual].dataset.archivo;
+                        indicador.textContent = 'Imagen ' + (diapositivaActual + 1) + ' de ' + diapositivas.length;
+                    }
+
+                    document.getElementById('anteriorCarrusel').addEventListener('click', function() {
+                        mostrarDiapositiva(diapositivaActual - 1);
+                    });
+
+                    document.getElementById('siguienteCarrusel').addEventListener('click', function() {
+                        mostrarDiapositiva(diapositivaActual + 1);
+                    });
+
+                    mostrarDiapositiva(0);
+                    botonEliminarImagen.disabled = diapositivas.length === 0;
                 </script>
             </div>
             <!-- TERMINA CARRUSEL -->
