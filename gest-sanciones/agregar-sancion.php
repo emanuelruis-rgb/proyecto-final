@@ -15,6 +15,6 @@
     
     $query= mysqli_query($conexion, $añadirSancionQuery);
 
-    header("Location: Sanciones.php");
+    header("Location: sanciones.php");
     exit();
 ?>

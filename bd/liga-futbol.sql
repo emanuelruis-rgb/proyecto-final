@@ -113,7 +113,13 @@ CREATE TABLE `jugador` (
   `idClub` int(11) NOT NULL,
   `fechaNacimiento` date NOT NULL,
   `genero` varchar(1) NOT NULL,
-  `idCategoria` int(11) NOT NULL
+  `idCategoria` int(11) NOT NULL,
+  -- Masa del jugador en kilogramos para los cálculos físicos.
+  `masa` decimal(6,2) NOT NULL,
+  -- Altura del jugador en metros.
+  `altura` decimal(4,2) NOT NULL,
+  -- Velocidad del jugador en metros por segundo.
+  `velocidad` decimal(6,2) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 -- --------------------------------------------------------
