@@ -11,7 +11,6 @@ $con = connection();
 $id = $_GET["id"] ?? '';
 
 // Se eliminan primero los registros relacionados para respetar las claves foráneas.
-//Las claves foráneas (Foreign Keys) son tablas que se relacionan con otra tabla en una base de datos.
 mysqli_begin_transaction($con);
 
 try {

@@ -102,10 +102,16 @@ h1 {
     transition: background 0.2s ease, transform 0.2s ease;
 }
 
-.botonlogin:hover {
-    background: #55d4df;
-    transform: translateY(-1px);
-}
+/* Anima el desplazamiento del fondo de la pantalla. */
+body {
+    margin: 0;
+    font-family: sans-serif;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+
+    background: linear-gradient(to right, #67ac65, #033b03);
 
 .mensaje-error {
     color: #ffb4b4;
@@ -114,11 +120,6 @@ h1 {
     margin: 18px 0 0;
 }
 
-.nombre {
-    color: var(--text-muted);
-    font-family: sans-serif;
-    font-size: 14px;
-    margin: 0 0 24px;
 }
 
 @media (max-width: 480px) {
