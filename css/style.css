@@ -17,10 +17,12 @@ body {
     min-height: 100vh;
     box-sizing: border-box;
     color: var(--text-main);
-    background-image: linear-gradient(135deg, rgba(3, 28, 17, 0.88), rgba(9, 54, 31, 0.68)), url('../img/fondo.jpg');
+    /* Usa el mismo fondo visual que la pantalla principal de Admin. */
+    background-image: linear-gradient(180deg, rgba(11, 37, 69, 0.75) 0%, rgba(15, 61, 46, 0.7) 100%), url('../img/fondo.jpg');
     background-size: cover;
     background-position: center;
     background-attachment: fixed;
+    background-repeat: no-repeat;
 }
 
 .logos {
@@ -102,24 +104,11 @@ h1 {
     transition: background 0.2s ease, transform 0.2s ease;
 }
 
-/* Anima el desplazamiento del fondo de la pantalla. */
-body {
-    margin: 0;
-    font-family: sans-serif;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    min-height: 100vh;
-
-    background: linear-gradient(to right, #67ac65, #033b03);
-
 .mensaje-error {
     color: #ffb4b4;
     font-size: 14px;
     font-weight: 700;
     margin: 18px 0 0;
-}
-
 }
 
 @media (max-width: 480px) {

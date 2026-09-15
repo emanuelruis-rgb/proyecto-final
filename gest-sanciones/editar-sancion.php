@@ -5,7 +5,7 @@
     $conexion = connection();
 
     /* recibe el id de clubes mandado por la ejecucion de este php en editar en la tabla de 
-    sanciones */
+    sanciones. */
     $idSancion = $_GET["idSancion"];
 
     /* recibe aca los datos mandados de sanciones.php para editarlos*/
