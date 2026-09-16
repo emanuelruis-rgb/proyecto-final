@@ -18,9 +18,9 @@
             </a>
             <div class="nav-izquierda-botones-container">
                 <!-- aca van los jugadores propios y despues da la opcion de seleccionar los ajenos-->
-                <a href="#" class="nav-izquierda-botones">Jugadores</a>
+                <a href="jugadores-club.php" class="nav-izquierda-botones">Jugadores</a>
                 <!-- apartado boletines para poder ver los boletines y noticias del admin-->
-                <a href="#" class="nav-izquierda-botones">Boletines</a>
+                <a href="boletines-club.php" class="nav-izquierda-botones">Boletines</a>
             </div>
         </nav>
 
