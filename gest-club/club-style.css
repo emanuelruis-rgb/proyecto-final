@@ -6,10 +6,18 @@
     --pitch-green-hover: #2f6f31;
     --gold: #C9A227;
     --text-main: #2C3E50;
+    /* Colores del botón de eliminar clubes. */
+    --danger: #dc3545;
+    --danger-hover: #bd2130;
 }
 
 body {
     min-height: 100vh;
+
+/* Estilos compartidos del panel */
+*, *::before, *::after {
+    box-sizing: border-box;
+}
     margin: 0;
     font-family: sans-serif;
     color: var(--text-main);
@@ -64,8 +72,14 @@ header {
 }
 
 
-.header-nav-link:hover {
+.header-nav-link:hover,
+.header-nav-link.active {
     color: #FFFFFF;
+    border-bottom-color: var(--gold);
+}
+
+.header-nav-link.active {
+    border-bottom-color: var(--gold);
 }
 
 .header-derecha {
@@ -146,12 +160,16 @@ h1 {
 }
 
 .users-form h1 {
+    /* Encabezado oscuro del formulario, igual que en la pantalla Fixture. */
     font-size: 1.5rem;
-    color: var(--navy);
-    margin-bottom: 25px;
+    color: #ffffff;
+    background: var(--navy);
+    margin: -35px -40px 25px;
+    padding: 14px 16px;
+    border-radius: 12px 12px 0 0;
     text-align: center;
     font-weight: 700;
-    text-shadow: none; /* anula el text-shadow del h1 general: acá el fondo es blanco */
+    text-shadow: none;
 }
 
 .users-form form {
@@ -196,7 +214,7 @@ h1 {
 }
 
 .users-form input[type="submit"]:hover {
-    background-color: #0B2545;
+    background-color: var(--pitch-green-hover);
 }
 
 /* TABLA DE CLUBES REGISTRADOS */

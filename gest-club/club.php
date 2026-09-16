@@ -29,9 +29,6 @@ $query = mysqli_query($con, "SELECT * FROM club");
         </nav>
 
         <div class="header-derecha">
-            <a href="#" class="header-item">
-                <i class="bi bi-bell"></i>
-            </a>
 
             <a href="#" class="header-item">
                 <i class="bi bi-person-circle"></i>

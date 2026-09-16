@@ -1,72 +1,86 @@
+:root {
+    --navy: #0A1510;
+    --navy-soft: #3E5C76;
+    --pitch-green: #3C8A3E;
+    --pitch-green-hover: #2f6f31;
+    --gold: #C9A227;
+    --text-main: #2C3E50;
+    --danger: #dc3545;
+    --danger-hover: #bd2130;
+}
+
+* {
+    box-sizing: border-box;
+}
+
 body {
     min-height: 100vh;
     margin: 0;
     font-family: sans-serif;
-    background-color: #EEF2F5;
-    color: #2C3E50;
+    color: var(--text-main);
+    background-image: linear-gradient(180deg, rgba(11, 37, 69, 0.75) 0%, rgba(15, 61, 46, 0.7) 100%), url('../img/fondo.jpg');
+    background-size: cover;
+    background-position: center;
+    background-attachment: fixed;
+    background-repeat: no-repeat;
 }
 
-/* Header en general */
 header {
     height: 90px;
-    background-color: #0B2545;
+    background-color: var(--navy);
+    border-bottom: 2px solid var(--gold);
     display: flex;
     justify-content: space-between;
-    align-items: center;      
-    padding: 0 40px;          
+    align-items: center;
+    padding: 0 40px;
     gap: 20px;
 }
 
-/* izquierda del header, donde van el logo y botones para cambiar de sección */
 .nav-izquierda-container {
-    /* Alinea el logotipo y los enlaces principales a la izquierda del header */
     display: flex;
     align-items: center;
-    gap: 18px;
+    gap: 60px;
     flex: 1;
     min-width: 0;
 }
 
-.logo-empresa {
-    height: 60px;
+.logo-liga {
+    height: 50px;
     width: auto;
-}
-
-.nav-izquierda-botones {
-    /* Estiliza cada enlace de navegación. */
-    display: inline-flex;
-    align-items: center;
-    justify-content: center;
-    height: 40px;
-    padding: 0 18px;
-    background-color: #3E5C76;
-    color: #FFFFFF;
-    text-decoration: none;
-    font-size: 15px;
-    font-weight: 600;
-    border: 1px solid rgba(255,255,255,0.15);
-    transition: 0.3s;
+    display: block;
+    transform: translateY(-2px);
 }
 
 .nav-izquierda-botones-container {
     display: flex;
     align-items: center;
-    gap: 10px;
+    gap: 28px;
     flex-wrap: wrap;
 }
 
+.nav-izquierda-botones {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    height: 40px;
+    padding: 0 6px;
+    background: none;
+    border: none;
+    border-bottom: 3px solid transparent;
+    color: rgba(255, 255, 255, 0.8);
+    text-decoration: none;
+    font-size: 15px;
+    font-weight: 600;
+    transition: 0.3s;
+}
+
+.nav-izquierda-botones:hover,
 .nav-izquierda-botones.active {
-    background-color: #005de7;
+    color: #FFFFFF;
+    border-bottom-color: var(--gold);
 }
 
-.nav-izquierda-botones:hover {
-    background-color: #0a0f14;
-}
-/* termina el header de la izquierda */
-
-/* Header de la derecha donde van los botones de usuario cerrar sesión y eso */
 .nav-derecha-container {
-    /* Alinea las acciones del lado derecho del encabezado. */
     display: flex;
     align-items: center;
     gap: 25px;
@@ -74,146 +88,120 @@ header {
     font-size: 18px;
 }
 
-/* Items uno por uno del header a la derecha */
-/* el nav derecha item es el boton especifico individual */
-.nav-derecha-container, .nav-derecha-item {
-    display:flex;
+.nav-derecha-item {
+    display: flex;
     align-items: center;
     gap: 14px;
-    color:white;
+    color: white;
     text-decoration: none;
-    font-size:18px;
+    font-size: 18px;
     transition: 0.3s;
 }
 
-.cerrar-sesion {
-    border: none;
-    background: #3E5C76;
-    color: white;
-    padding: 10px 18px;
-    border-radius: 8px;
-    cursor: pointer;
+.nav-derecha-item:hover {
+    color: var(--gold);
 }
 
-.cerrar-sesion:hover {
-    background-color: #4F7090;
-}
-/* termina el header a la derecha */
-
-
-/* todo lo de debajo del header */
-
-/* CONTENEDOR PRINCIPAL (Estructura Vertical)*/
-.main-container {
-    display: flex;
-    flex-direction: column; /* Apila el formulario y la tabla verticalmente */
-    align-items: center;
-    gap: 30px;
-    width: 100%;
-    max-width: 1000px;
-    margin: 40px auto;
-    padding: 0 20px;
-}
-
-/*  FORMULARIOS (Crear y Editar) */
 .formulario-container {
     background-color: #ffffff;
-    padding: 30px;
-    border-radius: 8px;
-    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.05);
+    padding: 35px 40px;
+    border-radius: 12px;
+    box-shadow: 0 8px 30px rgba(0, 0, 0, 0.25);
     width: 100%;
-    max-width: 500px;
-    margin: 0 auto; /* Para centrar cuando esté solo en la vista de edición */
-    margin-top: 43px;
+    max-width: 460px;
+    margin: 40px auto;
 }
 
 .formulario-container h1 {
-    font-size: 1.4rem;
-    color: #0B2545;
-    margin-bottom: 20px;
+    /* Encabezado oscuro del formulario, igual que en la pantalla Fixture. */
+    font-size: 1.5rem;
+    color: #ffffff;
+    background: var(--navy);
+    margin: -35px -40px 25px;
+    padding: 14px 16px;
+    border-radius: 12px 12px 0 0;
     text-align: center;
-    font-weight: 600;
+    font-weight: 700;
+    text-shadow: none;
 }
 
 .formulario-container form {
     display: flex;
     flex-direction: column;
-    gap: 12px;
+    gap: 14px;
 }
 
-.select-formulario {
-    height: 40px;
-    border: 1px solid #dcdfe6;
-    border-radius: 6px;
-    padding-left: 9px;
-    font-size: 0.95rem;
-    color: #2C3E50;
-    outline: none;
-}
-
+.select-formulario,
 .formulario-container input[type="text"],
 .formulario-container input[type="number"] {
     width: 100%;
-    padding: 11px 14px;
+    padding: 12px 16px;
     border: 1px solid #dcdfe6;
     border-radius: 6px;
-    font-size: 0.9rem;
+    background-color: #ffffff;
+    font-size: 0.95rem;
+    color: var(--text-main);
     outline: none;
-    transition: border-color 0.2s;
+    transition: border-color 0.2s ease-in-out, box-shadow 0.2s ease-in-out;
 }
 
-.formulario-container input[type="text"]:focus {
-    border-color: #005de7;
+.formulario-container input:focus,
+.select-formulario:focus {
+    border-color: var(--pitch-green);
+    box-shadow: 0 0 0 3px rgba(60, 138, 62, 0.15);
 }
 
 .formulario-container input[type="submit"] {
-    background-color: #0B2545;
+    background-color: var(--pitch-green);
     color: #ffffff;
     border: none;
-    padding: 12px;
+    padding: 14px;
     border-radius: 6px;
     font-size: 0.95rem;
-    font-weight: 600;
+    font-weight: 700;
     cursor: pointer;
     margin-top: 10px;
-    transition: background-color 0.2s;
+    transition: background-color 0.2s ease;
 }
 
 .formulario-container input[type="submit"]:hover {
-    background-color: #0B2545;
+    background-color: var(--pitch-green-hover);
 }
 
-/* TABLA DE CLUBES REGISTRADOS */
 .tabla {
     background-color: #ffffff;
     padding: 30px;
-    border-radius: 8px;
-    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.05);
+    border-radius: 12px;
+    box-shadow: 0 8px 30px rgba(0, 0, 0, 0.25);
     width: 100%;
+    max-width: 1300px;
+    margin: 0 auto 40px;
     overflow-x: auto;
 }
 
 .tabla h2 {
     font-size: 1.4rem;
-    color: #0B2545;
-    margin-bottom: 20px;
+    color: var(--navy);
+    margin: 0 0 20px;
+    font-weight: 700;
 }
 
 .tabla table {
     width: 100%;
     border-collapse: collapse;
     font-size: 0.9rem;
+    white-space: nowrap;
 }
 
 .tabla thead tr {
-    background-color: #0B2545;
+    background-color: var(--navy);
     color: #ffffff;
     text-align: left;
 }
 
-.tabla th, 
+.tabla th,
 .tabla td {
-    padding: 12px 15px;
+    padding: 14px 16px;
     border-bottom: 1px solid #eef2f5;
 }
 
@@ -221,31 +209,47 @@ header {
     background-color: #f8fafc;
 }
 
-/* Acciones en la tabla */
 .tabla--edit,
 .tabla--delete {
-    padding: 6px 12px;
-    border-radius: 4px;
+    display: inline-block;
+    padding: 7px 16px;
+    border-radius: 6px;
+    color: #ffffff;
     text-decoration: none;
     font-weight: 600;
-    font-size: 0.8rem;
-    display: inline-block;
+    font-size: 0.85rem;
+    text-align: center;
+    transition: background-color 0.2s ease;
 }
 
 .tabla--edit {
-    background-color: #0B2545;
-    color: #ffffff;
+    background-color: var(--navy);
 }
 
 .tabla--edit:hover {
-    background-color: #0B2545;
+    background-color: var(--navy-soft);
 }
 
 .tabla--delete {
-    background-color: #dc3545;
-    color: #ffffff;
+    background-color: var(--danger);
 }
 
 .tabla--delete:hover {
-    background-color: #bd2130;
+    background-color: var(--danger-hover);
+}
+
+@media (max-width: 900px) {
+    header {
+        height: auto;
+        min-height: 90px;
+        padding: 15px 20px;
+    }
+
+    .nav-izquierda-container {
+        gap: 25px;
+    }
+
+    .nav-izquierda-botones-container {
+        gap: 14px;
+    }
 }

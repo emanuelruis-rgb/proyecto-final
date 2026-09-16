@@ -18,9 +18,9 @@
             </a>
             <div class="nav-izquierda-botones-container">
                 <!-- aca van los jugadores propios y despues da la opcion de seleccionar los ajenos-->
-                <a href="#" class="nav-izquierda-botones">Jugadores</a>
+                <a href="jugadores-club.php" class="nav-izquierda-botones">Jugadores</a>
                 <!-- apartado boletines para poder ver los boletines y noticias del admin-->
-                <a href="#" class="nav-izquierda-botones">Boletines</a>
+                <a href="boletines-club.php" class="nav-izquierda-botones">Boletines</a>
             </div>
         </nav>
 
@@ -42,7 +42,7 @@
     </header>
 
     <div class="layout-abajo-header">
-         <!-- DE ACA EN DELANTE ES CARRUSEL. -->
+         <!-- Carrusel manual: el usuario cambia la imagen con los botones. -->
             <div class="carrusel-wrapper">
                 <div class="carrusel">
                     <div class="slides">
@@ -65,6 +65,39 @@
                         ?>
                     </div>
                 </div>
+
+                <!-- Permite avanzar o retroceder sin movimiento automático. -->
+                <div class="controles-carrusel">
+                    <button type="button" id="anteriorCarrusel" class="btn-carrusel">Anterior</button>
+                    <span id="indicadorCarrusel">Imagen 1</span>
+                    <button type="button" id="siguienteCarrusel" class="btn-carrusel">Siguiente</button>
+                </div>
+
+                <script>
+                    // Control manual del carrusel: solo se muestra una imagen a la vez.
+                    const diapositivas = document.querySelectorAll('.slide-item');
+                    const indicador = document.getElementById('indicadorCarrusel');
+                    let diapositivaActual = 0;
+
+                    function mostrarDiapositiva(indice) {
+                        if (diapositivas.length === 0) return;
+                        diapositivaActual = (indice + diapositivas.length) % diapositivas.length;
+                        diapositivas.forEach((diapositiva, posicion) => {
+                            diapositiva.classList.toggle('activa', posicion === diapositivaActual);
+                        });
+                        indicador.textContent = 'Imagen ' + (diapositivaActual + 1) + ' de ' + diapositivas.length;
+                    }
+
+                    document.getElementById('anteriorCarrusel').addEventListener('click', function() {
+                        mostrarDiapositiva(diapositivaActual - 1);
+                    });
+
+                    document.getElementById('siguienteCarrusel').addEventListener('click', function() {
+                        mostrarDiapositiva(diapositivaActual + 1);
+                    });
+
+                    mostrarDiapositiva(0);
+                </script>
             </div>
             <!-- TERMINA CARRUSEL -->
         </div>
