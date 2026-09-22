@@ -15,7 +15,7 @@
     <header> 
         <nav class="nav-izquierda-container">
             <a href="/proyecto-final/admin/indexadmin.php">
-                <img src="/proyecto-final/img/logo-liga/log-liga-b.png" alt="Logo" class="logo-liga">
+                <img src="/proyecto-final/img/logo-liga/log-liga-d.png" alt="Logo" class="logo-liga">
             </a>
             <div class="nav-izquierda-botones-container">
                 <a href="/proyecto-final/gest-jugador/jugador.php" class="nav-izquierda-botones">Jugadores</a>

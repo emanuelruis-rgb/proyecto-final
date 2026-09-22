@@ -80,7 +80,7 @@ h1 {
 }
 
 .formulario:focus {
-    border-color: var(--cyan);
+    border-color: var(--gold);
     background: rgba(255, 255, 255, 0.08);
     box-shadow: 0 0 0 3px rgba(32, 191, 208, 0.16);
 }
@@ -92,8 +92,8 @@ h1 {
     height: 48px;
     border-radius: 9px;
     border: none;
-    background: var(--cyan);
-    color: #06231b;
+    background: var(--gold);
+    color: #ffffff;
     font: inherit;
     font-size: 16px;
     font-weight: 700;

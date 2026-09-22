@@ -12,9 +12,9 @@
 <body>
     <!-- Agrupa los elementos visibles del formulario de inicio de sesión. -->
     <div class="login-container">
-        <img src="/proyecto-final/img/logo-liga/log-liga-n.png" alt="Logo" class="logos"> 
-        <h1><b>Login al sistema de control de la liga</b></h1>
-        <p class="nombre">Atrivia Enterprises</p>
+        <img src="/proyecto-final/img/logo-liga/log-liga-d.png" alt="Logo" class="logos"> 
+        <h1><b>Iniciar sesión</b></h1>
+        <p class="nombre">Atrivia Enterprise</p>
 
         <!-- empieza php-->
         <?php
@@ -32,7 +32,7 @@
         <form action="logueo/login.php" method="post">
             <input class="formulario" type="text" name="nombre" placeholder="Usuario" required>
             <input class="formulario" type="password" name="contraseña" placeholder="Contraseña" required>
-            <button class="botonlogin" type="submit">Login</button>
+            <button class="botonlogin" type="submit">Ingresar</button>
         </form>
     </div>    
 </body>
