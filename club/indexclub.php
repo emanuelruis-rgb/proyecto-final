@@ -63,8 +63,8 @@ if ($fila = mysqli_fetch_assoc($resultado)) {
             </button>
 
             <div class="user-menu-dropdown" id="userDropdown">
-                <a href="documento.php" class="user-menu-item">
-                    <i class="bi bi-person-badge"></i> Mi perfil
+                <a href="../uploads/documentos/reglamento.pdf" class="user-menu-item" download>
+                    <i class="bi bi-file-earmark-text"></i> Descargar documento
             </a>
             <a href="/proyecto-final/index.php" class="user-menu-item">
                 <i class="bi bi-box-arrow-right"></i>

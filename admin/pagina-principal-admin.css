@@ -378,3 +378,102 @@ h1{
 .user-menu-item i {
   font-size: 1rem;
 }
+
+.documentos-card {
+    width: min(100%, 560px);
+    margin: 20px auto 0;
+    background: rgba(255, 255, 255, 0.08);
+    border: 1px solid rgba(255, 255, 255, 0.18);
+    border-radius: 16px;
+    padding: 28px 24px;
+    box-shadow: 0 16px 35px rgba(0, 0, 0, 0.18);
+    backdrop-filter: blur(4px);
+}
+
+.documentos-form {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+}
+
+.documentos-label {
+    font-size: 1rem;
+    font-weight: 600;
+    color: #F7F7F7;
+    text-shadow: 0 2px 8px rgba(0, 0, 0, 0.35);
+}
+
+.documentos-input {
+    width: 100%;
+    box-sizing: border-box;
+    padding: 10px 14px;
+    border-radius: 10px;
+    border: 1px solid rgba(255, 255, 255, 0.28);
+    background: rgba(255, 255, 255, 0.9);
+    color: var(--text-main);
+    font-size: 0.9rem;
+}
+
+.documentos-input::file-selector-button {
+    padding: 8px 14px;
+    margin-right: 12px;
+    border: none;
+    border-radius: 8px;
+    background: linear-gradient(135deg, var(--pitch-green), var(--pitch-green-hover));
+    color: #fff;
+    font-weight: 600;
+    cursor: pointer;
+    transition: opacity 0.2s ease;
+}
+
+.documentos-input::file-selector-button:hover {
+    opacity: 0.9;
+}
+
+.documentos-btn {
+    background: linear-gradient(135deg, var(--pitch-green), var(--pitch-green-hover));
+    color: #fff;
+    border: none;
+    border-radius: 10px;
+    padding: 12px 18px;
+    font: inherit;
+    font-weight: 700;
+    cursor: pointer;
+    transition: transform 0.2s ease, box-shadow 0.2s ease, opacity 0.2s ease;
+    box-shadow: 0 8px 18px rgba(60, 138, 62, 0.28);
+}
+
+.documentos-btn:hover {
+    transform: translateY(-1px);
+    box-shadow: 0 10px 20px rgba(60, 138, 62, 0.35);
+}
+
+.documentos-btn:active {
+    transform: translateY(0);
+}
+
+.layout-abajo-header {
+    display: flex;
+    justify-content: center;
+}
+
+.mensaje-exito,
+.mensaje-error {
+    padding: 10px 14px;
+    border-radius: 8px;
+    font-weight: 600;
+    font-size: 0.9rem;
+    margin: 0;
+}
+
+.mensaje-exito {
+    background: rgba(60, 138, 62, 0.25);
+    border: 1px solid rgba(60, 138, 62, 0.6);
+    color: #A8E6A3;
+}
+
+.mensaje-error {
+    background: rgba(200, 50, 50, 0.25);
+    border: 1px solid rgba(200, 50, 50, 0.6);
+    color: #FF9E9E;
+}

@@ -2,12 +2,32 @@
 $carpeta = __DIR__ . '/../uploads/documentos/';
 $archivo = $carpeta . 'reglamento.pdf';
 $existe = file_exists($archivo);
-$mensaje = '';
 
-if (isset($_GET['ok']) && $_GET['ok'] === '1') {
-    $mensaje = 'El reglamento se subió correctamente.';
-} elseif (isset($_GET['error']) && $_GET['error'] === '1') {
-    $mensaje = 'No se pudo subir el archivo. Debe ser un PDF válido.';
+// Traduce el parámetro de la URL a un mensaje legible
+$mensajes = [
+    'exito'     => ['texto' => 'Archivo subido correctamente.', 'tipo' => 'exito'],
+    'error'     => ['texto' => 'Hubo un error al subir el archivo.', 'tipo' => 'error'],
+    'extension' => ['texto' => 'Solo se permiten archivos PDF.', 'tipo' => 'error'],
+];
+
+$estado = $_GET['estado'] ?? null;
+$mensajeAMostrar = $mensajes[$estado] ?? null;
+
+session_start();
+
+require_once $_SERVER['DOCUMENT_ROOT'] . "/proyecto-final/conexion-bd/conexion.php";
+$conexion = connection();
+
+$nombreSesion = $_SESSION['nombre'];
+$nombreMostrar = $nombreSesion; // valor por defecto, por si la consulta no encuentra nada
+
+$stmt = mysqli_prepare($conexion, "SELECT nombreUsuario FROM administrador WHERE nombreUsuario = ?");
+mysqli_stmt_bind_param($stmt, "s", $nombreSesion);
+mysqli_stmt_execute($stmt);
+$resultado = mysqli_stmt_get_result($stmt);
+
+if ($fila = mysqli_fetch_assoc($resultado)) {
+    $nombreMostrar = $fila['nombreUsuario'];
 }
 ?>
 <!DOCTYPE html>
@@ -30,22 +50,59 @@ if (isset($_GET['ok']) && $_GET['ok'] === '1') {
                 <a href="/proyecto-final/gest-club/club.php" class="nav-izquierda-botones">Clubes</a>
                 <a href="/proyecto-final/gest-fixture/fixtures.php" class="nav-izquierda-botones">Fixture</a>
                 <a href="/proyecto-final/gest-sanciones/sanciones.php" class="nav-izquierda-botones">Sanciones</a>
-                <a href="/proyecto-final/gest-documentos/documento.php" class="nav-izquierda-botones">Documentos</a>
             </div>
         </nav>
+
+        <script>
+        function toggleUserMenu() {
+        document.getElementById('userDropdown').classList.toggle('show'); //busca el elemento con la clase UserDropdown y activa/desactiva el menu
+        }
+
+        document.addEventListener('click', function(event) {
+        const menu = document.querySelector('.user-menu');
+        const dropdown = document.getElementById('userDropdown');
+        if (!menu.contains(event.target)) {
+            dropdown.classList.remove('show');
+            }
+        });
+        </script>
+
+        <div class="user-menu">
+            <button class="user-menu-toggle" onclick="toggleUserMenu()">
+                <i class="bi bi-person-circle"></i>
+                <span class="user-menu-name"><?php echo htmlspecialchars($nombreMostrar); ?></span>
+            </button>
+
+            <div class="user-menu-dropdown" id="userDropdown">
+                <a href="../gest-documentos/documento.php" class="user-menu-item">
+                    <i class="bi bi-file-earmark-text"></i> Subir documento
+            </a>
+            <a href="/proyecto-final/index.php" class="user-menu-item">
+                <i class="bi bi-box-arrow-right"></i>
+                <span>Cerrar sesión</span>
+            </a>
+            </div>
+        </div>
     </header>
 
     <div class="documentos-card">
-        <!-- confirma si el mensaje no esta vacio y si no lo esta lo muestra en un div con la clase documentos-mensaje -->
-        <?php if ($mensaje !== ''): ?>
-            <div class="documentos-mensaje"><?php echo htmlspecialchars($mensaje); ?></div> <!-- sirve por si el mensaje tiene caracteres especiales -->git 
+        <?php if ($mensajeAMostrar): ?>
+            <p class="mensaje-<?= $mensajeAMostrar['tipo'] ?>">
+             <?= htmlspecialchars($mensajeAMostrar['texto']) ?>
+             </p>
         <?php endif; ?>
 
-        <form action="/proyecto-final/gest-documentos/subir_documento.php" method="POST" enctype="multipart/form-data" class="documentos-form">
-            <label for="pdf" class="documentos-label">Subir formulario de los datos del partido (PDF)</label>
+        <form action="subir_documento.php" method="POST" enctype="multipart/form-data" class="documentos-form">
+            <label for="pdf" class="documentos-label">Subir reglamento / documento (PDF):</label>
             <input type="file" name="pdf" id="pdf" accept="application/pdf" required class="documentos-input">
             <button type="submit" class="documentos-btn">Subir</button>
         </form>
     </div>
+<!-- sirve para que el mensaje no se muestre aunque se recargue la pagina -->
+    <script>
+    if (window.location.search.includes('estado=')) {
+        window.history.replaceState(null, '', window.location.pathname);
+    }
+    </script>
 </body>
 </html>
