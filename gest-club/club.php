@@ -2,6 +2,23 @@
 include(__DIR__ . "/../conexion-bd/conexion.php");
 $con = connection();
 $query = mysqli_query($con, "SELECT * FROM club");
+
+session_start();
+
+require_once $_SERVER['DOCUMENT_ROOT'] . "/proyecto-final/conexion-bd/conexion.php";
+$conexion = connection();
+
+$nombreSesion = $_SESSION['nombre'];
+$nombreMostrar = $nombreSesion; // valor por defecto, por si la consulta no encuentra nada
+
+$stmt = mysqli_prepare($conexion, "SELECT nombreUsuario FROM administrador WHERE nombreUsuario = ?");
+mysqli_stmt_bind_param($stmt, "s", $nombreSesion);
+mysqli_stmt_execute($stmt);
+$resultado = mysqli_stmt_get_result($stmt);
+
+if ($fila = mysqli_fetch_assoc($resultado)) {
+    $nombreMostrar = $fila['nombreUsuario'];
+}
 ?>
 <!DOCTYPE html>
 <html lang="es">
@@ -28,17 +45,35 @@ $query = mysqli_query($con, "SELECT * FROM club");
             </div>
         </nav>
 
-        <div class="header-derecha">
+        <script>
+        function toggleUserMenu() {
+        document.getElementById('userDropdown').classList.toggle('show'); //busca el elemento con la clase UserDropdown y activa/desactiva el menu
+        }
 
-            <a href="#" class="header-item">
+        document.addEventListener('click', function(event) {
+        const menu = document.querySelector('.user-menu');
+        const dropdown = document.getElementById('userDropdown');
+        if (!menu.contains(event.target)) {
+            dropdown.classList.remove('show');
+            }
+        });
+        </script>
+
+        <div class="user-menu">
+            <button class="user-menu-toggle" onclick="toggleUserMenu()">
                 <i class="bi bi-person-circle"></i>
-                <span></span>
-            </a>
+                <span class="user-menu-name"><?php echo htmlspecialchars($nombreMostrar); ?></span>
+            </button>
 
-            <a href="../index.php" class="header-item">
+            <div class="user-menu-dropdown" id="userDropdown">
+                <a href="documento.php" class="user-menu-item">
+                    <i class="bi bi-person-badge"></i> Mi perfil
+            </a>
+            <a href="/proyecto-final/index.php" class="user-menu-item">
                 <i class="bi bi-box-arrow-right"></i>
                 <span>Cerrar sesión</span>
             </a>
+            </div>
         </div>
     </header>
 <br><br>
