@@ -1,4 +1,5 @@
 <?php
+session_name('admin_session');
 session_start();
 
 require_once $_SERVER['DOCUMENT_ROOT'] . "/proyecto-final/conexion-bd/conexion.php";

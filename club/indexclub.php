@@ -1,19 +1,20 @@
 <?php
+session_name('club_session');
 session_start();
 
 require_once $_SERVER['DOCUMENT_ROOT'] . "/proyecto-final/conexion-bd/conexion.php";
 $conexion = connection();
 
-$nombreSesion = $_SESSION['nombre'];
-$nombreMostrar = $nombreSesion; // valor por defecto, por si la consulta no encuentra nada
+$nombreSesionClub = $_SESSION['nombre'];
+$nombreMostrarClub = $nombreSesionClub; // valor por defecto, por si la consulta no encuentra nada
 
-$stmt = mysqli_prepare($conexion, "SELECT nombreUsuario FROM administrador WHERE nombreUsuario = ?");
-mysqli_stmt_bind_param($stmt, "s", $nombreSesion);
+$stmt = mysqli_prepare($conexion, "SELECT nombreClub FROM club WHERE nombreClub = ?");
+mysqli_stmt_bind_param($stmt, "s", $nombreSesionClub);
 mysqli_stmt_execute($stmt);
 $resultado = mysqli_stmt_get_result($stmt);
 
 if ($fila = mysqli_fetch_assoc($resultado)) {
-    $nombreMostrar = $fila['nombreUsuario'];
+    $nombreMostrarClub = $fila['nombreClub'];
 }
 ?>
 <!DOCTYPE html>
@@ -26,7 +27,7 @@ if ($fila = mysqli_fetch_assoc($resultado)) {
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Página principal clubes</title>
     <link rel="stylesheet" href="pagina-principal-club.css">
-    <link rel="icon" type="image/png" href="../img/copa.png">
+    <link rel="icon" type="image/png" href="../img/logo-liga/log-liga-b.png">
 </head>
 <body>
     <header> 
@@ -59,7 +60,7 @@ if ($fila = mysqli_fetch_assoc($resultado)) {
         <div class="user-menu">
             <button class="user-menu-toggle" onclick="toggleUserMenu()">
                 <i class="bi bi-person-circle"></i>
-                <span class="user-menu-name"><?php echo htmlspecialchars($nombreMostrar); ?></span>
+                <span class="user-menu-name"><?php echo htmlspecialchars($nombreMostrarClub); ?></span>
             </button>
 
             <div class="user-menu-dropdown" id="userDropdown">

@@ -29,6 +29,7 @@ INNER JOIN club
 $queryCategoria = mysqli_query($con, "SELECT * FROM categoria");
 $queryClub = mysqli_query($con, "SELECT * FROM club");
 
+session_name('admin_session');
 session_start();
 
 require_once $_SERVER['DOCUMENT_ROOT'] . "/proyecto-final/conexion-bd/conexion.php";

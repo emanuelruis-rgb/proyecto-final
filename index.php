@@ -19,6 +19,7 @@
         <!-- empieza php-->
         <?php
         // Inicia la sesión para consultar y limpiar los errores de acceso.
+        session_name('login_session');
         session_start();
         if (isset($_SESSION['error'])) {
             // Muestra un aviso y evita que reaparezca en futuras visitas.

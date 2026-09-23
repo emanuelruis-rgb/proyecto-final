@@ -6,6 +6,7 @@
     /* join que junta las filas de acuerdo a idjugador(sancion) y cedula(jugador) */
     $querySanciones = mysqli_query($conexion, "SELECT sancion.idSancion, jugador.cedula, jugador.nombre, jugador.apellido, sancion.tipo, sancion.motivo, sancion.fechaSuspencion FROM sancion INNER JOIN jugador ON sancion.cedulaJugador = jugador.cedula;");
 
+session_name('admin_session');
 session_start();
 
 require_once $_SERVER['DOCUMENT_ROOT'] . "/proyecto-final/conexion-bd/conexion.php";
