@@ -1,22 +1,28 @@
 <?php
+// Recupera la sesión exclusiva del administrador.
 session_name('admin_session');
 session_start();
 
+// Carga la conexión compartida con la base de datos.
 require_once $_SERVER['DOCUMENT_ROOT'] . "/proyecto-final/conexion-bd/conexion.php";
 $conexion = connection();
 
+// Obtiene el usuario guardado en la sesión y define un nombre alternativo.
 $nombreSesion = $_SESSION['nombre'] ?? '';
 $nombreMostrar = $nombreSesion !== '' ? $nombreSesion : 'Administrador';
 
+// Busca el nombre real del administrador usando una consulta preparada.
 $stmt = mysqli_prepare($conexion, "SELECT nombreUsuario FROM administrador WHERE nombreUsuario = ?");
 mysqli_stmt_bind_param($stmt, "s", $nombreSesion);
 mysqli_stmt_execute($stmt);
 $resultado = mysqli_stmt_get_result($stmt);
 
+// Reemplaza el nombre alternativo si el administrador existe en la base.
 if ($fila = mysqli_fetch_assoc($resultado)) {
     $nombreMostrar = $fila['nombreUsuario'];
 }
 
+// Variables que almacenan el resultado de publicar un boletín.
 $mensajeBoletin = '';
 $tipoMensajeBoletin = '';
 
