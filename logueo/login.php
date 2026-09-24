@@ -19,6 +19,9 @@ if (mysqli_num_rows($resultadoAdmin) > 0) {
     session_name('admin_session');
     session_start();
     $_SESSION['nombre'] = $nombre;
+    // Guarda el administrador para atribuirle los boletines que publique.
+    $admin = mysqli_fetch_assoc($resultadoAdmin);
+    $_SESSION['idAdmin'] = $admin['idAdmin'];
     header("Location: ../admin/indexadmin.php");
     exit();
 } else {

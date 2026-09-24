@@ -183,6 +183,7 @@ if ($fila = mysqli_fetch_assoc($resultado)) {
                 <?php endwhile; ?>
             </tbody>
         </table>
+        </div>
     </div>
 </body>
 </html>

@@ -16,6 +16,15 @@ $resultado = mysqli_stmt_get_result($stmt);
 if ($fila = mysqli_fetch_assoc($resultado)) {
     $nombreMostrarClub = $fila['nombreClub'];
 }
+
+require_once __DIR__ . '/boletines-data.php';
+
+// Carga los boletines para mostrar solo el resumen en la página principal.
+$boletines = $conexion ? obtenerBoletines($conexion) : [];
+if ($conexion) {
+    // La conexión ya no se necesita después de cargar los datos.
+    mysqli_close($conexion);
+}
 ?>
 <!DOCTYPE html>
 <html lang="es">
@@ -26,7 +35,7 @@ if ($fila = mysqli_fetch_assoc($resultado)) {
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Página principal clubes</title>
-    <link rel="stylesheet" href="pagina-principal-club.css">
+    <link rel="stylesheet" href="pagina-principal-club.css?v=5">
     <link rel="icon" type="image/png" href="../img/logo-liga/log-liga-b.png">
 </head>
 <body>
@@ -38,8 +47,6 @@ if ($fila = mysqli_fetch_assoc($resultado)) {
             <div class="nav-izquierda-botones-container">
                 <!-- aca van los jugadores propios y despues da la opcion de seleccionar los ajenos-->
                 <a href="jugadores-club.php" class="nav-izquierda-botones">Jugadores</a>
-                <!-- apartado boletines para poder ver los boletines y noticias del admin-->
-                <a href="boletines-club.php" class="nav-izquierda-botones">Boletines</a>
             </div>
         </nav>
 
@@ -134,6 +141,42 @@ if ($fila = mysqli_fetch_assoc($resultado)) {
                 </script>
             </div>
             <!-- TERMINA CARRUSEL -->
+
+            <!-- Muestra una vista breve y enlaza con el listado completo. -->
+            <section class="boletines-resumen" aria-labelledby="titulo-boletines">
+                <div class="boletines-encabezado">
+                    <div>
+                        <p class="boletines-etiqueta">Información de la liga</p>
+                        <h1 id="titulo-boletines">Últimos boletines</h1>
+                    </div>
+                    <a href="boletines-club.php" class="boletines-ver-todos">
+                        Ver todos <i class="bi bi-arrow-right" aria-hidden="true"></i>
+                    </a>
+                </div>
+
+                <?php if (empty($boletines)): ?>
+                    <!-- Estado visible cuando todavía no hay publicaciones. -->
+                    <div class="boletines-vacio">
+                        <i class="bi bi-newspaper" aria-hidden="true"></i>
+                        <p>Aún no hay boletines publicados.</p>
+                    </div>
+                <?php else: ?>
+                    <!-- En el inicio solo se muestran los tres más recientes. -->
+                    <div class="boletines-grid">
+                        <?php foreach (array_slice($boletines, 0, 3) as $boletin): ?>
+                            <article class="boletin-item">
+                                <i class="bi bi-megaphone boletin-icono" aria-hidden="true"></i>
+                                <div>
+                                    <p class="boletin-fecha">
+                                        <?php echo htmlspecialchars(date('d/m/Y', strtotime($boletin['fechaSubida']))); ?>
+                                    </p>
+                                    <h2><?php echo htmlspecialchars($boletin['titulo']); ?></h2>
+                                </div>
+                            </article>
+                        <?php endforeach; ?>
+                    </div>
+                <?php endif; ?>
+            </section>
         </div>
     </div>
         

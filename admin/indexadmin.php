@@ -16,6 +16,38 @@ $resultado = mysqli_stmt_get_result($stmt);
 if ($fila = mysqli_fetch_assoc($resultado)) {
     $nombreMostrar = $fila['nombreUsuario'];
 }
+
+$mensajeBoletin = '';
+$tipoMensajeBoletin = '';
+
+if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['agregar_boletin'])) {
+    // Valida el título y asocia el boletín con el administrador autenticado.
+    $tituloBoletin = trim($_POST['titulo'] ?? '');
+    $idAdmin = $_SESSION['idAdmin'] ?? 0;
+
+    if ($idAdmin <= 0) {
+        $mensajeBoletin = 'Tu sesión de administrador no es válida. Vuelve a iniciar sesión.';
+        $tipoMensajeBoletin = 'error';
+    } elseif ($tituloBoletin === '' || strlen($tituloBoletin) > 40) {
+        $mensajeBoletin = 'El título debe tener entre 1 y 40 caracteres.';
+        $tipoMensajeBoletin = 'error';
+    } else {
+        // Escapa el texto antes de insertarlo en la base de datos.
+        $conexion = connection();
+        $tituloSeguro = mysqli_real_escape_string($conexion, $tituloBoletin);
+        $consulta = "INSERT INTO boletin (idAdmin, fechaSubida, titulo) VALUES ($idAdmin, CURDATE(), '$tituloSeguro')";
+
+        if (mysqli_query($conexion, $consulta)) {
+            $mensajeBoletin = 'Boletín publicado correctamente.';
+            $tipoMensajeBoletin = 'exito';
+        } else {
+            $mensajeBoletin = 'No se pudo publicar el boletín.';
+            $tipoMensajeBoletin = 'error';
+        }
+
+        mysqli_close($conexion);
+    }
+}
 ?>
 <!DOCTYPE html>
 <html lang="es">
@@ -25,7 +57,7 @@ if ($fila = mysqli_fetch_assoc($resultado)) {
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Página principal admins</title>
-    <link rel="stylesheet" href="pagina-principal-admin.css">
+    <link rel="stylesheet" href="pagina-principal-admin.css?v=5">
     <link rel="icon" type="image/png" href="../img/logo-liga/log-liga-b.png">
 </head>
 <body>
@@ -39,6 +71,7 @@ if ($fila = mysqli_fetch_assoc($resultado)) {
                 <a href="/proyecto-final/gest-club/club.php" class="nav-izquierda-botones">Clubes</a>
                 <a href="/proyecto-final/gest-fixture/fixtures.php" class="nav-izquierda-botones">Fixture</a>
                 <a href="/proyecto-final/gest-sanciones/sanciones.php" class="nav-izquierda-botones">Sanciones</a>
+                <a href="/proyecto-final/gest-documentos/documento.php" class="nav-izquierda-botones">Documentos</a>
             </div>
         </nav>
 
@@ -77,7 +110,37 @@ if ($fila = mysqli_fetch_assoc($resultado)) {
 
     <div class="layout-abajo-header">
         <div class="dashboard-container">
-            <h1> Bienvenido a la Página Principal de Admins!</h1>
+            <section class="admin-introduccion" aria-labelledby="titulo-admin">
+                <div class="admin-introduccion-icono" aria-hidden="true">
+                    <i class="bi bi-speedometer2"></i>
+                </div>
+                <div>
+                    <p class="admin-introduccion-etiqueta">Panel de administración</p>
+                    <h1 id="titulo-admin">Bienvenido a la página principal</h1>
+                    <p class="admin-introduccion-descripcion">Gestiona la información de la liga y mantén actualizadas las comunicaciones de los clubes.</p>
+                </div>
+            </section>
+
+            <!-- Formulario que permite publicar sin usar phpMyAdmin. -->
+            <section class="publicar-boletin" id="publicar-boletin" aria-labelledby="titulo-publicar-boletin">
+                <div>
+                    <p class="publicar-boletin-etiqueta">Comunicaciones</p>
+                    <h2 id="titulo-publicar-boletin">Publicar boletín</h2>
+                    <p>El comunicado aparecerá en la sección de boletines de los clubes.</p>
+                </div>
+                <form method="POST" class="publicar-boletin-form">
+                    <label for="titulo-boletin">Título del boletín</label>
+                    <div class="publicar-boletin-campo">
+                        <input type="text" id="titulo-boletin" name="titulo" maxlength="40" required placeholder="Ej. Cambio de horario de la jornada">
+                        <button type="submit" name="agregar_boletin"><i class="bi bi-send" aria-hidden="true"></i> Publicar</button>
+                    </div>
+                </form>
+                <?php if ($mensajeBoletin !== ''): ?>
+                    <p class="mensaje-boletin <?php echo $tipoMensajeBoletin; ?>">
+                        <?php echo htmlspecialchars($mensajeBoletin); ?>
+                    </p>
+                <?php endif; ?>
+            </section>
 
             <!-- Carrusel manual: el usuario cambia la imagen con los botones. -->
             <div class="carrusel-wrapper">
