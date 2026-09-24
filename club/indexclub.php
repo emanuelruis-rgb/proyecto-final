@@ -5,8 +5,8 @@ session_start();
 require_once $_SERVER['DOCUMENT_ROOT'] . "/proyecto-final/conexion-bd/conexion.php";
 $conexion = connection();
 
-$nombreSesionClub = $_SESSION['nombre'];
-$nombreMostrarClub = $nombreSesionClub; // valor por defecto, por si la consulta no encuentra nada
+$nombreSesionClub = $_SESSION['nombre'] ?? '';
+$nombreMostrarClub = $nombreSesionClub !== '' ? $nombreSesionClub : 'Club';
 
 $stmt = mysqli_prepare($conexion, "SELECT nombreClub FROM club WHERE nombreClub = ?");
 mysqli_stmt_bind_param($stmt, "s", $nombreSesionClub);

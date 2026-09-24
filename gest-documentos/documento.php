@@ -19,8 +19,8 @@ session_start();
 require_once $_SERVER['DOCUMENT_ROOT'] . "/proyecto-final/conexion-bd/conexion.php";
 $conexion = connection();
 
-$nombreSesion = $_SESSION['nombre'];
-$nombreMostrar = $nombreSesion; // valor por defecto, por si la consulta no encuentra nada
+$nombreSesion = $_SESSION['nombre'] ?? '';
+$nombreMostrar = $nombreSesion !== '' ? $nombreSesion : 'Administrador';
 
 $stmt = mysqli_prepare($conexion, "SELECT nombreUsuario FROM administrador WHERE nombreUsuario = ?");
 mysqli_stmt_bind_param($stmt, "s", $nombreSesion);
@@ -37,7 +37,7 @@ if ($fila = mysqli_fetch_assoc($resultado)) {
     <meta charset="UTF-8">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.13.1/font/bootstrap-icons.min.css">
     <title>Gestión de documentos</title>
-    <link rel="stylesheet" href="/proyecto-final/admin/pagina-principal-admin.css">
+    <link rel="stylesheet" href="/proyecto-final/admin/pagina-principal-admin.css?v=6">
     <link rel="icon" type="image/png" href="../img/logo-liga/log-liga-b.png">
 </head>
 <body>

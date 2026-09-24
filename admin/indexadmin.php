@@ -5,8 +5,8 @@ session_start();
 require_once $_SERVER['DOCUMENT_ROOT'] . "/proyecto-final/conexion-bd/conexion.php";
 $conexion = connection();
 
-$nombreSesion = $_SESSION['nombre'];
-$nombreMostrar = $nombreSesion; // valor por defecto, por si la consulta no encuentra nada
+$nombreSesion = $_SESSION['nombre'] ?? '';
+$nombreMostrar = $nombreSesion !== '' ? $nombreSesion : 'Administrador';
 
 $stmt = mysqli_prepare($conexion, "SELECT nombreUsuario FROM administrador WHERE nombreUsuario = ?");
 mysqli_stmt_bind_param($stmt, "s", $nombreSesion);
