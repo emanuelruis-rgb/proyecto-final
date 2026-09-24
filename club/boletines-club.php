@@ -1,9 +1,28 @@
 <?php
+session_name('club_session');
+session_start();
+
 require_once __DIR__ . '/../conexion-bd/conexion.php';
 require_once __DIR__ . '/boletines-data.php';
 
-// Carga todos los boletines para la vista completa.
 $conexion = connection();
+
+// Obtiene el nombre del club para reutilizar el menú del inicio.
+$nombreSesionClub = $_SESSION['nombre'] ?? '';
+$nombreMostrarClub = $nombreSesionClub !== '' ? $nombreSesionClub : 'Club';
+
+if ($nombreSesionClub !== '') {
+	$stmt = mysqli_prepare($conexion, 'SELECT nombreClub FROM club WHERE nombreClub = ?');
+	mysqli_stmt_bind_param($stmt, 's', $nombreSesionClub);
+	mysqli_stmt_execute($stmt);
+	$resultado = mysqli_stmt_get_result($stmt);
+
+	if ($fila = mysqli_fetch_assoc($resultado)) {
+		$nombreMostrarClub = $fila['nombreClub'];
+	}
+}
+
+// Carga todos los boletines para la vista completa.
 $boletines = $conexion ? obtenerBoletines($conexion) : [];
 if ($conexion) {
 	// Libera la conexión antes de generar la respuesta HTML.
@@ -17,32 +36,49 @@ if ($conexion) {
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
 	<title>Boletines | Club</title>
 	<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.13.1/font/bootstrap-icons.min.css">
-	<link rel="stylesheet" href="pagina-principal-club.css?v=5">
-	<link rel="icon" type="image/png" href="../img/copa.png">
+	<link rel="stylesheet" href="pagina-principal-club.css?v=6">
+	<link rel="icon" type="image/png" href="../img/logo-liga/log-liga-b.png">
 </head>
 <body>
 	<header>
 		<nav class="nav-izquierda-container">
-			<a href="indexclub.php">
-				<img src="/proyecto-final/img/logo-empresa/logo-empresa-blanco.png" alt="Logo" class="logo-empresa">
+			<a href="/proyecto-final/club/indexclub.php">
+				<img src="/proyecto-final/img/logo-liga/log-liga-d.png" alt="Logo" class="logo-empresa">
 			</a>
 			<div class="nav-izquierda-botones-container">
 				<a href="jugadores-club.php" class="nav-izquierda-botones">Jugadores</a>
-				<a href="boletines-club.php" class="nav-izquierda-botones active" aria-current="page">Boletines</a>
 			</div>
 		</nav>
 
-		<div class="nav-derecha-container">
-			<a href="#" class="nav-derecha-item" aria-label="Notificaciones">
-				<i class="bi bi-bell" aria-hidden="true"></i>
-			</a>
-			<a href="#" class="nav-derecha-item" aria-label="Perfil">
-				<i class="bi bi-person-circle" aria-hidden="true"></i>
-			</a>
-			<a href="/proyecto-final/index.php" class="nav-derecha-item">
-				<i class="bi bi-box-arrow-right" aria-hidden="true"></i>
-				<span>Cerrar sesión</span>
-			</a>
+		<script>
+		function toggleUserMenu() {
+			document.getElementById('userDropdown').classList.toggle('show');
+		}
+
+		document.addEventListener('click', function(event) {
+			const menu = document.querySelector('.user-menu');
+			const dropdown = document.getElementById('userDropdown');
+			if (!menu.contains(event.target)) {
+				dropdown.classList.remove('show');
+			}
+		});
+		</script>
+
+		<div class="user-menu">
+			<button class="user-menu-toggle" onclick="toggleUserMenu()">
+				<i class="bi bi-person-circle"></i>
+				<span class="user-menu-name"><?php echo htmlspecialchars($nombreMostrarClub); ?></span>
+			</button>
+
+			<div class="user-menu-dropdown" id="userDropdown">
+				<a href="../uploads/documentos/reglamento.pdf" class="user-menu-item" download>
+					<i class="bi bi-file-earmark-text"></i> Descargar documento
+				</a>
+				<a href="/proyecto-final/logout.php" class="user-menu-item">
+					<i class="bi bi-box-arrow-right"></i>
+					<span>Cerrar sesión</span>
+				</a>
+			</div>
 		</div>
 	</header>
 

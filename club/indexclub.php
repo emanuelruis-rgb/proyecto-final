@@ -35,7 +35,7 @@ if ($conexion) {
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Página principal clubes</title>
-    <link rel="stylesheet" href="pagina-principal-club.css?v=5">
+    <link rel="stylesheet" href="pagina-principal-club.css?v=6">
     <link rel="icon" type="image/png" href="../img/logo-liga/log-liga-b.png">
 </head>
 <body>

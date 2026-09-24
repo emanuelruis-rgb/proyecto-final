@@ -20,6 +20,8 @@ body {
 /* Header en general */
 header {
     height: 88px;
+    min-height: 88px;
+    box-sizing: border-box;
     background-color: var(--navy);
     border-bottom: 2px solid var(--gold);
     display: flex;
@@ -37,6 +39,14 @@ header {
     gap: 60px;
     flex: 1;
     min-width: 0;
+}
+
+.nav-izquierda-container > a {
+    display: flex;
+    align-items: center;
+    width: 100px;
+    height: 50px;
+    flex: 0 0 100px;
 }
 
 .logo-empresa {
