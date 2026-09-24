@@ -78,6 +78,31 @@ header {
     flex-wrap: wrap;
 }
 
+/* Completa visualmente el navbar sin convertirlo en otra sección. */
+.club-header-context {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    margin-left: auto;
+    margin-right: 28px;
+    color: #FFFFFF;
+}
+
+.club-header-context span {
+    color: var(--gold);
+    font-size: 14px;
+    font-weight: 700;
+    letter-spacing: 0.5px;
+    text-transform: uppercase;
+}
+
+.club-header-context small {
+    padding-left: 12px;
+    border-left: 1px solid rgba(255, 255, 255, 0.3);
+    color: #D5DDE4;
+    font-size: 13px;
+}
+
 .nav-izquierda-botones.active {
     background-color: #005de7;
 }
@@ -369,6 +394,10 @@ h1{
 }
 
 @media (max-width: 760px) {
+    .club-header-context {
+        display: none;
+    }
+
     .layout-abajo-header {
         grid-template-columns: 1fr;
         gap: 24px;

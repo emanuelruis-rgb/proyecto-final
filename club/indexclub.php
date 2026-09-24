@@ -36,6 +36,7 @@ if ($conexion) {
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Página principal clubes</title>
     <link rel="stylesheet" href="pagina-principal-club.css?v=6">
+    <script src="menu-club.js" defer></script>
     <link rel="icon" type="image/png" href="../img/logo-liga/log-liga-b.png">
 </head>
 <body>
@@ -50,19 +51,11 @@ if ($conexion) {
             </div>
         </nav>
 
-        <script>
-        function toggleUserMenu() {
-        document.getElementById('userDropdown').classList.toggle('show'); //busca el elemento con la clase UserDropdown y activa/desactiva el menu
-        }
-
-        document.addEventListener('click', function(event) {
-        const menu = document.querySelector('.user-menu');
-        const dropdown = document.getElementById('userDropdown');
-        if (!menu.contains(event.target)) {
-            dropdown.classList.remove('show');
-            }
-        });
-        </script>
+        <!-- Identifica el espacio de trabajo sin añadir otra opción al navbar. -->
+        <div class="club-header-context" aria-label="Sección actual">
+            <span>Portal del club</span>
+            <small>Gestión y novedades de la liga</small>
+        </div>
 
         <div class="user-menu">
             <button class="user-menu-toggle" onclick="toggleUserMenu()">

@@ -37,6 +37,7 @@ if ($conexion) {
 	<title>Boletines | Club</title>
 	<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.13.1/font/bootstrap-icons.min.css">
 	<link rel="stylesheet" href="pagina-principal-club.css?v=6">
+	<script src="menu-club.js" defer></script>
 	<link rel="icon" type="image/png" href="../img/logo-liga/log-liga-b.png">
 </head>
 <body>
@@ -50,19 +51,11 @@ if ($conexion) {
 			</div>
 		</nav>
 
-		<script>
-		function toggleUserMenu() {
-			document.getElementById('userDropdown').classList.toggle('show');
-		}
-
-		document.addEventListener('click', function(event) {
-			const menu = document.querySelector('.user-menu');
-			const dropdown = document.getElementById('userDropdown');
-			if (!menu.contains(event.target)) {
-				dropdown.classList.remove('show');
-			}
-		});
-		</script>
+		<!-- Mantiene la misma identidad visual que la página principal. -->
+		<div class="club-header-context" aria-label="Sección actual">
+			<span>Portal del club</span>
+			<small>Gestión y novedades de la liga</small>
+		</div>
 
 		<div class="user-menu">
 			<button class="user-menu-toggle" onclick="toggleUserMenu()">
