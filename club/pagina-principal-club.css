@@ -166,8 +166,6 @@ header {
 }
 /* termina el header a la derecha */
 
-/* DE ACA PARA ABAJO NO TOQUE NADA MAS(felipe) */
-
 .layout-abajo-header {
     /* Presenta el carrusel y los boletines como contenido principal. */
     display: grid;

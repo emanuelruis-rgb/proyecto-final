@@ -1,5 +1,4 @@
 <?php
-// Carga la conexión compartida con la base de datos.
 include "../conexion-bd/conexion.php";
 $conexion = connection();
 
@@ -24,11 +23,16 @@ if (mysqli_num_rows($resultadoAdmin) > 0) {
     $_SESSION['idAdmin'] = $admin['idAdmin'];
     header("Location: ../admin/indexadmin.php");
     exit();
-} else {
+} else {  //acá es si detecta q se ingreso como club.
     if (mysqli_num_rows($resultadoClub) > 0) {
         session_name('club_session');
         session_start();
-        $_SESSION['nombre'] = $nombre;
+        // el nombre del club queda guaradado como "nombre", ed ID como "idClub". esto se puede 
+        //usar en cualquier lado de la aplicacion web.
+        $club = mysqli_fetch_assoc($resultadoClub);
+        
+        $_SESSION['nombre'] = $club['nombreClub'];
+        $_SESSION['idClub'] = $club['idClub'];
         header("Location: ../club/indexclub.php");
         exit();
     } else {
