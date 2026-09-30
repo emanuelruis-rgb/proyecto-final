@@ -1,16 +1,20 @@
 <?php
     include_once(__DIR__ . "/../conexion-bd/conexion.php");
+
+    session_name('admin_session');
+    session_start();
+
     $conexion = connection();
+
     /*query que busca los clubes para ponerlos en los option de select clubes */
     $queryClubes = mysqli_query($conexion, "SELECT * FROM club");
-    /* join que junta las filas de acuerdo a idjugador(sancion) y cedula(jugador) */
-    $querySanciones = mysqli_query($conexion, "SELECT sancion.idSancion, jugador.cedula, jugador.nombre, jugador.apellido, sancion.tipo, sancion.motivo, sancion.fechaSuspencion FROM sancion INNER JOIN jugador ON sancion.cedulaJugador = jugador.cedula;");
-
-session_name('admin_session');
-session_start();
-
-require_once $_SERVER['DOCUMENT_ROOT'] . "/proyecto-final/conexion-bd/conexion.php";
-$conexion = connection();
+    /* join que junta las filas de acuerdo a la cédula del jugador y al club al que pertenece */
+    $querySanciones = mysqli_query($conexion, "
+        SELECT s.idSancion, j.cedula, j.nombre, j.apellido, c.nombreClub, s.tipo, s.motivo, s.fechaSuspencion
+        FROM sancion s
+        INNER JOIN jugador j ON s.cedulaJugador = j.cedula
+        INNER JOIN club c ON j.idClub = c.idClub
+    ");
 
 $nombreSesion = $_SESSION['nombre'];
 $nombreMostrar = $nombreSesion; // valor por defecto, por si la consulta no encuentra nada
@@ -132,6 +136,7 @@ if ($fila = mysqli_fetch_assoc($resultado)) {
                     <th>CI</th>
                     <th>Nombre</th>
                     <th>Apellido</th>
+                    <th>Club</th>
                     <th>Tipo de Sanción</th>
                     <th>Motivo</th>
                     <th>Fechas suspensión</th>
@@ -150,11 +155,12 @@ if ($fila = mysqli_fetch_assoc($resultado)) {
                 <td><?= $sancion['cedula'] ?></td>
                 <td><?= $sancion['nombre'] ?></td>
                 <td><?= $sancion['apellido'] ?></td>
+                <td><?= $sancion['nombreClub'] ?></td>
                 <td><?= $sancion['tipo'] ?></td>
                 <td><?= $sancion['motivo'] ?></td>
                 <td><?= $sancion['fechaSuspencion'] ?></td>
-                <th><a href="editar-sancion.php?idSancion=<?= $sancion['idSancion'] ?>" class="tabla--edit">Editar</a></th>
-                <th><a href="eliminar-sancion.php?idSancion=<?= $sancion['idSancion'] ?>" class="tabla--delete" >Eliminar</a></th>
+                <th><a href="editar-sancion.php?idSancion=<?= $sancion['idSancion'] ?>" class="tabla--edit"><i class="bi bi-pencil-square"></i></a></th>
+                <th><a href="eliminar-sancion.php?idSancion=<?= $sancion['idSancion'] ?>" class="tabla--delete" ><i class="bi bi-trash3-fill"></i></a></th>
             </tr>
             <?php endwhile; ?>
             </tbody>

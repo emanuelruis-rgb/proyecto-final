@@ -120,11 +120,14 @@ if ($fila = mysqli_fetch_assoc($resultado)) {
             <?php endwhile; ?>
 
             </select>
-            <input type="date" name="fecha-nacimiento" required>
-            <input type="text" name="genero" placeholder="Género" maxlength="1" required>
+            <input type="date" name="fecha-nacimiento" min="2013-01-01" max="2019-01-01" required>
+            <select name="genero" id="genero" required>
+                <option value="" disabled selected>Seleccionar género</option>
+                <option value="M">Masculino</option>
+                <option value="F">Femenino</option>
+            </select>
             <select name="idcategoria" required>
             <option value="">Seleccionar categoría</option>
-
             <?php while ($categoria = mysqli_fetch_array($queryCategoria)): ?>
                 <option value="<?= $categoria['idCategoria'] ?>">
                     <?= $categoria['año'] ?>
@@ -177,8 +180,8 @@ if ($fila = mysqli_fetch_assoc($resultado)) {
                         <th><?= $row['altura'] ?></th>
                         <th><?= $row['velocidad'] ?></th>
                         <th><?= number_format($row['fuerzaPeso'], 2) ?></th>
-                        <th><a href="actualizar-jug.php?id=<?= $row['cedula'] ?>" class="users-table--edit">Editar</a></th>
-                        <th><a href="eliminar-jug.php?id=<?= $row['cedula'] ?>" class="users-table--delete" >Eliminar</a></th>
+                        <th><a href="actualizar-jug.php?id=<?= $row['cedula'] ?>" class="users-table--edit"><i class="bi bi-pencil-square"></i></a></th>
+                        <th><a href="eliminar-jug.php?id=<?= $row['cedula'] ?>" class="users-table--delete" ><i class="bi bi-trash3-fill"></i></a></th>
                     </tr>
                 <?php endwhile; ?>
             </tbody>

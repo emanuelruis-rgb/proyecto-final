@@ -115,8 +115,8 @@ if ($fila = mysqli_fetch_assoc($resultado)) {
                         <th><?= $row['nombrePresidente'] ?></th>
                         <th><?= $row['añoCreacion'] ?></th>
                         <th><?= $row['estadio'] ?></th>
-                        <th><a href="actualizar-club.php?id=<?= $row['idClub'] ?>" class="users-table--edit">Editar</a></th>
-                        <th><a href="eliminar-club.php?id=<?= $row['idClub'] ?>" class="users-table--delete" >Eliminar</a></th>
+                        <th><a href="actualizar-club.php?id=<?= $row['idClub'] ?>" class="users-table--edit"><i class="bi bi-pencil-square"></i></a></th>
+                        <th><a href="eliminar-club.php?id=<?= $row['idClub'] ?>" class="users-table--delete" ><i class="bi bi-trash3-fill"></i></a></th>
                     </tr>
                 <?php endwhile; ?>
             </tbody>

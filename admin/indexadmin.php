@@ -77,7 +77,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['agregar_boletin'])) {
                 <a href="/proyecto-final/gest-club/club.php" class="nav-izquierda-botones">Clubes</a>
                 <a href="/proyecto-final/gest-fixture/fixtures.php" class="nav-izquierda-botones">Fixture</a>
                 <a href="/proyecto-final/gest-sanciones/sanciones.php" class="nav-izquierda-botones">Sanciones</a>
-                <a href="/proyecto-final/gest-documentos/documento.php" class="nav-izquierda-botones">Documentos</a>
             </div>
         </nav>
 

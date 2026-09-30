@@ -140,7 +140,7 @@ if ($fila = mysqli_fetch_assoc($resultado)) {
       </select>
 
       <label for="fechaPartido">Fecha</label>
-      <input type="date" name="fechaPartido" id="fechaPartido" required>
+      <input type="date" name="fechaPartido" id="fechaPartido" min="<?= date('Y-m-d') ?>" required>
 
       <label for="horaPartido">Hora</label>
       <input type="number" name="horaPartido" id="horaPartido" min="0" max="2359" placeholder="1530" required>
@@ -194,7 +194,7 @@ if ($fila = mysqli_fetch_assoc($resultado)) {
                   <!-- Elimina el partido seleccionado sin mostrar un formulario de alta. -->
                   <a href="eliminar-partido.php?id=<?= $p['idPartido'] ?>"
                      class="eliminar"
-                     onclick="return confirm('¿Eliminar este partido?')">Eliminar</a>
+                     onclick="return confirm('¿Eliminar este partido?')"><i class="bi bi-trash3-fill"></i></a>
                 </td>
               </tr>
             <?php endforeach; ?>
@@ -244,7 +244,7 @@ if ($fila = mysqli_fetch_assoc($resultado)) {
           ?>
           <a href="eliminar-partido.php?id=<?= $p['idPartido'] ?>"
              class="eliminar"
-             onclick="return confirm('¿Eliminar este partido?')">Eliminar</a>
+             onclick="return confirm('¿Eliminar este partido?')"><i class="bi bi-trash3-fill"></i></a>
         </div>
       <?php endforeach; ?>
     </div>
