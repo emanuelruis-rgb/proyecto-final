@@ -8,9 +8,12 @@ function formatoHora($hora) {
     return sprintf('%02d:%02d', $horas, $minutos);
 }
 
-// Devuelve los partidos agrupados por fecha, que es la columna disponible en la BD actual.
-function obtenerFixture($con) {
+// Devuelve los partidos agrupados por fecha.
+// Si $idCompeticion es 0 trae todas las competiciones; si no, solo la indicada.
+function obtenerFixture($con, $idCompeticion = 0) {
     $sql = "SELECT p.idPartido,
+                   p.idCompeticion,
+                   p.jugado,
                    p.fechaPartido,
                    p.horaPartido,
                    p.golesLocal,
@@ -20,9 +23,17 @@ function obtenerFixture($con) {
             FROM partido p
             JOIN club cl ON p.idClubLocal = cl.idClub
             JOIN club cv ON p.idClubVisitante = cv.idClub
+            WHERE (? = 0 OR p.idCompeticion = ?)
             ORDER BY p.fechaPartido, p.horaPartido";
 
-    $result = mysqli_query($con, $sql);
+    $stmt = mysqli_prepare($con, $sql);
+    if (!$stmt) {
+        return [];
+    }
+
+    mysqli_stmt_bind_param($stmt, "ii", $idCompeticion, $idCompeticion);
+    mysqli_stmt_execute($stmt);
+    $result = mysqli_stmt_get_result($stmt);
     if (!$result) {
         return [];
     }
@@ -52,13 +63,14 @@ function obtenerClubes($con) {
 function crearPartido($con, $datos) {
     $sql = "INSERT INTO partido
                 (idClubLocal, idClubVisitante, golesLocal, golesVisitante,
-                 duracionPartido, arbitro, estadio, fechaPartido, horaPartido)
-            VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)";
+                 duracionPartido, arbitro, estadio, fechaPartido, horaPartido,
+                 idCompeticion, jugado)
+            VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
 
     $stmt = mysqli_prepare($con, $sql);
     mysqli_stmt_bind_param(
         $stmt,
-        "iiiiisssi",
+        "iiiiisssiii",
         $datos['idClubLocal'],
         $datos['idClubVisitante'],
         $datos['golesLocal'],
@@ -67,10 +79,30 @@ function crearPartido($con, $datos) {
         $datos['arbitro'],
         $datos['estadio'],
         $datos['fechaPartido'],
-        $datos['horaPartido']
+        $datos['horaPartido'],
+        $datos['idCompeticion'],
+        $datos['jugado']
     );
 
     return mysqli_stmt_execute($stmt);
+}
+
+// Guarda el marcador y marca el partido como jugado para incluirlo en posiciones.
+function registrarResultado($con, $idPartido, $golesLocal, $golesVisitante) {
+    $sql = "UPDATE partido
+            SET golesLocal = ?, golesVisitante = ?, jugado = 1
+            WHERE idPartido = ? AND jugado = 0";
+
+    $stmt = mysqli_prepare($con, $sql);
+    if (!$stmt) {
+        return false;
+    }
+
+    mysqli_stmt_bind_param($stmt, "iii", $golesLocal, $golesVisitante, $idPartido);
+    $actualizado = mysqli_stmt_execute($stmt) && mysqli_stmt_affected_rows($stmt) === 1;
+    mysqli_stmt_close($stmt);
+
+    return $actualizado;
 }
 
 // Elimina un partido por su ID. Devuelve true si salió bien.

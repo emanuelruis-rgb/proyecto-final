@@ -4,37 +4,59 @@ include(__DIR__ . "/fixtures-data.php");
 
 $con = connection();
 $clubes = obtenerClubes($con);
+$resultadoCompeticiones = mysqli_query($con, "SELECT idCompeticion, nombreCompeticion FROM competicion ORDER BY nombreCompeticion");
+$competiciones = $resultadoCompeticiones ? mysqli_fetch_all($resultadoCompeticiones, MYSQLI_ASSOC) : [];
+$idCompeticionFiltro = (int)($_GET['competicion'] ?? 0);
 $mensaje = '';
 
 // Procesa el alta desde la misma pantalla para no depender de un botón separado.
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-  $datos = [
-    'idClubLocal' => (int)($_POST['idClubLocal'] ?? 0),
-    'idClubVisitante' => (int)($_POST['idClubVisitante'] ?? 0),
-    'fechaPartido' => $_POST['fechaPartido'] ?? '',
-    'horaPartido' => (int)($_POST['horaPartido'] ?? 0),
-    'estadio' => $_POST['estadio'] ?? '',
-    'arbitro' => $_POST['arbitro'] ?? '',
-    'golesLocal' => 0,
-    'golesVisitante' => 0,
-    'duracionPartido' => 0,
-  ];
+  if (isset($_POST['guardarResultado'])) {
+    $idPartido = filter_var($_POST['idPartido'] ?? null, FILTER_VALIDATE_INT);
+    $golesLocal = filter_var($_POST['golesLocal'] ?? null, FILTER_VALIDATE_INT);
+    $golesVisitante = filter_var($_POST['golesVisitante'] ?? null, FILTER_VALIDATE_INT);
+    $competicion = (int)($_POST['competicion'] ?? 0);
 
-  // Evita guardar un partido entre el mismo club y valida los datos básicos.
-  if ($datos['idClubLocal'] === $datos['idClubVisitante']) {
-    $mensaje = 'El club local y visitante no pueden ser el mismo.';
-  } elseif (!$datos['idClubLocal'] || !$datos['idClubVisitante'] || !$datos['fechaPartido']) {
-    $mensaje = 'Completa los clubes y la fecha del partido.';
-  } elseif (crearPartido($con, $datos)) {
-    // Actualiza la vista para mostrar la fecha recién guardada.
-    header('Location: fixtures.php');
-    exit;
+    if ($idPartido === false || $idPartido < 1 ||
+        $golesLocal === false || $golesLocal < 0 ||
+        $golesVisitante === false || $golesVisitante < 0) {
+      $mensaje = 'Ingresa un marcador válido para ambos clubes.';
+    } elseif (registrarResultado($con, $idPartido, $golesLocal, $golesVisitante)) {
+      header('Location: fixtures.php?competicion=' . $competicion);
+      exit;
+    } else {
+      $mensaje = 'No se pudo guardar el resultado. Es posible que el partido ya esté jugado.';
+    }
   } else {
-    $mensaje = 'Ocurrió un error al guardar el partido.';
+    $datos = [
+      'idClubLocal' => (int)($_POST['idClubLocal'] ?? 0),
+      'idClubVisitante' => (int)($_POST['idClubVisitante'] ?? 0),
+      'fechaPartido' => $_POST['fechaPartido'] ?? '',
+      'horaPartido' => (int)($_POST['horaPartido'] ?? 0),
+      'estadio' => $_POST['estadio'] ?? '',
+      'arbitro' => $_POST['arbitro'] ?? '',
+      'golesLocal' => 0,
+      'golesVisitante' => 0,
+      'duracionPartido' => 0,
+      'idCompeticion' => (int)($_POST['idCompeticion'] ?? 0),
+      'jugado' => 0,
+    ];
+
+    // Evita guardar un partido entre el mismo club y valida los datos básicos.
+    if ($datos['idClubLocal'] === $datos['idClubVisitante']) {
+      $mensaje = 'El club local y visitante no pueden ser el mismo.';
+    } elseif (!$datos['idClubLocal'] || !$datos['idClubVisitante'] || !$datos['fechaPartido'] || !$datos['idCompeticion']) {
+      $mensaje = 'Completa los clubes, la fecha y la competición del partido.';
+    } elseif (crearPartido($con, $datos)) {
+      header('Location: fixtures.php');
+      exit;
+    } else {
+      $mensaje = 'Ocurrió un error al guardar el partido.';
+    }
   }
 }
 
-$fixture = obtenerFixture($con);
+$fixture = obtenerFixture($con, $idCompeticionFiltro);
 
 session_name('admin_session');
 session_start();
@@ -74,6 +96,7 @@ if ($fila = mysqli_fetch_assoc($resultado)) {
                 <a href="/proyecto-final/gest-club/club.php" class="header-nav-link">Clubes</a>
                 <a href="/proyecto-final/gest-fixture/fixtures.php" class="header-nav-link active">Fixture</a>
                 <a href="/proyecto-final/gest-sanciones/sanciones.php" class="header-nav-link">Sanciones</a>
+                <a href="/proyecto-final/gest-fixture/posiciones.php" class="header-nav-link">Posiciones</a>
             </div>
         </nav>
 
@@ -108,9 +131,6 @@ if ($fila = mysqli_fetch_assoc($resultado)) {
             </div>
         </div>
     </header>
-
-
-
 <main>
   <!--
     La vista del fixture permite cargar una fecha y luego consultar los
@@ -136,6 +156,14 @@ if ($fila = mysqli_fetch_assoc($resultado)) {
         <option value="">Seleccionar</option>
         <?php foreach ($clubes as $club): ?>
           <option value="<?= $club['idClub'] ?>"><?= htmlspecialchars($club['nombreClub']) ?></option>
+        <?php endforeach; ?>
+      </select>
+      
+      <label for="idCompeticion">Competicion</label>
+      <select name="idCompeticion" id="idCompeticion" required>
+        <option value="">Seleccionar</option>
+        <?php foreach ($competiciones as $competicion): ?>
+          <option value="<?= $competicion['idCompeticion'] ?>"><?= htmlspecialchars($competicion['nombreCompeticion']) ?></option>
         <?php endforeach; ?>
       </select>
 
@@ -165,6 +193,17 @@ if ($fila = mysqli_fetch_assoc($resultado)) {
   <?php if ($fixture): ?>
     <!-- Tabla general para consultar rápidamente todos los partidos del fixture. -->
     <section class="tabla-fixture">
+      <form method="GET">
+        <select name="competicion" onchange="this.form.submit()">
+          <option value="0">Todas las competiciones</option>
+          <?php foreach ($competiciones as $c): ?>
+            <option value="<?= $c['idCompeticion'] ?>" <?= $c['idCompeticion'] == $idCompeticionFiltro ? 'selected' : '' ?>>
+              <?= htmlspecialchars($c['nombreCompeticion']) ?>
+        </option>
+      <?php endforeach; ?>
+    </select>
+    </form>
+
       <h1>Tabla de partidos</h1>
       <table>
         <thead>
@@ -173,7 +212,7 @@ if ($fila = mysqli_fetch_assoc($resultado)) {
             <th>Club local</th>
             <th>Club visitante</th>
             <th>Hora / resultado</th>
-            <th>Acción</th>
+            <th>Acción / resultado</th>
           </tr>
         </thead>
         <tbody>
@@ -184,13 +223,28 @@ if ($fila = mysqli_fetch_assoc($resultado)) {
                 <td><?= htmlspecialchars($p['local']) ?></td>
                 <td><?= htmlspecialchars($p['visitante']) ?></td>
                 <td>
-                  <?php if ($p['golesLocal'] === null || ((int)$p['golesLocal'] === 0 && (int)$p['golesVisitante'] === 0)): ?>
+                  <?php if (!$p['jugado']): ?>
                     <?= formatoHora($p['horaPartido']) ?>
                   <?php else: ?>
                     <?= (int)$p['golesLocal'] ?> - <?= (int)$p['golesVisitante'] ?>
                   <?php endif; ?>
                 </td>
                 <td>
+                  <?php if (!$p['jugado']): ?>
+                    <form method="POST" class="resultado-form">
+                      <input type="hidden" name="idPartido" value="<?= (int)$p['idPartido'] ?>">
+                      <input type="hidden" name="competicion" value="<?= $idCompeticionFiltro ?>">
+                      <label>
+                        Local
+                        <input type="number" name="golesLocal" min="0" step="1" required>
+                      </label>
+                      <label>
+                        Visitante
+                        <input type="number" name="golesVisitante" min="0" step="1" required>
+                      </label>
+                      <button type="submit" name="guardarResultado" value="1">Guardar resultado</button>
+                    </form>
+                  <?php endif; ?>
                   <!-- Elimina el partido seleccionado sin mostrar un formulario de alta. -->
                   <a href="eliminar-partido.php?id=<?= $p['idPartido'] ?>"
                      class="eliminar"
@@ -223,7 +277,7 @@ if ($fila = mysqli_fetch_assoc($resultado)) {
           ?>
           <div class="equipo local"><?= htmlspecialchars($p['local']) ?></div>
           <div class="centro">
-            <?php if ($p['golesLocal'] === null || ((int)$p['golesLocal'] === 0 && (int)$p['golesVisitante'] === 0)): ?>
+            <?php if (!$p['jugado']): ?>
               <?php
                 // Muestra la hora del partido
               ?>

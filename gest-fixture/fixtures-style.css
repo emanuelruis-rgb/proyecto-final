@@ -237,6 +237,42 @@ main > p {
     font-size: 0.9rem;
 }
 
+.resultado-form {
+    display: flex;
+    align-items: end;
+    gap: 8px;
+    padding: 0;
+    margin: 0;
+    background: transparent;
+    box-shadow: none;
+}
+
+.resultado-form label {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+    font-size: 0.75rem;
+}
+
+.resultado-form input {
+    width: 56px;
+    padding: 6px;
+}
+
+.resultado-form button {
+    padding: 7px 10px;
+    border: 0;
+    border-radius: 6px;
+    background: var(--pitch-green);
+    color: #fff;
+    font-weight: 700;
+    cursor: pointer;
+}
+
+.resultado-form button:hover {
+    background: var(--pitch-green-hover);
+}
+
 .tabla-fixture tr:last-child td {
     border-bottom: none;
 }
