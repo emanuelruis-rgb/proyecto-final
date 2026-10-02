@@ -1,4 +1,7 @@
 <?php
+session_name('admin_session');
+session_start();
+
 include(__DIR__ . "/../conexion-bd/conexion.php");
 $con = connection();
 
@@ -29,8 +32,8 @@ INNER JOIN club
 $queryCategoria = mysqli_query($con, "SELECT * FROM categoria");
 $queryClub = mysqli_query($con, "SELECT * FROM club");
 
-session_name('admin_session');
-session_start();
+$errorCedula=$_SESSION['errorCedula'] ?? '';
+unset($_SESSION['errorCedula']);
 
 require_once $_SERVER['DOCUMENT_ROOT'] . "/proyecto-final/conexion-bd/conexion.php";
 $conexion = connection();
@@ -111,6 +114,9 @@ if ($fila = mysqli_fetch_assoc($resultado)) {
             <input type="text" name="nombre" placeholder="Nombre">
             <input type="text" name="apellido" placeholder="Apellido">
             <input type="text" name="cedula" placeholder="Cédula">
+            <?php if($errorCedula): ?>
+                <small style="color:red;"><?=htmlspecialchars($errorCedula) ?></small>
+            <?php endif; ?>
             <select name="idclub" required>
             <option value="">Seleccionar club</option>
             <?php while ($club = mysqli_fetch_array($queryClub)): ?>

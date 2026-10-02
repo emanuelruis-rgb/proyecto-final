@@ -1,4 +1,15 @@
 <?php
+require_once(__DIR__ . "/validar-ci.php");
+session_name('admin_session');
+session_start();
+
+$cedula=str_replace(['.','-',' '], '', $_POST['cedula'] ?? '');
+if(!validarCI($cedula)) {
+    $_SESSION['errorCedula'] = "La cédula ingresada no es válida.";
+    header('Location: jugador.php');
+    exit;
+}
+
 include(__DIR__ . "/../conexion-bd/conexion.php");
 $con = connection();
 
