@@ -163,7 +163,7 @@ if ($fila = mysqli_fetch_assoc($resultado)) {
 
     <div class="tabla">
         <h2>Sanciones registradas</h2>
-        <form method="GET" class="filtros-sanciones">
+        <form class="filtros" method="GET" class="filtros-sanciones">
     <select name="filtro-club" onchange="this.form.submit()">
         <option value="0">Todos los clubes</option>
         <?php mysqli_data_seek($queryClubes, 0); // el while de arriba ya recorrió el resultado ?>
@@ -184,7 +184,7 @@ if ($fila = mysqli_fetch_assoc($resultado)) {
 </select>
 
     <?php if ($filtroClub || $filtroCategoria): ?>
-    <a href="sanciones.php">Limpiar filtros</a>
+    <a href="sanciones.php"class="limpiar-filtros">Limpiar filtros</a>
 <?php endif; ?>
 </form>
         <table>
@@ -192,7 +192,6 @@ if ($fila = mysqli_fetch_assoc($resultado)) {
                 <tr>
                     <!-- YA ESTAN CAMBIADOS LOS NOMBRES AHORA HAY QUE ADAPTAR EL FORMULARIO DE INTRODUCCION PARA Sanciones
                      EL SISTEMA DE RECUPERACION PARA PONER LAS SANCIONES EN LA TABLA INFERIOR LO HAGO DE CERO -->
-                    <th>ID Sanción</th>
                     <th>CI</th>
                     <th>Nombre</th>
                     <th>Apellido</th>
@@ -212,7 +211,6 @@ if ($fila = mysqli_fetch_assoc($resultado)) {
                 <?php while ($sancion = mysqli_fetch_array($querySanciones)): ?>
             <tr>
                 <!-- cada uno de estos td define una columna, y busca una columna en la bd, en orden -->
-                <td><?= $sancion['idSancion'] ?></td>
                 <td><?= $sancion['cedula'] ?></td>
                 <td><?= $sancion['nombre'] ?></td>
                 <td><?= $sancion['apellido'] ?></td>

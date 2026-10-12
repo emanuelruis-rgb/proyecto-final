@@ -59,3 +59,28 @@
     .nav-izquierda-container { gap: 25px; }
     .nav-izquierda-botones-container { gap: 14px; }
 }
+
+.filtros {
+    display: flex; flex-wrap: wrap; align-items: center; gap: 14px;
+    background: #fff; padding: 16px 20px; border-radius: 12px; 
+    max-width: 1300px; margin: 0 auto 20px;
+}
+.filtros select {
+    flex: 1 1 220px; min-width: 0; padding: 10px 40px 10px 14px;
+    border: 1px solid #dcdfe6; border-radius: 6px; background-color: #fff;
+    font-size: 0.95rem; color: var(--text-main); cursor: pointer; outline: none;
+    appearance: none;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8' fill='none' stroke='%232C3E50' stroke-width='2'%3E%3Cpath d='M1 1l5 5 5-5'/%3E%3C/svg%3E");
+    background-repeat: no-repeat; background-position: right 14px center;
+    transition: border-color 0.2s ease, box-shadow 0.2s ease;
+}
+
+.filtros select:focus { border-color: var(--pitch-green); box-shadow: 0 0 0 3px rgba(60, 138, 62, 0.15); }
+
+.limpiar-filtros {
+    display: inline-flex; align-items: center; gap: 6px; padding: 10px 16px;
+    border: 1px solid var(--danger); border-radius: 6px; background: transparent;
+    color: var(--danger); font-size: 0.9rem; font-weight: 600; text-decoration: none; white-space: nowrap;
+    transition: background-color 0.2s ease, color 0.2s ease;
+}
+.limpiar-filtros:hover { background: var(--danger); color: #fff; }
