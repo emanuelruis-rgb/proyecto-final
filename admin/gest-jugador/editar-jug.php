@@ -1,6 +1,6 @@
 <?php
 
-include(__DIR__ . "/../conexion-bd/conexion.php");
+include(__DIR__ . "/../../conexion-bd/conexion.php");
 $con = connection();
 
 $cedula = $_POST['cedula'];
@@ -31,7 +31,7 @@ $sql = "UPDATE jugador SET
 $query = mysqli_query($con, $sql);
 
 if ($query) {
-    header("Location: /proyecto-final/gest-jugador/jugador.php");
+    header("Location: /proyecto-final/admin/gest-jugador/jugador.php");
     exit();
 } else {
     echo "Error al actualizar el jugador: " . mysqli_error($con);

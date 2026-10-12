@@ -10,7 +10,7 @@ if(!validarCI($cedula)) {
     exit;
 }
 
-include(__DIR__ . "/../conexion-bd/conexion.php");
+include(__DIR__ . "/../../conexion-bd/conexion.php");
 $con = connection();
 
 $nombre = $_POST['nombre'] ?? '';

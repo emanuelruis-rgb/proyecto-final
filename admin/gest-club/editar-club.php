@@ -1,6 +1,6 @@
 <?php
 
-include(__DIR__ . "/../conexion-bd/conexion.php");
+include(__DIR__ . "/../../conexion-bd/conexion.php");
 $con = connection();
 
 $id=$_POST["idClub"];

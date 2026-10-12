@@ -1,5 +1,5 @@
 <?php
-include(__DIR__ . "/../conexion-bd/conexion.php");
+include(__DIR__ . "/../../conexion-bd/conexion.php");
 $conexion = connection();
 
 /* este get del idclub es el que recibe el id club de sanciones.js

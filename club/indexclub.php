@@ -49,6 +49,8 @@ if ($conexion) {
                 <!-- aca van los jugadores propios y despues da la opcion de seleccionar los ajenos-->
                 <a href="jugadores-club.php" class="nav-izquierda-botones">Jugadores</a>
                 <a href="sanciones.php" class="nav-izquierda-botones">Sanciones</a>
+                <a href="sanciones.php" class="nav-izquierda-botones">Fixture</a>
+                <a href="../admin/gest-fixture/posiciones.php" class="nav-izquierda-botones">Tabla de posiciones</a>
             </div>
         </nav>
 
