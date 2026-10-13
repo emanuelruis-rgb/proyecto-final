@@ -17,7 +17,51 @@ $resultado = mysqli_stmt_get_result($stmt);
 if ($fila = mysqli_fetch_assoc($resultado)) {
     $nombreMostrarClub = $fila['nombreClub'];
 }
+
+$tipoClub = $_GET["tipoClub"];
+
+//Este query es para iterar los jugadores propios alla abajo, en base a club.
+// usa el nombreClubSesion q ya viene de login
+if ($tipoClub == "propio") {
+    $queryJugadores = mysqli_query($conexion, "
+    SELECT
+        jugador.cedula,
+        jugador.nombre,
+        jugador.apellido,
+        jugador.idClub,
+        jugador.fechaNacimiento,
+        jugador.genero,
+        categoria.año,
+        club.nombreClub
+    FROM jugador
+    INNER JOIN categoria 
+    ON jugador.idCategoria = categoria.idCategoria
+    INNER JOIN club 
+    ON jugador.idClub = club.idClub
+    WHERE jugador.idClub = $idClub;
+    ");
+} else {
+    $queryJugadores = mysqli_query($conexion, "
+    SELECT
+        jugador.cedula,
+        jugador.nombre,
+        jugador.apellido,
+        jugador.idClub,
+        jugador.fechaNacimiento,
+        jugador.genero,
+        categoria.año,
+        club.nombreClub
+    FROM jugador
+    INNER JOIN categoria 
+    ON jugador.idCategoria = categoria.idCategoria
+    INNER JOIN club 
+    ON jugador.idClub = club.idClub
+    WHERE jugador.idClub != $idClub;
+    ");
+};
+
 ?>
+
 <!DOCTYPE html>
 <html lang="es">
 <head>
@@ -37,6 +81,7 @@ if ($fila = mysqli_fetch_assoc($resultado)) {
             <div class="nav-izquierda-botones-container">
                 <!-- aca van los jugadores propios y despues da la opcion de seleccionar los ajenos-->
                 <a href="" class="nav-izquierda-botones">Jugadores</a>
+                <a href="/proyecto-final/club/sanciones.php" class="nav-izquierda-botones">Sanciones</a>
             </div>
         </nav>
 
@@ -64,8 +109,8 @@ if ($fila = mysqli_fetch_assoc($resultado)) {
     </header>
     <main>
         <div class="boton-alternar-tabla-container">
-            <a href="jugadores-club.php?tipo=propios" class="boton-alternar-tabla">Nuestros jugadores</a>
-            <a href="jugadores-club.php?tipo=ajenos" class="boton-alternar-tabla">Jugadores ajenos</a>
+            <a href="jugadores-club.php?tipoClub=propio" class="boton-alternar-tabla">Nuestros jugadores</a>
+            <a href="jugadores-club.php?tipoClub=ajenos" class="boton-alternar-tabla">Jugadores ajenos</a>
         </div>
 
         <div class="tabla">
@@ -83,18 +128,18 @@ if ($fila = mysqli_fetch_assoc($resultado)) {
                     </tr>
                 </thead>
                 <tbody>
-                    <!-- este while itera por las sanciones con el join de allá arriba
-                    y $sancion es una sancion invidual
-                    <?php // while ($sancion = mysqli_fetch_array($querySanciones)): ?>-->
+                    <?php while ($jugador = mysqli_fetch_array($queryJugadores)): ?>
                 <tr>
-                    <!-- cada uno de estos td define una columna, y busca una columna en la bd, en orden -->
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
+                    <td><?= $jugador['cedula'] ?></td>
+                    <td><?= $jugador['nombre'] ?></td>
+                    <td><?= $jugador['apellido'] ?></td>
+                    <td><?= $jugador['nombreClub'] ?></td> 
+                    <td><?= $jugador['fechaNacimiento'] ?></td>
+                    <td><?= $jugador['genero'] ?></td>
+                    <td><?= $jugador['año'] ?></td>
                 </tr>
-                </tbody>
+                <?php endwhile; ?>
+            </tbody>
             </table>
         </div>
     </main>

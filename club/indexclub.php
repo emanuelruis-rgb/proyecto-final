@@ -47,7 +47,7 @@ if ($conexion) {
             </a>
             <div class="nav-izquierda-botones-container">
                 <!-- aca van los jugadores propios y despues da la opcion de seleccionar los ajenos-->
-                <a href="jugadores-club.php" class="nav-izquierda-botones">Jugadores</a>
+                <a href="jugadores-club.php?tipoClub=propio" class="nav-izquierda-botones">Jugadores</a>
                 <a href="sanciones.php" class="nav-izquierda-botones">Sanciones</a>
             </div>
         </nav>
