@@ -1,6 +1,10 @@
 <?php
 session_name('club_session');
 session_start();
+if (!isset($_SESSION['nombre'], $_SESSION['idClub'])) {
+    header('Location: /proyecto-final/index.php');
+    exit;
+}
 
 require_once $_SERVER['DOCUMENT_ROOT'] . "/proyecto-final/conexion-bd/conexion.php";
 $conexion = connection();
@@ -49,6 +53,8 @@ if ($conexion) {
                 <!-- aca van los jugadores propios y despues da la opcion de seleccionar los ajenos-->
                 <a href="jugadores-club.php?tipoClub=propio" class="nav-izquierda-botones">Jugadores</a>
                 <a href="sanciones.php" class="nav-izquierda-botones">Sanciones</a>
+                <a href="fixture.php" class="nav-izquierda-botones">Fixture</a>
+                <a href="posiciones.php" class="nav-izquierda-botones">Tabla de posiciones</a>
             </div>
         </nav>
 

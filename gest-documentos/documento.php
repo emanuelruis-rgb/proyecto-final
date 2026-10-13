@@ -15,6 +15,10 @@ $mensajeAMostrar = $mensajes[$estado] ?? null;
 
 session_name('admin_session');
 session_start();
+if (!isset($_SESSION['nombre'])) {
+    header('Location: /proyecto-final/index.php');
+    exit;
+}
 
 require_once $_SERVER['DOCUMENT_ROOT'] . "/proyecto-final/conexion-bd/conexion.php";
 $conexion = connection();
@@ -37,7 +41,7 @@ if ($fila = mysqli_fetch_assoc($resultado)) {
     <meta charset="UTF-8">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.13.1/font/bootstrap-icons.min.css">
     <title>Gestión de documentos</title>
-    <link rel="stylesheet" href="/proyecto-final/admin/pagina-principal-admin.css?v=6">
+    <link rel="stylesheet" href="../pagina-principal-admin.css?v=6">
     <link rel="icon" type="image/png" href="../img/logo-liga/log-liga-b.png">
 </head>
 <body>
@@ -47,10 +51,10 @@ if ($fila = mysqli_fetch_assoc($resultado)) {
                 <img src="/proyecto-final/img/logo-liga/log-liga-b.png" alt="Logo" class="logo-liga">
             </a>
             <div class="nav-izquierda-botones-container">
-                <a href="/proyecto-final/gest-jugador/jugador.php" class="nav-izquierda-botones">Jugadores</a>
-                <a href="/proyecto-final/gest-club/club.php" class="nav-izquierda-botones">Clubes</a>
-                <a href="/proyecto-final/gest-fixture/fixtures.php" class="nav-izquierda-botones">Fixture</a>
-                <a href="/proyecto-final/gest-sanciones/sanciones.php" class="nav-izquierda-botones">Sanciones</a>
+                <a href="/proyecto-final/admin/gest-jugador/jugador.php" class="nav-izquierda-botones">Jugadores</a>
+                <a href="/proyecto-final/admin/gest-club/club.php" class="nav-izquierda-botones">Clubes</a>
+                <a href="/proyecto-final/admin/gest-fixture/fixtures.php" class="nav-izquierda-botones">Fixture</a>
+                <a href="/proyecto-final/admin/gest-sanciones/sanciones.php" class="nav-izquierda-botones">Sanciones</a>
             </div>
         </nav>
 

@@ -1,5 +1,13 @@
 <?php
-include(__DIR__ . "/../conexion-bd/conexion.php");
+// La gestión del fixture está reservada a una sesión autenticada de administrador.
+session_name('admin_session');
+session_start();
+if (!isset($_SESSION['nombre'])) {
+  header('Location: /proyecto-final/index.php');
+  exit;
+}
+
+include(__DIR__ . "/../../conexion-bd/conexion.php");
 include(__DIR__ . "/fixtures-data.php");
 
 $con = connection();
@@ -9,7 +17,7 @@ $competiciones = $resultadoCompeticiones ? mysqli_fetch_all($resultadoCompeticio
 $idCompeticionFiltro = (int)($_GET['competicion'] ?? 0);
 $mensaje = '';
 
-// Procesa el alta desde la misma pantalla para no depender de un botón separado.
+// El administrador puede crear partidos o cargar el resultado de uno pendiente.
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
   if (isset($_POST['guardarResultado'])) {
     $idPartido = filter_var($_POST['idPartido'] ?? null, FILTER_VALIDATE_INT);
@@ -57,24 +65,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 }
 
 $fixture = obtenerFixture($con, $idCompeticionFiltro);
-
-session_name('admin_session');
-session_start();
-
-require_once $_SERVER['DOCUMENT_ROOT'] . "/proyecto-final/conexion-bd/conexion.php";
-$conexion = connection();
-
-$nombreSesion = $_SESSION['nombre'];
-$nombreMostrar = $nombreSesion; // valor por defecto, por si la consulta no encuentra nada
-
-$stmt = mysqli_prepare($conexion, "SELECT nombreUsuario FROM administrador WHERE nombreUsuario = ?");
-mysqli_stmt_bind_param($stmt, "s", $nombreSesion);
-mysqli_stmt_execute($stmt);
-$resultado = mysqli_stmt_get_result($stmt);
-
-if ($fila = mysqli_fetch_assoc($resultado)) {
-    $nombreMostrar = $fila['nombreUsuario'];
-}
+$nombreMostrar = $_SESSION['nombre'];
 ?>
 <!DOCTYPE html>
 <html lang="es">
@@ -82,21 +73,22 @@ if ($fila = mysqli_fetch_assoc($resultado)) {
   <meta charset="UTF-8">
   <title>Gestión del fixture</title>
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.13.1/font/bootstrap-icons.min.css">
-  <link rel="stylesheet" href="/proyecto-final/gest-fixture/fixtures-style.css">
-  <link rel="icon" type="image/png" href="../img/logo-liga/log-liga-b.png">
+  <link rel="stylesheet" href="../pagina-principal-admin.css?v=5">
+  <link rel="stylesheet" href="fixtures-style.css?v=1">
+  <link rel="icon" type="image/png" href="../../img/logo-liga/log-liga-b.png">
 </head>
 <body>
-  <header class="main-header">
-        <nav class="main-nav">
-            <a href="/proyecto-final/admin/indexadmin.php" class="brand-link">
+  <header> 
+        <nav class="nav-izquierda-container">
+            <a href="/proyecto-final/admin/indexadmin.php">
                 <img src="/proyecto-final/img/logo-liga/log-liga-b.png" alt="Logo" class="logo-liga">
             </a>
-            <div class="nav-links">
-                <a href="/proyecto-final/gest-jugador/jugador.php" class="header-nav-link">Jugadores</a>
-                <a href="/proyecto-final/gest-club/club.php" class="header-nav-link">Clubes</a>
-                <a href="/proyecto-final/gest-fixture/fixtures.php" class="header-nav-link active">Fixture</a>
-                <a href="/proyecto-final/gest-sanciones/sanciones.php" class="header-nav-link">Sanciones</a>
-                <a href="/proyecto-final/gest-fixture/posiciones.php" class="header-nav-link">Posiciones</a>
+            <div class="nav-izquierda-botones-container">
+                <a href="../gest-jugador/jugador.php" class="nav-izquierda-botones">Jugadores</a>
+                <a href="../gest-club/club.php" class="nav-izquierda-botones ">Clubes</a>
+                <a href="../gest-fixture/fixtures.php" class="nav-izquierda-botones active">Fixture</a>                
+                <a href="../gest-sanciones/sanciones.php" class="nav-izquierda-botones">Sanciones</a>
+                <a href="posiciones.php" class="nav-izquierda-botones">Tabla de posiciones</a>
             </div>
         </nav>
 

@@ -1,5 +1,5 @@
 <?php
-    include(__DIR__ . "/../conexion-bd/conexion.php");
+    include(__DIR__ . "/../../conexion-bd/conexion.php");
     $con=connection();
 
     $id=$_GET['id'];
@@ -15,7 +15,7 @@
     <head>
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1">
-        <link href="/proyecto-final/gest-club/club-style.css" rel="stylesheet">
+        <link href="/proyecto-final/admin/gest-club/club-style.css" rel="stylesheet">
         <title>Editar club</title>
         
     </head>

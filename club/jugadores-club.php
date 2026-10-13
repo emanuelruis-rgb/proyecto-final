@@ -1,6 +1,10 @@
 <?php
 session_name('club_session');
 session_start();
+if (!isset($_SESSION['nombre'], $_SESSION['idClub'])) {
+    header('Location: /proyecto-final/index.php');
+    exit;
+}
 
 require_once $_SERVER['DOCUMENT_ROOT'] . "/proyecto-final/conexion-bd/conexion.php";
 $conexion = connection();

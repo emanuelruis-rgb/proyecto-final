@@ -1,20 +1,58 @@
 <?php
-    include_once(__DIR__ . "/../conexion-bd/conexion.php");
+    include_once(__DIR__ . "/../../conexion-bd/conexion.php");
 
     session_name('admin_session');
     session_start();
+    if (!isset($_SESSION['nombre'])) {
+        header('Location: /proyecto-final/index.php');
+        exit;
+    }
 
     $conexion = connection();
 
     /*query que busca los clubes para ponerlos en los option de select clubes */
     $queryClubes = mysqli_query($conexion, "SELECT * FROM club");
     /* join que junta las filas de acuerdo a la cédula del jugador y al club al que pertenece */
-    $querySanciones = mysqli_query($conexion, "
-        SELECT s.idSancion, j.cedula, j.nombre, j.apellido, c.nombreClub, s.tipo, s.motivo, s.fechaSuspencion
-        FROM sancion s
-        INNER JOIN jugador j ON s.cedulaJugador = j.cedula
-        INNER JOIN club c ON j.idClub = c.idClub
-    ");
+    $filtroClub      = (int)($_GET['filtro-club'] ?? 0);
+$filtroCategoria = (int)($_GET['filtro-categoria'] ?? 0);
+
+// Categorías para el selector del filtro
+$categorias = mysqli_fetch_all(
+    mysqli_query($conexion, "SELECT idCategoria, `año` FROM categoria ORDER BY `año` DESC"),
+    MYSQLI_ASSOC
+);
+
+$where  = [];
+$tipos  = "";
+$params = [];
+
+if ($filtroClub > 0) {
+    $where[]  = "c.idClub = ?";
+    $tipos   .= "i";
+    $params[] = $filtroClub;
+}
+if ($filtroCategoria > 0) {
+    $where[]  = "j.idCategoria = ?";
+    $tipos   .= "i";
+    $params[] = $filtroCategoria;
+}
+
+$sqlSanciones = "
+    SELECT s.idSancion, j.cedula, j.nombre, j.apellido, cat.`año` AS categoria,
+           c.nombreClub, s.tipo, s.motivo, s.fechaSuspencion
+    FROM sancion s
+    INNER JOIN jugador j   ON s.cedulaJugador = j.cedula
+    INNER JOIN club c      ON j.idClub = c.idClub
+    LEFT JOIN categoria cat ON j.idCategoria = cat.idCategoria"
+    . ($where ? " WHERE " . implode(" AND ", $where) : "")
+    . " ORDER BY s.idSancion DESC";
+
+$stmtSanciones = mysqli_prepare($conexion, $sqlSanciones);
+if ($params) {
+    mysqli_stmt_bind_param($stmtSanciones, $tipos, ...$params);
+}
+mysqli_stmt_execute($stmtSanciones);
+$querySanciones = mysqli_stmt_get_result($stmtSanciones);
 
 $nombreSesion = $_SESSION['nombre'];
 $nombreMostrar = $nombreSesion; // valor por defecto, por si la consulta no encuentra nada
@@ -36,8 +74,9 @@ if ($fila = mysqli_fetch_assoc($resultado)) {
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Gestión de sanciones</title>
-    <link rel="stylesheet" href="sanciones-style.css">
-    <link rel="icon" type="image/png" href="../img/logo-liga/log-liga-b.png">
+    <link rel="stylesheet" href="../pagina-principal-admin.css?v=5">
+    <link rel="stylesheet" href="sanciones-style.css?v=1">
+    <link rel="icon" type="image/png" href="../../img/logo-liga/log-liga-b.png">
     <script src="sanciones.js" defer></script>
 </head>
 <body>
@@ -47,10 +86,11 @@ if ($fila = mysqli_fetch_assoc($resultado)) {
                 <img src="/proyecto-final/img/logo-liga/log-liga-b.png" alt="Logo" class="logo-liga">
             </a>
             <div class="nav-izquierda-botones-container">
-                <a href="/proyecto-final/gest-jugador/jugador.php" class="nav-izquierda-botones">Jugadores</a>
-                <a href="/proyecto-final/gest-club/club.php" class="nav-izquierda-botones">Clubes</a>
-                <a href="/proyecto-final/gest-fixture/fixtures.php" class="nav-izquierda-botones">Fixture</a>
-                <a href="/proyecto-final/gest-sanciones/sanciones.php" class="nav-izquierda-botones active">Sanciones</a>
+                <a href="../gest-jugador/jugador.php" class="nav-izquierda-botones">Jugadores</a>
+                <a href="../gest-club/club.php" class="nav-izquierda-botones">Clubes</a>
+                <a href="../gest-fixture/fixtures.php" class="nav-izquierda-botones">Fixture</a>
+                <a href="../gest-sanciones/sanciones.php" class="nav-izquierda-botones active">Sanciones</a>
+                <a href="../gest-fixture/posiciones.php" class="nav-izquierda-botones">Tabla de posiciones</a>
             </div>
         </nav>
 
@@ -127,16 +167,40 @@ if ($fila = mysqli_fetch_assoc($resultado)) {
 
     <div class="tabla">
         <h2>Sanciones registradas</h2>
+        <form class="filtros" method="GET" class="filtros-sanciones">
+    <select name="filtro-club" onchange="this.form.submit()">
+        <option value="0">Todos los clubes</option>
+        <?php mysqli_data_seek($queryClubes, 0); // el while de arriba ya recorrió el resultado ?>
+        <?php while ($club = mysqli_fetch_array($queryClubes)): ?>
+            <option value="<?= $club['idClub'] ?>" <?= $club['idClub'] == $filtroClub ? 'selected' : '' ?>>
+                <?= htmlspecialchars($club['nombreClub']) ?>
+            </option>
+        <?php endwhile; ?>
+    </select>
+
+    <select name="filtro-categoria" onchange="this.form.submit()">
+    <option value="0">Todas las categorías</option>
+    <?php foreach ($categorias as $cat): ?>
+        <option value="<?= $cat['idCategoria'] ?>" <?= $cat['idCategoria'] == $filtroCategoria ? 'selected' : '' ?>>
+            <?= htmlspecialchars($cat['año']) ?>
+        </option>
+    <?php endforeach; ?>
+</select>
+
+    <?php if ($filtroClub || $filtroCategoria): ?>
+    <a href="sanciones.php"class="limpiar-filtros">Limpiar filtros</a>
+<?php endif; ?>
+</form>
         <table>
             <thead>
                 <tr>
                     <!-- YA ESTAN CAMBIADOS LOS NOMBRES AHORA HAY QUE ADAPTAR EL FORMULARIO DE INTRODUCCION PARA Sanciones
                      EL SISTEMA DE RECUPERACION PARA PONER LAS SANCIONES EN LA TABLA INFERIOR LO HAGO DE CERO -->
-                    <th>ID Sanción</th>
                     <th>CI</th>
                     <th>Nombre</th>
                     <th>Apellido</th>
                     <th>Club</th>
+                    <th>Categoría</th>
                     <th>Tipo de Sanción</th>
                     <th>Motivo</th>
                     <th>Fechas suspensión</th>
@@ -151,11 +215,11 @@ if ($fila = mysqli_fetch_assoc($resultado)) {
                 <?php while ($sancion = mysqli_fetch_array($querySanciones)): ?>
             <tr>
                 <!-- cada uno de estos td define una columna, y busca una columna en la bd, en orden -->
-                <td><?= $sancion['idSancion'] ?></td>
                 <td><?= $sancion['cedula'] ?></td>
                 <td><?= $sancion['nombre'] ?></td>
                 <td><?= $sancion['apellido'] ?></td>
                 <td><?= $sancion['nombreClub'] ?></td>
+                <td><?= htmlspecialchars($sancion['categoria'] ?? '-') ?></td> 
                 <td><?= $sancion['tipo'] ?></td>
                 <td><?= $sancion['motivo'] ?></td>
                 <td><?= $sancion['fechaSuspencion'] ?></td>

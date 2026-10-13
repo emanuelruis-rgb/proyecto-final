@@ -1,0 +1,86 @@
+/* Estilos propios de esta página. Variables, body, header y menú de usuario vienen del CSS general. */
+:root { --danger: #dc3545; --danger-hover: #bd2130; } /* mover al :root del general */
+
+* { box-sizing: border-box; }
+.logo-liga { display: block; transform: translateY(-2px); }
+.nav-derecha-item:hover { color: var(--gold); }
+
+/* ===== Formulario ===== */
+.formulario-container {
+    background: #fff; padding: 35px 40px; border-radius: 12px; box-shadow: var(--sombra);
+    width: 100%; max-width: 460px; margin: 40px auto;
+}
+.formulario-container h1 {
+    font-size: 1.5rem; font-weight: 700; color: #fff; background: var(--navy);
+    margin: -35px -40px 25px; padding: 14px 16px; border-radius: 12px 12px 0 0;
+    text-align: center; text-shadow: none;
+}
+.formulario-container form { display: flex; flex-direction: column; gap: 14px; }
+
+.select-formulario, .formulario-container input[type="text"], .formulario-container input[type="number"] {
+    width: 100%; padding: 12px 16px; border: 1px solid #dcdfe6; border-radius: 6px;
+    background: #fff; font-size: 0.95rem; color: var(--text-main); outline: none;
+    transition: border-color 0.2s ease-in-out, box-shadow 0.2s ease-in-out;
+}
+.formulario-container input:focus, .select-formulario:focus {
+    border-color: var(--pitch-green); box-shadow: 0 0 0 3px rgba(60, 138, 62, 0.15);
+}
+.formulario-container input[type="submit"] {
+    background: var(--pitch-green); color: #fff; border: none; padding: 14px; border-radius: 6px;
+    font-size: 0.95rem; font-weight: 700; cursor: pointer; margin-top: 10px;
+    transition: background-color 0.2s ease;
+}
+.formulario-container input[type="submit"]:hover { background: var(--pitch-green-hover); }
+
+/* ===== Tabla ===== */
+.tabla {
+    background: #fff; padding: 30px; border-radius: 12px; box-shadow: var(--sombra);
+    width: 100%; max-width: 1300px; margin: 0 auto 40px; overflow-x: auto;
+}
+.tabla h2 { font-size: 1.4rem; font-weight: 700; color: var(--navy); margin: 0 0 20px; }
+.tabla table { width: 100%; border-collapse: collapse; font-size: 0.9rem; white-space: nowrap; }
+.tabla thead tr { background: var(--navy); color: #fff; text-align: left; }
+.tabla th, .tabla td { padding: 14px 16px; border-bottom: 1px solid #eef2f5; }
+.tabla tbody tr:hover { background: #f8fafc; }
+
+/* Botones Editar / Eliminar */
+.tabla--edit, .tabla--delete {
+    display: inline-block; padding: 7px 16px; border-radius: 6px; color: #fff; text-decoration: none;
+    font-weight: 600; font-size: 0.85rem; text-align: center; transition: background-color 0.2s ease;
+}
+.tabla--edit { background: var(--navy); }
+.tabla--edit:hover { background: var(--navy-soft); }
+.tabla--delete { background: var(--danger); }
+.tabla--delete:hover { background: var(--danger-hover); }
+
+/* ===== Responsive: header en pantallas chicas ===== */
+@media (max-width: 900px) {
+    header { height: auto; min-height: 90px; padding: 15px 20px; }
+    .nav-izquierda-container { gap: 25px; }
+    .nav-izquierda-botones-container { gap: 14px; }
+}
+
+.filtros {
+    display: flex; flex-wrap: wrap; align-items: center; gap: 14px;
+    background: #fff; padding: 16px 20px; border-radius: 12px; 
+    max-width: 1300px; margin: 0 auto 20px;
+}
+.filtros select {
+    flex: 1 1 220px; min-width: 0; padding: 10px 40px 10px 14px;
+    border: 1px solid #dcdfe6; border-radius: 6px; background-color: #fff;
+    font-size: 0.95rem; color: var(--text-main); cursor: pointer; outline: none;
+    appearance: none;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8' fill='none' stroke='%232C3E50' stroke-width='2'%3E%3Cpath d='M1 1l5 5 5-5'/%3E%3C/svg%3E");
+    background-repeat: no-repeat; background-position: right 14px center;
+    transition: border-color 0.2s ease, box-shadow 0.2s ease;
+}
+
+.filtros select:focus { border-color: var(--pitch-green); box-shadow: 0 0 0 3px rgba(60, 138, 62, 0.15); }
+
+.limpiar-filtros {
+    display: inline-flex; align-items: center; gap: 6px; padding: 10px 16px;
+    border: 1px solid var(--danger); border-radius: 6px; background: transparent;
+    color: var(--danger); font-size: 0.9rem; font-weight: 600; text-decoration: none; white-space: nowrap;
+    transition: background-color 0.2s ease, color 0.2s ease;
+}
+.limpiar-filtros:hover { background: var(--danger); color: #fff; }

@@ -1,6 +1,6 @@
 <?php
 
-include(__DIR__ . "/../conexion-bd/conexion.php");
+include(__DIR__ . "/../../conexion-bd/conexion.php");
 $con = connection();
 
 $cedula = $_GET['id'];
@@ -19,7 +19,7 @@ $queryCategoria = mysqli_query($con, "SELECT * FROM categoria");
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <link href="/proyecto-final/gest-jugador/jug-style.css" rel="stylesheet">
+    <link href="/proyecto-final/admin/gest-jugador/jug-style.css" rel="stylesheet">
     <title>Editar jugador</title>
 </head>
 <body>

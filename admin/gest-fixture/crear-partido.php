@@ -1,5 +1,13 @@
 <?php
-include(__DIR__ . "/../conexion-bd/conexion.php");
+// Impide que una sesión de club o un visitante cree partidos.
+session_name('admin_session');
+session_start();
+if (!isset($_SESSION['nombre'])) {
+    header('Location: /proyecto-final/index.php');
+    exit;
+}
+
+include(__DIR__ . "/../../conexion-bd/conexion.php");
 include(__DIR__ . "/fixtures-data.php");
 
 $con = connection();
@@ -35,7 +43,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 <head>
   <meta charset="UTF-8">
   <title>Nuevo partido</title>
-  <link rel="stylesheet" href="/proyecto-final/gest-fixture/fixtures-style.css">
+  <link rel="stylesheet" href="/proyecto-final/admin/gest-fixture/fixtures-style.css">
 </head>
 <body>
 

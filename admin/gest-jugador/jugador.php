@@ -1,8 +1,12 @@
 <?php
 session_name('admin_session');
 session_start();
+if (!isset($_SESSION['nombre'])) {
+    header('Location: /proyecto-final/index.php');
+    exit;
+}
 
-include(__DIR__ . "/../conexion-bd/conexion.php");
+include(__DIR__ . "/../../conexion-bd/conexion.php");
 $con = connection();
 
 /* esta query hace join de jugador y club para poder no solo tener todos los datos del jugador
@@ -58,21 +62,23 @@ if ($fila = mysqli_fetch_assoc($resultado)) {
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Gestión de jugadores</title>
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.13.1/font/bootstrap-icons.min.css">
-    <link rel="stylesheet" href="/proyecto-final/gest-jugador/jug-style.css">
-    <link rel="icon" type="image/png" href="../img/logo-liga/log-liga-b.png">
+    <link rel="stylesheet" href="../pagina-principal-admin.css?v=5">
+    <link rel="stylesheet" href="jug-style.css?v=1">
+    <link rel="icon" type="image/png" href="../../img/logo-liga/log-liga-b.png">
 </head>
 <body>
     
     <header> 
-        <nav class="main-nav">
+        <nav class="nav-izquierda-container">
             <a href="/proyecto-final/admin/indexadmin.php">
                 <img src="/proyecto-final/img/logo-liga/log-liga-b.png" alt="Logo" class="logo-liga">
             </a>
-            <div class="nav-links">
-                <a href="/proyecto-final/gest-jugador/jugador.php" class="header-nav-link active">Jugadores</a>
-                <a href="/proyecto-final/gest-club/club.php" class="header-nav-link">Clubes</a>
-                <a href="/proyecto-final/gest-fixture/fixtures.php" class="header-nav-link">Fixture</a>
-                <a href="/proyecto-final/gest-sanciones/sanciones.php" class="header-nav-link">Sanciones</a>
+            <div class="nav-izquierda-botones-container">
+                <a href="../gest-jugador/jugador.php" class="nav-izquierda-botones active">Jugadores</a>
+                <a href="../gest-club/club.php" class="nav-izquierda-botones">Clubes</a>
+                <a href="../gest-fixture/fixtures.php" class="nav-izquierda-botones">Fixture</a>                
+                <a href="../gest-sanciones/sanciones.php" class="nav-izquierda-botones">Sanciones</a>
+                <a href="../gest-fixture/posiciones.php" class="nav-izquierda-botones">Tabla de posiciones</a>
             </div>
         </nav>
 

@@ -1,5 +1,5 @@
 <?php 
-    include(__DIR__ . "/../conexion-bd/conexion.php");
+    include(__DIR__ . "/../../conexion-bd/conexion.php");
     $conexion = connection();
     /* este archivo solo manda lo recibido de editar-sancion.php a la bd. edita todo menos la id 
     de la sancion, editar-sancion.php es solo la interfaz */

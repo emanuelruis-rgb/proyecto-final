@@ -2,6 +2,10 @@
 // Recupera la sesión exclusiva del administrador.
 session_name('admin_session');
 session_start();
+if (!isset($_SESSION['nombre'])) {
+    header('Location: /proyecto-final/index.php');
+    exit;
+}
 
 // Carga la conexión compartida con la base de datos.
 require_once $_SERVER['DOCUMENT_ROOT'] . "/proyecto-final/conexion-bd/conexion.php";
@@ -73,10 +77,11 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['agregar_boletin'])) {
                 <img src="/proyecto-final/img/logo-liga/log-liga-d.png" alt="Logo" class="logo-liga">
             </a>
             <div class="nav-izquierda-botones-container">
-                <a href="/proyecto-final/gest-jugador/jugador.php" class="nav-izquierda-botones">Jugadores</a>
-                <a href="/proyecto-final/gest-club/club.php" class="nav-izquierda-botones">Clubes</a>
-                <a href="/proyecto-final/gest-fixture/fixtures.php" class="nav-izquierda-botones">Fixture</a>
-                <a href="/proyecto-final/gest-sanciones/sanciones.php" class="nav-izquierda-botones">Sanciones</a>
+                <a href="gest-jugador/jugador.php" class="nav-izquierda-botones">Jugadores</a>
+                <a href="gest-club/club.php" class="nav-izquierda-botones">Clubes</a>
+                <a href="gest-fixture/fixtures.php" class="nav-izquierda-botones">Fixture</a>
+                <a href="gest-sanciones/sanciones.php" class="nav-izquierda-botones">Sanciones</a>
+                <a href="gest-fixture/posiciones.php" class="nav-izquierda-botones">Tabla de posiciones</a>
             </div>
         </nav>
 
@@ -101,7 +106,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['agregar_boletin'])) {
             </button>
 
             <div class="user-menu-dropdown" id="userDropdown">
-                <a href="../gest-documentos/documento.php" class="user-menu-item">
+                <a href="gest-documentos/documento.php" class="user-menu-item">
                     <i class="bi bi-file-earmark-text"></i> Subir documento
             </a>
             <a href="/proyecto-final/index.php" class="user-menu-item">

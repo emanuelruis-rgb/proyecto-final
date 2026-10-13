@@ -1,7 +1,7 @@
 <?php 
     /* ESTE ARCHIVO SIRVE COMO LA INTERFAZ PARA EDITAR LAS SANCIONES. NO PODES CAMBIAR EL ID, EL RESTO SI
     Y LA OPERACION EN LA BD DE REALMENTE CAMBIAR LA SANCION VA EN ejectura-editar-sancion.php */
-    include(__DIR__ . "/../conexion-bd/conexion.php");
+    include(__DIR__ . "/../../conexion-bd/conexion.php");
     $conexion = connection();
 
     /* recibe el id de clubes mandado por la ejecucion de este php en editar en la tabla de 
@@ -30,7 +30,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Editar sanciones</title>
     <link rel="stylesheet" href="sanciones-style.css">
-    <link rel="icon" type="image/png" href="../img/copa.png">
+    <link rel="icon" type="image/png" href="../../img/logo-liga/log-liga-b.png">
     <script src="sanciones.js" defer></script>
 </head>
 <body>
@@ -40,10 +40,10 @@
                 <img src="/proyecto-final/img/logo-empresa/logo-empresa-blanco.png" alt="Logo" class="logo-empresa">
             </a>
             <div class="nav-izquierda-botones-container">
-                <a href="/proyecto-final/gest-jugador/jugador.php" class="nav-izquierda-botones">Jugadores</a>
-                <a href="/proyecto-final/gest-club/club.php" class="nav-izquierda-botones">Clubes</a>
-                <a href="/proyecto-final/admin/fixtures.php" class="nav-izquierda-botones">Fixture</a>
-                <a href="/proyecto-final/gest-sanciones/sanciones.php" class="nav-izquierda-botones">Sanciones</a>
+                <a href="/proyecto-final/admin/gest-jugador/jugador.php" class="nav-izquierda-botones">Jugadores</a>
+                <a href="/proyecto-final/admin/gest-club/club.php" class="nav-izquierda-botones">Clubes</a>
+                <a href="/proyecto-final/admin/gest-fixture/fixtures.php" class="nav-izquierda-botones">Fixture</a>
+                <a href="/proyecto-final/admin/gest-sanciones/sanciones.php" class="nav-izquierda-botones">Sanciones</a>
             </div>
         </nav>
 

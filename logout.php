@@ -1,5 +1,7 @@
 <?php
-// Cierra las sesiones independientes que puede tener abiertas el navegador.
+
+// Cada rol usa una sesión distinta; se invalidan todas para cerrar también
+// una sesión anterior de otro rol abierta en el mismo navegador.
 foreach (['admin_session', 'club_session', 'login_session'] as $nombreSesion) {
 	session_name($nombreSesion);
 	session_start();
@@ -7,12 +9,13 @@ foreach (['admin_session', 'club_session', 'login_session'] as $nombreSesion) {
 
 	if (ini_get('session.use_cookies')) {
 		$parametros = session_get_cookie_params();
+		// Además de destruir la sesión en el servidor, expira la cookie del navegador.
 		setcookie($nombreSesion, '', time() - 42000, $parametros['path'], $parametros['domain'], $parametros['secure'], $parametros['httponly']);
 	}
 
 	session_destroy();
 }
 
-// Devuelve al usuario al formulario de inicio de sesión.
+// Evita que una recarga del formulario repita la solicitud de cierre.
 header('Location: index.php');
 exit;

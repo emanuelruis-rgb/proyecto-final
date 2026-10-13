@@ -1,16 +1,57 @@
 <?php
 session_name('club_session');
 session_start();
+if (!isset($_SESSION['nombre'], $_SESSION['idClub'])) {
+    header('Location: /proyecto-final/index.php');
+    exit;
+}
 
 require_once $_SERVER['DOCUMENT_ROOT'] . "/proyecto-final/conexion-bd/conexion.php";
 $conexion = connection();
 
-$querySanciones = mysqli_query($conexion, "
-        SELECT s.idSancion, j.cedula, j.nombre, j.apellido, c.nombreClub, s.tipo, s.motivo, s.fechaSuspencion
-        FROM sancion s
-        INNER JOIN jugador j ON s.cedulaJugador = j.cedula
-        INNER JOIN club c ON j.idClub = c.idClub
-    ");
+/*query que busca los clubes para ponerlos en los option de select clubes */
+    $queryClubes = mysqli_query($conexion, "SELECT * FROM club");
+    /* join que junta las filas de acuerdo a la cédula del jugador y al club al que pertenece */
+    $filtroClub      = (int)($_GET['filtro-club'] ?? 0);
+$filtroCategoria = (int)($_GET['filtro-categoria'] ?? 0);
+
+// Categorías para el selector del filtro
+$categorias = mysqli_fetch_all(
+    mysqli_query($conexion, "SELECT idCategoria, `año` FROM categoria ORDER BY `año` DESC"),
+    MYSQLI_ASSOC
+);
+
+$where  = [];
+$tipos  = "";
+$params = [];
+
+if ($filtroClub > 0) {
+    $where[]  = "c.idClub = ?";
+    $tipos   .= "i";
+    $params[] = $filtroClub;
+}
+if ($filtroCategoria > 0) {
+    $where[]  = "j.idCategoria = ?";
+    $tipos   .= "i";
+    $params[] = $filtroCategoria;
+}
+
+$sqlSanciones = "
+    SELECT s.idSancion, j.cedula, j.nombre, j.apellido, cat.`año` AS categoria,
+           c.nombreClub, s.tipo, s.motivo, s.fechaSuspencion
+    FROM sancion s
+    INNER JOIN jugador j   ON s.cedulaJugador = j.cedula
+    INNER JOIN club c      ON j.idClub = c.idClub
+    LEFT JOIN categoria cat ON j.idCategoria = cat.idCategoria"
+    . ($where ? " WHERE " . implode(" AND ", $where) : "")
+    . " ORDER BY s.idSancion DESC";
+
+$stmtSanciones = mysqli_prepare($conexion, $sqlSanciones);
+if ($params) {
+    mysqli_stmt_bind_param($stmtSanciones, $tipos, ...$params);
+}
+mysqli_stmt_execute($stmtSanciones);
+$querySanciones = mysqli_stmt_get_result($stmtSanciones);
 $nombreSesionClub = $_SESSION['nombre'] ?? '';
 $nombreMostrarClub = $nombreSesionClub !== '' ? $nombreSesionClub : 'Club';
 
@@ -52,9 +93,10 @@ if ($conexion) {
                 <img src="/proyecto-final/img/logo-liga/log-liga-d.png" alt="Logo" class="logo-empresa">
             </a>
             <div class="nav-izquierda-botones-container">
-                <!-- aca van los jugadores propios y despues da la opcion de seleccionar los ajenos-->
                 <a href="jugadores-club.php" class="nav-izquierda-botones">Jugadores</a>
-                <a href="sanciones.php" class="nav-izquierda-botones">Sanciones</a>
+                <a href="sanciones.php" class="nav-izquierda-botones active" aria-current="page">Sanciones</a>
+                <a href="fixture.php" class="nav-izquierda-botones">Fixture</a>
+                <a href="posiciones.php" class="nav-izquierda-botones">Tabla de posiciones</a>
             </div>
         </nav>
 
@@ -83,6 +125,29 @@ if ($conexion) {
     </header>
     <div class="tabla">
         <h2>Sanciones registradas</h2>
+        <form class="filtros" method="GET" class="filtros-sanciones">
+    <select name="filtro-club" onchange="this.form.submit()">
+        <option value="0">Todos los clubes</option>
+        <?php mysqli_data_seek($queryClubes, 0); // el while de arriba ya recorrió el resultado ?>
+        <?php while ($club = mysqli_fetch_array($queryClubes)): ?>
+            <option value="<?= $club['idClub'] ?>" <?= $club['idClub'] == $filtroClub ? 'selected' : '' ?>>
+                <?= htmlspecialchars($club['nombreClub']) ?>
+            </option>
+        <?php endwhile; ?>
+    </select>
+
+    <select name="filtro-categoria" onchange="this.form.submit()">
+    <option value="0">Todas las categorías</option>
+    <?php foreach ($categorias as $cat): ?>
+        <option value="<?= $cat['idCategoria'] ?>" <?= $cat['idCategoria'] == $filtroCategoria ? 'selected' : '' ?>>
+            <?= htmlspecialchars($cat['año']) ?>
+        </option>
+    <?php endforeach; ?>
+</select>
+
+    <?php if ($filtroClub || $filtroCategoria): ?>
+    <a href="sanciones.php"class="limpiar-filtros">Limpiar filtros</a>
+<?php endif; ?>
         <table>
             <thead>
                 <tr>
