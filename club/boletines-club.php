@@ -1,6 +1,10 @@
 <?php
 session_name('club_session');
 session_start();
+if (!isset($_SESSION['nombre'], $_SESSION['idClub'])) {
+    header('Location: /proyecto-final/index.php');
+    exit;
+}
 
 require_once __DIR__ . '/../conexion-bd/conexion.php';
 require_once __DIR__ . '/boletines-data.php';
@@ -48,6 +52,9 @@ if ($conexion) {
 			</a>
 			<div class="nav-izquierda-botones-container">
 				<a href="jugadores-club.php" class="nav-izquierda-botones">Jugadores</a>
+				<a href="sanciones.php" class="nav-izquierda-botones">Sanciones</a>
+				<a href="fixture.php" class="nav-izquierda-botones">Fixture</a>
+				<a href="posiciones.php" class="nav-izquierda-botones">Tabla de posiciones</a>
 			</div>
 		</nav>
 

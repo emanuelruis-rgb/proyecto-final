@@ -2,6 +2,10 @@
 // Recupera la sesión exclusiva del administrador.
 session_name('admin_session');
 session_start();
+if (!isset($_SESSION['nombre'])) {
+    header('Location: /proyecto-final/index.php');
+    exit;
+}
 
 // Carga la conexión compartida con la base de datos.
 require_once $_SERVER['DOCUMENT_ROOT'] . "/proyecto-final/conexion-bd/conexion.php";

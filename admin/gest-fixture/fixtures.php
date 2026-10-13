@@ -1,4 +1,12 @@
 <?php
+// La gestión del fixture está reservada a una sesión autenticada de administrador.
+session_name('admin_session');
+session_start();
+if (!isset($_SESSION['nombre'])) {
+  header('Location: /proyecto-final/index.php');
+  exit;
+}
+
 include(__DIR__ . "/../../conexion-bd/conexion.php");
 include(__DIR__ . "/fixtures-data.php");
 
@@ -9,7 +17,7 @@ $competiciones = $resultadoCompeticiones ? mysqli_fetch_all($resultadoCompeticio
 $idCompeticionFiltro = (int)($_GET['competicion'] ?? 0);
 $mensaje = '';
 
-// Procesa el alta desde la misma pantalla para no depender de un botón separado.
+// El administrador puede crear partidos o cargar el resultado de uno pendiente.
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
   if (isset($_POST['guardarResultado'])) {
     $idPartido = filter_var($_POST['idPartido'] ?? null, FILTER_VALIDATE_INT);
@@ -57,24 +65,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 }
 
 $fixture = obtenerFixture($con, $idCompeticionFiltro);
-
-session_name('admin_session');
-session_start();
-
-require_once $_SERVER['DOCUMENT_ROOT'] . "/proyecto-final/conexion-bd/conexion.php";
-$conexion = connection();
-
-$nombreSesion = $_SESSION['nombre'];
-$nombreMostrar = $nombreSesion; // valor por defecto, por si la consulta no encuentra nada
-
-$stmt = mysqli_prepare($conexion, "SELECT nombreUsuario FROM administrador WHERE nombreUsuario = ?");
-mysqli_stmt_bind_param($stmt, "s", $nombreSesion);
-mysqli_stmt_execute($stmt);
-$resultado = mysqli_stmt_get_result($stmt);
-
-if ($fila = mysqli_fetch_assoc($resultado)) {
-    $nombreMostrar = $fila['nombreUsuario'];
-}
+$nombreMostrar = $_SESSION['nombre'];
 ?>
 <!DOCTYPE html>
 <html lang="es">

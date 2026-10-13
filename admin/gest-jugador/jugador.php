@@ -1,6 +1,10 @@
 <?php
 session_name('admin_session');
 session_start();
+if (!isset($_SESSION['nombre'])) {
+    header('Location: /proyecto-final/index.php');
+    exit;
+}
 
 include(__DIR__ . "/../../conexion-bd/conexion.php");
 $con = connection();

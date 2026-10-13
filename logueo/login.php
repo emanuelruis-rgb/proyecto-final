@@ -2,6 +2,7 @@
 include "../conexion-bd/conexion.php";
 $conexion = connection();
 
+
 // Obtiene las credenciales enviadas por el formulario de acceso.
 $nombre = $_POST['nombre'];
 $contraseña = $_POST['contraseña'];

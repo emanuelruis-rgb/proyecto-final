@@ -44,10 +44,15 @@ form button:hover { background: var(--pitch-green-hover); }
 .tabla-alta-fixture input, .tabla-alta-fixture select { width: 100%; padding: 10px; box-sizing: border-box; }
 .tabla-alta-fixture button { padding: 10px 14px; }
 
-.resultado-form { padding: 0; gap: 8px; align-items: end; }
+.resultado-form {
+    display: grid; grid-template-columns: repeat(2, 64px);
+    justify-content: end; padding: 0; gap: 6px 8px; align-items: end;
+}
 .resultado-form label { display: flex; flex-direction: column; gap: 4px; font-size: 0.75rem; }
-.resultado-form input { width: 56px; padding: 6px; }
-.resultado-form button { padding: 7px 10px; }
+.resultado-form input { width: 100%; box-sizing: border-box; padding: 6px; }
+.resultado-form button {
+    grid-column: 1 / -1; justify-self: end; margin-top: 0; padding: 7px 10px;
+}
 
 /* ===== Tabla general ===== */
 .tabla-fixture table { width: 100%; border-collapse: collapse; white-space: nowrap; }

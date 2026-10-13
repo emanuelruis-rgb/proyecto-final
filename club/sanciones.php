@@ -1,6 +1,10 @@
 <?php
 session_name('club_session');
 session_start();
+if (!isset($_SESSION['nombre'], $_SESSION['idClub'])) {
+    header('Location: /proyecto-final/index.php');
+    exit;
+}
 
 require_once $_SERVER['DOCUMENT_ROOT'] . "/proyecto-final/conexion-bd/conexion.php";
 $conexion = connection();
@@ -89,9 +93,10 @@ if ($conexion) {
                 <img src="/proyecto-final/img/logo-liga/log-liga-d.png" alt="Logo" class="logo-empresa">
             </a>
             <div class="nav-izquierda-botones-container">
-                <!-- aca van los jugadores propios y despues da la opcion de seleccionar los ajenos-->
                 <a href="jugadores-club.php" class="nav-izquierda-botones">Jugadores</a>
-                <a href="sanciones.php" class="nav-izquierda-botones">Sanciones</a>
+                <a href="sanciones.php" class="nav-izquierda-botones active" aria-current="page">Sanciones</a>
+                <a href="fixture.php" class="nav-izquierda-botones">Fixture</a>
+                <a href="posiciones.php" class="nav-izquierda-botones">Tabla de posiciones</a>
             </div>
         </nav>
 

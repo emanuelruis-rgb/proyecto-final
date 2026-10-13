@@ -1,4 +1,12 @@
 <?php
+// Impide que una sesión de club o un visitante cree partidos.
+session_name('admin_session');
+session_start();
+if (!isset($_SESSION['nombre'])) {
+    header('Location: /proyecto-final/index.php');
+    exit;
+}
+
 include(__DIR__ . "/../../conexion-bd/conexion.php");
 include(__DIR__ . "/fixtures-data.php");
 

@@ -2,6 +2,10 @@
 require_once(__DIR__ . "/validar-ci.php");
 session_name('admin_session');
 session_start();
+if (!isset($_SESSION['nombre'])) {
+    header('Location: /proyecto-final/index.php');
+    exit;
+}
 
 $cedula=str_replace(['.','-',' '], '', $_POST['cedula'] ?? '');
 if(!validarCI($cedula)) {
