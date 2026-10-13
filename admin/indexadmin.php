@@ -14,6 +14,13 @@ $conexion = connection();
 // Obtiene el usuario guardado en la sesión y define un nombre alternativo.
 $nombreSesion = $_SESSION['nombre'] ?? '';
 $nombreMostrar = $nombreSesion !== '' ? $nombreSesion : 'Administrador';
+$tokenCsrfBoletines = $_SESSION['csrf_boletines'] ?? '';
+
+// Crea un token impredecible para validar las acciones POST de boletines.
+if ($tokenCsrfBoletines === '') {
+    $tokenCsrfBoletines = bin2hex(random_bytes(32));
+    $_SESSION['csrf_boletines'] = $tokenCsrfBoletines;
+}
 
 // Busca el nombre real del administrador usando una consulta preparada.
 $stmt = mysqli_prepare($conexion, "SELECT nombreUsuario FROM administrador WHERE nombreUsuario = ?");
@@ -25,10 +32,54 @@ $resultado = mysqli_stmt_get_result($stmt);
 if ($fila = mysqli_fetch_assoc($resultado)) {
     $nombreMostrar = $fila['nombreUsuario'];
 }
+mysqli_stmt_close($stmt);
 
-// Variables que almacenan el resultado de publicar un boletín.
+// Separa el aviso de eliminación del aviso de publicación para mostrar cada uno junto a su acción.
+$mensajeFlashBoletin = $_SESSION['mensaje_flash_boletin'] ?? null;
+unset($_SESSION['mensaje_flash_boletin']);
 $mensajeBoletin = '';
 $tipoMensajeBoletin = '';
+$mensajeEliminacionBoletin = $mensajeFlashBoletin['mensaje'] ?? '';
+$tipoMensajeEliminacionBoletin = $mensajeFlashBoletin['tipo'] ?? '';
+
+if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['eliminar_boletin'])) {
+    // Exige que la petición provenga del formulario del panel y no de una web externa.
+    $tokenEnviado = $_POST['csrf_token'] ?? '';
+    if (!is_string($tokenEnviado) || !hash_equals($tokenCsrfBoletines, $tokenEnviado)) {
+        $mensajeEliminacionBoletin = 'No se pudo validar la solicitud. Recarga la página e inténtalo de nuevo.';
+        $tipoMensajeEliminacionBoletin = 'error';
+    } else {
+        // Acepta únicamente identificadores enteros positivos para el borrado.
+        $idBoletin = filter_var($_POST['idBoletin'] ?? null, FILTER_VALIDATE_INT);
+        if ($idBoletin === false || $idBoletin === null || $idBoletin <= 0) {
+            $mensajeEliminacionBoletin = 'El boletín seleccionado no es válido.';
+            $tipoMensajeEliminacionBoletin = 'error';
+        } else {
+            // El identificador se enlaza como parámetro, nunca se concatena en el SQL.
+            $stmtEliminar = mysqli_prepare($conexion, "DELETE FROM boletin WHERE idBoletin = ?");
+            mysqli_stmt_bind_param($stmtEliminar, "i", $idBoletin);
+            mysqli_stmt_execute($stmtEliminar);
+            $boletinEliminado = mysqli_stmt_affected_rows($stmtEliminar) === 1;
+            mysqli_stmt_close($stmtEliminar);
+
+            if ($boletinEliminado) {
+                $mensajeEliminacionBoletin = 'Boletín eliminado correctamente.';
+                $tipoMensajeEliminacionBoletin = 'exito';
+            } else {
+                $mensajeEliminacionBoletin = 'No se encontró el boletín seleccionado; puede que ya haya sido eliminado.';
+                $tipoMensajeEliminacionBoletin = 'error';
+            }
+        }
+    }
+
+    // Evita repetir el borrado al recargar y permite mostrar el resultado tras redirigir.
+    $_SESSION['mensaje_flash_boletin'] = [
+        'mensaje' => $mensajeEliminacionBoletin,
+        'tipo' => $tipoMensajeEliminacionBoletin,
+    ];
+    header('Location: indexadmin.php#gestionar-boletines');
+    exit;
+}
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['agregar_boletin'])) {
     // Valida el título y asocia el boletín con el administrador autenticado.
@@ -42,21 +93,37 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['agregar_boletin'])) {
         $mensajeBoletin = 'El título debe tener entre 1 y 40 caracteres.';
         $tipoMensajeBoletin = 'error';
     } else {
-        // Escapa el texto antes de insertarlo en la base de datos.
-        $conexion = connection();
-        $tituloSeguro = mysqli_real_escape_string($conexion, $tituloBoletin);
-        $consulta = "INSERT INTO boletin (idAdmin, fechaSubida, titulo) VALUES ($idAdmin, CURDATE(), '$tituloSeguro')";
-
-        if (mysqli_query($conexion, $consulta)) {
+        // Guarda el boletín con parámetros para mantener segura la consulta.
+        $stmtAgregar = mysqli_prepare(
+            $conexion,
+            "INSERT INTO boletin (idAdmin, fechaSubida, titulo) VALUES (?, CURDATE(), ?)"
+        );
+        mysqli_stmt_bind_param($stmtAgregar, "is", $idAdmin, $tituloBoletin);
+        if (mysqli_stmt_execute($stmtAgregar)) {
             $mensajeBoletin = 'Boletín publicado correctamente.';
             $tipoMensajeBoletin = 'exito';
         } else {
             $mensajeBoletin = 'No se pudo publicar el boletín.';
             $tipoMensajeBoletin = 'error';
         }
-
-        mysqli_close($conexion);
+        mysqli_stmt_close($stmtAgregar);
     }
+}
+
+// Carga los boletines ordenados del más reciente al más antiguo para administrarlos.
+$boletines = [];
+$resultadoBoletines = mysqli_query(
+    $conexion,
+    "SELECT idBoletin, fechaSubida, titulo FROM boletin ORDER BY fechaSubida DESC, idBoletin DESC"
+);
+if ($resultadoBoletines === false) {
+    $mensajeBoletin = 'No se pudo cargar la lista de boletines.';
+    $tipoMensajeBoletin = 'error';
+} else {
+    while ($boletin = mysqli_fetch_assoc($resultadoBoletines)) {
+        $boletines[] = $boletin;
+    }
+    mysqli_free_result($resultadoBoletines);
 }
 ?>
 <!DOCTYPE html>
@@ -67,7 +134,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['agregar_boletin'])) {
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Página principal admins</title>
-    <link rel="stylesheet" href="pagina-principal-admin.css?v=5">
+    <link rel="stylesheet" href="pagina-principal-admin.css?v=6">
     <link rel="icon" type="image/png" href="../img/logo-liga/log-liga-b.png">
 </head>
 <body>
@@ -149,6 +216,48 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['agregar_boletin'])) {
                     <p class="mensaje-boletin <?php echo $tipoMensajeBoletin; ?>">
                         <?php echo htmlspecialchars($mensajeBoletin); ?>
                     </p>
+                <?php endif; ?>
+            </section>
+
+            <!-- Lista los comunicados existentes y ofrece borrado individual desde el panel. -->
+            <section class="gestionar-boletines" id="gestionar-boletines" aria-labelledby="titulo-gestionar-boletines">
+                <div class="gestionar-boletines-encabezado">
+                    <div>
+                        <p class="publicar-boletin-etiqueta">Administración</p>
+                        <h2 id="titulo-gestionar-boletines">Boletines publicados</h2>
+                    </div>
+                    <span class="boletines-cantidad"><?php echo count($boletines); ?></span>
+                </div>
+
+                <?php if ($mensajeEliminacionBoletin !== ''): ?>
+                    <p class="mensaje-boletin <?php echo $tipoMensajeEliminacionBoletin; ?>" role="status">
+                        <?php echo htmlspecialchars($mensajeEliminacionBoletin); ?>
+                    </p>
+                <?php endif; ?>
+
+                <?php if (empty($boletines)): ?>
+                    <p class="boletines-sin-registros">Todavía no hay boletines publicados para eliminar.</p>
+                <?php else: ?>
+                    <ul class="boletines-admin-lista">
+                        <?php foreach ($boletines as $boletin): ?>
+                            <li class="boletin-admin-item">
+                                <div class="boletin-admin-detalle">
+                                    <h3><?php echo htmlspecialchars($boletin['titulo']); ?></h3>
+                                    <time datetime="<?php echo htmlspecialchars($boletin['fechaSubida']); ?>">
+                                        Publicado el <?php echo htmlspecialchars(date('d/m/Y', strtotime($boletin['fechaSubida']))); ?>
+                                    </time>
+                                </div>
+                                <form method="POST" class="boletin-admin-eliminar" onsubmit="return confirm('¿Eliminar este boletín? Esta acción no se puede deshacer.');">
+                                    <input type="hidden" name="idBoletin" value="<?php echo (int) $boletin['idBoletin']; ?>">
+                                    <input type="hidden" name="csrf_token" value="<?php echo htmlspecialchars($tokenCsrfBoletines); ?>">
+                                    <button type="submit" name="eliminar_boletin" value="1">
+                                        <i class="bi bi-trash" aria-hidden="true"></i>
+                                        Eliminar
+                                    </button>
+                                </form>
+                            </li>
+                        <?php endforeach; ?>
+                    </ul>
                 <?php endif; ?>
             </section>
 
