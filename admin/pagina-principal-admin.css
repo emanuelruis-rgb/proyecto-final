@@ -87,11 +87,46 @@ header {
 .mensaje-boletin.exito { color: #9BE09D; }
 .mensaje-boletin.error { color: #FFB0B0; }
 
+/* Presenta la lista administrativa de boletines, sus fechas, el contador y la acción de borrado.
+   En móvil, cada boletín apila sus datos y el botón ocupa todo el ancho disponible. */
+.gestionar-boletines {
+    width: min(100%, 900px); box-sizing: border-box; margin: 0 auto 34px; padding: 24px 30px;
+    background: rgba(7, 20, 18, 0.94); border: 1px solid rgba(255, 255, 255, 0.2);
+    border-left: 4px solid var(--pitch-green); border-radius: 10px;
+    box-shadow: 0 14px 32px rgba(0, 0, 0, 0.24); font-family: sans-serif;
+}
+.gestionar-boletines-encabezado { display: flex; align-items: center; justify-content: space-between; gap: 16px; }
+.gestionar-boletines h2 { margin: 0; color: #fff; font-size: 24px; }
+.gestionar-boletines .mensaje-boletin { margin-top: 16px; }
+.boletines-cantidad {
+    display: grid; place-items: center; min-width: 34px; height: 34px; padding: 0 8px;
+    box-sizing: border-box; border-radius: 17px; background: rgba(201, 162, 39, 0.18);
+    color: var(--gold); font-weight: 700;
+}
+.boletines-sin-registros { margin: 18px 0 0; color: #D5DDE4; font-size: 14px; }
+.boletines-admin-lista { display: grid; gap: 10px; margin: 18px 0 0; padding: 0; list-style: none; }
+.boletin-admin-item {
+    display: flex; align-items: center; justify-content: space-between; gap: 18px; padding: 14px 16px;
+    border: 1px solid rgba(255, 255, 255, 0.14); border-radius: 7px; background: rgba(255, 255, 255, 0.05);
+}
+.boletin-admin-detalle { min-width: 0; }
+.boletin-admin-detalle h3 { margin: 0; color: #fff; font-size: 16px; overflow-wrap: anywhere; }
+.boletin-admin-detalle time { display: block; margin-top: 6px; color: #D5DDE4; font-size: 13px; }
+.boletin-admin-eliminar { flex: 0 0 auto; }
+.boletin-admin-eliminar button {
+    display: inline-flex; align-items: center; justify-content: center; gap: 7px; min-height: 40px; padding: 9px 14px;
+    border: 0; border-radius: 5px; background: #b42332; color: #fff; cursor: pointer; font: inherit; font-weight: 700;
+}
+.boletin-admin-eliminar button:hover { background: #921b28; }
+
 @media (max-width: 600px) {
     .admin-introduccion { align-items: flex-start; padding: 20px; }
     .admin-introduccion-icono { width: 44px; height: 44px; flex-basis: 44px; font-size: 21px; }
     .admin-introduccion h1 { font-size: 28px; }
     .publicar-boletin-campo { align-items: stretch; flex-direction: column; }
+    .gestionar-boletines { padding: 20px; }
+    .boletin-admin-item { align-items: stretch; flex-direction: column; gap: 12px; }
+    .boletin-admin-eliminar button { width: 100%; }
 }
 
 /* ===== Carrusel ===== */

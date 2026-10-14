@@ -118,7 +118,10 @@ if ($tipoClub == "propio") {
         </div>
 
         <div class="tabla">
-            <h2>Jugadores</h2>
+            <h2><?php echo htmlspecialchars($tituloTabla); ?></h2>
+            <?php if ($errorJugadores !== ''): ?>
+                <p role="alert"><?php echo htmlspecialchars($errorJugadores); ?></p>
+            <?php endif; ?>
             <table>
                 <thead>
                     <tr>
