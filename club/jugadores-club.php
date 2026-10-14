@@ -21,6 +21,41 @@ $resultado = mysqli_stmt_get_result($stmt);
 if ($fila = mysqli_fetch_assoc($resultado)) {
     $nombreMostrarClub = $fila['nombreClub'];
 }
+mysqli_stmt_close($stmt);
+
+// Determina si la vista solicita jugadores del club autenticado o de los otros clubes.
+$tipoJugadores = ($_GET['tipo'] ?? 'propios') === 'ajenos' ? 'ajenos' : 'propios';
+$condicionClub = $tipoJugadores === 'propios' ? '= ?' : '<> ?';
+$tituloTabla = $tipoJugadores === 'propios' ? 'Nuestros jugadores' : 'Jugadores ajenos';
+
+// Carga la ficha de cada jugador y resuelve los nombres del club y de su categoría.
+$sqlJugadores = "
+    SELECT j.cedula, j.nombre, j.apellido, j.fechaNacimiento, j.genero,
+           c.nombreClub, cat.`año` AS categoria
+    FROM jugador j
+    INNER JOIN club c ON j.idClub = c.idClub
+    LEFT JOIN categoria cat ON j.idCategoria = cat.idCategoria
+    WHERE j.idClub $condicionClub
+    ORDER BY j.apellido ASC, j.nombre ASC";
+$stmtJugadores = mysqli_prepare($conexion, $sqlJugadores);
+$jugadores = [];
+$errorJugadores = '';
+
+if ($stmtJugadores === false) {
+    $errorJugadores = 'No se pudo preparar la consulta de jugadores.';
+} else {
+    mysqli_stmt_bind_param($stmtJugadores, "i", $idClub);
+    if (!mysqli_stmt_execute($stmtJugadores)) {
+        $errorJugadores = 'No se pudo cargar la lista de jugadores.';
+    } else {
+        $resultadoJugadores = mysqli_stmt_get_result($stmtJugadores);
+        while ($jugador = mysqli_fetch_assoc($resultadoJugadores)) {
+            $jugadores[] = $jugador;
+        }
+        mysqli_free_result($resultadoJugadores);
+    }
+    mysqli_stmt_close($stmtJugadores);
+}
 ?>
 <!DOCTYPE html>
 <html lang="es">
@@ -70,12 +105,15 @@ if ($fila = mysqli_fetch_assoc($resultado)) {
     </header>
     <main>
         <div class="boton-alternar-tabla-container">
-            <a href="jugadores-club.php?tipo=propios" class="boton-alternar-tabla">Nuestros jugadores</a>
-            <a href="jugadores-club.php?tipo=ajenos" class="boton-alternar-tabla">Jugadores ajenos</a>
+            <a href="jugadores-club.php?tipo=propios" class="boton-alternar-tabla<?php echo $tipoJugadores === 'propios' ? ' active' : ''; ?>"<?php echo $tipoJugadores === 'propios' ? ' aria-current="page"' : ''; ?>>Nuestros jugadores</a>
+            <a href="jugadores-club.php?tipo=ajenos" class="boton-alternar-tabla<?php echo $tipoJugadores === 'ajenos' ? ' active' : ''; ?>"<?php echo $tipoJugadores === 'ajenos' ? ' aria-current="page"' : ''; ?>>Jugadores ajenos</a>
         </div>
 
         <div class="tabla">
-            <h2>Jugadores</h2>
+            <h2><?php echo htmlspecialchars($tituloTabla); ?></h2>
+            <?php if ($errorJugadores !== ''): ?>
+                <p role="alert"><?php echo htmlspecialchars($errorJugadores); ?></p>
+            <?php endif; ?>
             <table>
                 <thead>
                     <tr>
@@ -89,17 +127,27 @@ if ($fila = mysqli_fetch_assoc($resultado)) {
                     </tr>
                 </thead>
                 <tbody>
-                    <!-- este while itera por las sanciones con el join de allá arriba
-                    y $sancion es una sancion invidual
-                    <?php // while ($sancion = mysqli_fetch_array($querySanciones)): ?>-->
-                <tr>
-                    <!-- cada uno de estos td define una columna, y busca una columna en la bd, en orden -->
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                </tr>
+                    <?php if ($errorJugadores === '' && empty($jugadores)): ?>
+                        <tr>
+                            <td colspan="7">
+                                <?php echo $tipoJugadores === 'propios'
+                                    ? 'Este club todavía no tiene jugadores registrados.'
+                                    : 'No hay jugadores registrados en otros clubes.'; ?>
+                            </td>
+                        </tr>
+                    <?php else: ?>
+                        <?php foreach ($jugadores as $jugador): ?>
+                            <tr>
+                                <td><?php echo htmlspecialchars($jugador['cedula']); ?></td>
+                                <td><?php echo htmlspecialchars($jugador['nombre']); ?></td>
+                                <td><?php echo htmlspecialchars($jugador['apellido']); ?></td>
+                                <td><?php echo htmlspecialchars($jugador['nombreClub']); ?></td>
+                                <td><?php echo htmlspecialchars(date('d/m/Y', strtotime($jugador['fechaNacimiento']))); ?></td>
+                                <td><?php echo htmlspecialchars($jugador['genero']); ?></td>
+                                <td><?php echo htmlspecialchars((string) ($jugador['categoria'] ?? 'Sin categoría')); ?></td>
+                            </tr>
+                        <?php endforeach; ?>
+                    <?php endif; ?>
                 </tbody>
             </table>
         </div>

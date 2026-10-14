@@ -193,6 +193,11 @@ header {
   color: var(--navy);
 }
 
+.boton-alternar-tabla.active {
+    background-color: var(--gold);
+    color: var(--navy);
+}
+
 .tabla {
     background-color: #ffffff;
     padding: 30px;
