@@ -1,14 +1,21 @@
 <?php
 session_name('admin_session');
 session_start();
+
 if (!isset($_SESSION['nombre'])) {
     header('Location: /proyecto-final/index.php');
     exit;
 }
 
-include(__DIR__ . "/../../conexion-bd/conexion.php");
-$con = connection();
+require_once(__DIR__ . "/../../conexion-bd/conexion.php");
 
+$conexion = connection();
+$con = $conexion;
+
+$categorias = mysqli_fetch_all(
+    mysqli_query($conexion, "SELECT idCategoria, `año` FROM categoria ORDER BY `año` DESC"),
+    MYSQLI_ASSOC
+);
 /* esta query hace join de jugador y club para poder no solo tener todos los datos del jugador
 sino que también los del club. asi ponemos, en vez de idclub, ponemos nombreClub */
 /*
@@ -16,31 +23,34 @@ sino que también los del club. asi ponemos, en vez de idclub, ponemos nombreClu
     P = m x g, donde m es la masa en kg y g = 9,81 m/s².
     El resultado se expresa en Newtons (N), por eso se muestra como fuerzaPeso.
 */
-$query = mysqli_query($con, "SELECT
-    jugador.idClub,
-    club.nombreClub,
-    jugador.cedula,
-    jugador.nombre,
-    jugador.apellido,
-    jugador.fechaNacimiento,
-    jugador.genero,
-    jugador.idCategoria,
-    -- La fuerza peso se calcula con la gravedad terrestre aproximada de 9,81 m/s².
-    jugador.masa,
-    jugador.altura,
-    jugador.velocidad,
-    jugador.masa * 9.81 AS fuerzaPeso
-FROM jugador
-INNER JOIN club
-    ON jugador.idClub = club.idClub;");
+$query = mysqli_query($con, "
+    SELECT
+        jugador.idClub,
+        club.nombreClub,
+        jugador.cedula,
+        jugador.nombre,
+        jugador.apellido,
+        jugador.fechaNacimiento,
+        jugador.genero,
+        jugador.idCategoria,
+        categoria.`año` AS añoCategoria,
+        jugador.masa,
+        jugador.altura,
+        jugador.velocidad,
+        jugador.masa * 9.81 AS fuerzaPeso
+    FROM jugador
+    INNER JOIN club
+        ON jugador.idClub = club.idClub
+    INNER JOIN categoria
+        ON jugador.idCategoria = categoria.idCategoria
+");
 $queryCategoria = mysqli_query($con, "SELECT * FROM categoria");
 $queryClub = mysqli_query($con, "SELECT * FROM club");
 
 $errorCedula=$_SESSION['errorCedula'] ?? '';
 unset($_SESSION['errorCedula']);
 
-require_once $_SERVER['DOCUMENT_ROOT'] . "/proyecto-final/conexion-bd/conexion.php";
-$conexion = connection();
+
 
 $nombreSesion = $_SESSION['nombre'];
 $nombreMostrar = $nombreSesion; // valor por defecto, por si la consulta no encuentra nada
@@ -187,7 +197,7 @@ if ($fila = mysqli_fetch_assoc($resultado)) {
                         <th><?= $row['nombreClub'] ?></th>
                         <th><?= $row['fechaNacimiento'] ?></th>
                         <th><?= $row['genero'] ?></th>
-                        <th><?= $row['idCategoria'] ?></th>
+                        <td><?= htmlspecialchars((string) $row['añoCategoria']) ?></td>
                         <th><?= $row['masa'] ?></th>
                         <th><?= $row['altura'] ?></th>
                         <th><?= $row['velocidad'] ?></th>

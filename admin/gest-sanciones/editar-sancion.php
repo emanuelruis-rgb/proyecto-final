@@ -29,41 +29,12 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Editar sanciones</title>
+    <link rel="stylesheet" href="/proyecto-final/admin/pagina-principal-admin.css">
     <link rel="stylesheet" href="sanciones-style.css">
     <link rel="icon" type="image/png" href="../../img/logo-liga/log-liga-b.png">
     <script src="sanciones.js" defer></script>
 </head>
 <body>
-    <header> 
-        <nav class="nav-izquierda-container">
-            <a href="/proyecto-final/admin/indexadmin.php">
-                <img src="/proyecto-final/img/logo-empresa/logo-empresa-blanco.png" alt="Logo" class="logo-empresa">
-            </a>
-            <div class="nav-izquierda-botones-container">
-                <a href="/proyecto-final/admin/gest-jugador/jugador.php" class="nav-izquierda-botones">Jugadores</a>
-                <a href="/proyecto-final/admin/gest-club/club.php" class="nav-izquierda-botones">Clubes</a>
-                <a href="/proyecto-final/admin/gest-fixture/fixtures.php" class="nav-izquierda-botones">Fixture</a>
-                <a href="/proyecto-final/admin/gest-sanciones/sanciones.php" class="nav-izquierda-botones">Sanciones</a>
-            </div>
-        </nav>
-
-        <div class="nav-derecha-container">
-            <a href="#" class="nav-derecha-item">
-                <i class="bi bi-bell"></i>
-            </a>
-
-            <a href="#" class="nav-derecha-item">
-                <i class="bi bi-person-circle"></i>
-                <span></span>
-            </a>
-
-            <a href="/proyecto-final/index.php" class="nav-derecha-item">
-                <i class="bi bi-box-arrow-right"></i>
-                <span>Cerrar sesión</span>
-            </a>
-        </div>
-    </header>
-
     <div class="formulario-container">
         <h1>Editar sanción</h1>
         <form action="ejecutar-editar-sancion.php" method="POST">

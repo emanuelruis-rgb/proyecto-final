@@ -102,9 +102,7 @@ if ($fila = mysqli_fetch_assoc($resultado)) {
         <table>
             <thead>
                 <tr>
-                    <th>ID</th>
                     <th>Nombre</th>
-                    <th>Contraseña</th>
                     <th>Presidente</th>
                     <th>Año de fundación</th>
                     <th>Estadio</th>
@@ -115,9 +113,7 @@ if ($fila = mysqli_fetch_assoc($resultado)) {
             <tbody>
                 <?php while ($row = mysqli_fetch_array($query)): ?>
                     <tr>
-                        <th><?= $row['idClub'] ?></th>
                         <th><?= $row['nombreClub'] ?></th>
-                        <th><?= $row['contraseñaClub'] ?></th>
                         <th><?= $row['nombrePresidente'] ?></th>
                         <th><?= $row['añoCreacion'] ?></th>
                         <th><?= $row['estadio'] ?></th>

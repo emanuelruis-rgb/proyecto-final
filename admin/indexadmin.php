@@ -254,6 +254,10 @@ if ($resultadoBoletines === false) {
                                         <i class="bi bi-trash" aria-hidden="true"></i>
                                         Eliminar
                                     </button>
+                                    <button type="submit" name="actualizar_boletin" value="1">
+                                        <i class="bi bi-pencil" aria-hidden="true"></i>
+                                        Actualizar
+                                    </button>
                                 </form>
                             </li>
                         <?php endforeach; ?>

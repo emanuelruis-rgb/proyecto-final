@@ -15,7 +15,9 @@
     <head>
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1">
+        <link rel="stylesheet" href="/proyecto-final/admin/pagina-principal-admin.css?v=6">
         <link href="/proyecto-final/admin/gest-club/club-style.css" rel="stylesheet">
+        <link rel="icon" type="image/png" href="../../img/logo-liga/log-liga-b.png">
         <title>Editar club</title>
         
     </head>

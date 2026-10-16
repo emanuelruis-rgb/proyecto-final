@@ -131,3 +131,6 @@ h2.jornada {
 .tabla-fixture th, .tabla-fixture td { padding: 14px 16px; text-align: left; font-size: 0.9rem; border-bottom: 1px solid #e5e7eb; }
 .tabla-fixture th { color: var(--navy); }
 .tabla-fixture tr:last-child td { border-bottom: none; }
+
+.tabla-fixture .filtros { flex-direction: row; flex-wrap: wrap; background: transparent; box-shadow: none; margin: 0; padding: 16px; }
+.tabla-fixture .filtros select { flex: 1 1 200px; }

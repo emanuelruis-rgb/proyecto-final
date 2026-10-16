@@ -55,6 +55,7 @@ if ($fila = mysqli_fetch_assoc($resultado)) {
                 <a href="/proyecto-final/admin/gest-club/club.php" class="nav-izquierda-botones">Clubes</a>
                 <a href="/proyecto-final/admin/gest-fixture/fixtures.php" class="nav-izquierda-botones">Fixture</a>
                 <a href="/proyecto-final/admin/gest-sanciones/sanciones.php" class="nav-izquierda-botones">Sanciones</a>
+                <a href="/proyecto-final/admin/gest-fixture/posiciones.php" class="nav-izquierda-botones">Tabla de posiciones</a>
             </div>
         </nav>
 
