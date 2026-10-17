@@ -112,22 +112,26 @@ header {
 .boletin-admin-detalle { min-width: 0; }
 .boletin-admin-detalle h3 { margin: 0; color: #fff; font-size: 16px; overflow-wrap: anywhere; }
 .boletin-admin-detalle time { display: block; margin-top: 6px; color: #D5DDE4; font-size: 13px; }
-.boletin-admin-eliminar { flex: 0 0 auto; }
-.boletin-admin-eliminar button {
-    display: inline-flex; align-items: center; justify-content: center; gap: 7px; min-height: 40px; padding: 9px 14px;
-    border: 0; border-radius: 5px; background: #b42332; color: #fff; cursor: pointer; font: inherit; font-weight: 700;
-}
-.boletin-admin-eliminar button:hover { background: #921b28; }
 
-@media (max-width: 600px) {
-    .admin-introduccion { align-items: flex-start; padding: 20px; }
-    .admin-introduccion-icono { width: 44px; height: 44px; flex-basis: 44px; font-size: 21px; }
-    .admin-introduccion h1 { font-size: 28px; }
-    .publicar-boletin-campo { align-items: stretch; flex-direction: column; }
-    .gestionar-boletines { padding: 20px; }
-    .boletin-admin-item { align-items: stretch; flex-direction: column; gap: 12px; }
-    .boletin-admin-eliminar button { width: 100%; }
+/* Botones de gestión de boletines */
+.boletin-admin-eliminar { display: flex; align-items: center; gap: 10px; flex: 0 0 auto; }
+.boletin-admin-eliminar button {
+    display: inline-flex; align-items: center; justify-content: center; gap: 7px;
+    min-height: 40px; padding: 9px 14px; border: none; border-radius: 6px;
+    cursor: pointer; font: inherit; font-weight: 700; transition: background .2s;
 }
+.btn-eliminar-boletin { background: #b42332; color: #fff; }
+.btn-eliminar-boletin:hover { background: #921b28; }
+.btn-editar-boletin { background: var(--gold); color: var(--navy); }
+.btn-editar-boletin:hover { background: #E0B735; }
+
+/* Adaptación para móviles */
+@media (max-width: 600px) {
+    .boletin-admin-item { align-items: stretch; flex-direction: column; gap: 12px; }
+    .boletin-admin-eliminar { width: 100%; }
+    .boletin-admin-eliminar button { flex: 1; }
+}
+
 
 /* ===== Carrusel ===== */
 .carrusel-wrapper {
@@ -223,3 +227,32 @@ header {
 .mensaje-exito, .mensaje-error { padding: 10px 14px; border-radius: 8px; font-weight: 600; font-size: 0.9rem; margin: 0; }
 .mensaje-exito { background: rgba(60, 138, 62, 0.25); border: 1px solid rgba(60, 138, 62, 0.6); color: #A8E6A3; }
 .mensaje-error { background: rgba(200, 50, 50, 0.25); border: 1px solid rgba(200, 50, 50, 0.6); color: #FF9E9E; }
+
+.modal-boletin {
+    display: none; position: fixed; inset: 0; background: rgba(10, 15, 12, .75); backdrop-filter: blur(4px); z-index: 9999; justify-content: center; align-items: center; padding: 20px;
+}
+
+.modal-boletin-contenido {
+    background: #fff; width: 100%; max-width: 420px; padding-bottom: 20px; border-radius: 12px; box-shadow: 0 15px 30px rgba(0,0,0,.4); overflow: hidden;
+
+    h2 { margin: 0 0 16px; padding: 14px; background: #0f1812; color: #fff; font-size: 1.1rem; text-align: center; }
+    p, label { padding: 0 20px; }
+    p { color: #666; margin-bottom: 16px; font-size: .9rem; }
+    label { display: block; margin-bottom: 6px; font-weight: 600; font-size: .85rem; }
+
+    input[type="text"] {
+        width: calc(100% - 40px); margin: 0 20px 16px; padding: 10px; border: 1px solid #d0d7d1; border-radius: 6px; font-size: 14px; box-sizing: border-box;
+        &:focus { outline: none; border-color: #3b8746; box-shadow: 0 0 0 3px rgba(59,135,70,.2); }
+    }
+}
+
+.modal-boletin-botones {
+    display: flex; justify-content: flex-end; gap: 10px; padding: 0 20px;
+
+    button { padding: 10px 18px; border: none; border-radius: 6px; cursor: pointer; font-weight: 600; }
+}
+
+.btn-guardar-boletin {
+    background: #3b8746; color: #fff; width: 100%;
+    &:hover { background: #2f6d37; }
+}

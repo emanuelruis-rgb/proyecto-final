@@ -42,6 +42,31 @@ $tipoMensajeBoletin = '';
 $mensajeEliminacionBoletin = $mensajeFlashBoletin['mensaje'] ?? '';
 $tipoMensajeEliminacionBoletin = $mensajeFlashBoletin['tipo'] ?? '';
 
+if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['guardar_cambios_boletin'])) {
+    $id = (int) $_POST['idBoletin'];
+    $titulo = trim($_POST['titulo']);
+    $token = $_POST['csrf_token'] ?? '';
+
+    if (
+        $id > 0 &&
+        $titulo !== '' &&
+        strlen($titulo) <= 40 &&
+        hash_equals($tokenCsrfBoletines, $token)
+    ) {
+        $stmt = mysqli_prepare(
+            $conexion,
+            "UPDATE boletin SET titulo = ? WHERE idBoletin = ?"
+        );
+
+        mysqli_stmt_bind_param($stmt, "si", $titulo, $id);
+        mysqli_stmt_execute($stmt);
+        mysqli_stmt_close($stmt);
+    }
+
+    header('Location: indexadmin.php#gestionar-boletines');
+    exit;
+}
+
 if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['eliminar_boletin'])) {
     // Exige que la petición provenga del formulario del panel y no de una web externa.
     $tokenEnviado = $_POST['csrf_token'] ?? '';
@@ -137,6 +162,58 @@ if ($resultadoBoletines === false) {
     <link rel="stylesheet" href="pagina-principal-admin.css?v=6">
     <link rel="icon" type="image/png" href="../img/logo-liga/log-liga-b.png">
 </head>
+
+<!-- Ventana para editar comunicados -->
+<div id="modalEditarBoletin" class="modal-boletin">
+    <div class="modal-boletin-contenido">
+        <h2>Editar comunicado</h2>
+        <p>Modificá el título del comunicado seleccionado.</p>
+
+        <form method="POST" id="formEditarBoletin">
+            <input type="hidden" name="idBoletin" id="editarIdBoletin">
+            <input type="hidden" name="csrf_token"
+                   value="<?php echo htmlspecialchars($tokenCsrfBoletines); ?>">
+            <input type="hidden" name="guardar_cambios_boletin" value="1">
+
+            <label for="editarTitulo">Título del comunicado</label>
+            <input type="text" id="editarTitulo" name="titulo"
+                   maxlength="40" required>
+
+            <div class="modal-boletin-botones">
+                <button type="button" onclick="cerrarModalBoletin()">
+                    Cancelar
+                </button>
+                <button type="submit" class="btn-guardar-boletin">
+                    Guardar cambios
+                </button>
+            </div>
+        </form>
+    </div>
+</div>
+<script>
+
+function editarBoletin(boton) {
+    const elemento = boton.closest('.boletin-admin-item');
+    const titulo = elemento.querySelector('.boletin-admin-detalle h3');
+    const id = elemento.querySelector('[name="idBoletin"]').value;
+
+    document.getElementById('editarIdBoletin').value = id;
+    document.getElementById('editarTitulo').value = titulo.textContent.trim();
+
+    document.getElementById('modalEditarBoletin').style.display = 'flex';
+    document.getElementById('editarTitulo').focus();
+}
+
+function cerrarModalBoletin() {
+    document.getElementById('modalEditarBoletin').style.display = 'none';
+}
+
+document.getElementById('modalEditarBoletin').addEventListener('click', function(event) {
+    if (event.target === this) {
+        cerrarModalBoletin();
+    }
+});
+</script>
 <body>
     <header> 
         <nav class="nav-izquierda-container">
@@ -250,12 +327,12 @@ if ($resultadoBoletines === false) {
                                 <form method="POST" class="boletin-admin-eliminar" onsubmit="return confirm('¿Eliminar este boletín? Esta acción no se puede deshacer.');">
                                     <input type="hidden" name="idBoletin" value="<?php echo (int) $boletin['idBoletin']; ?>">
                                     <input type="hidden" name="csrf_token" value="<?php echo htmlspecialchars($tokenCsrfBoletines); ?>">
-                                    <button type="submit" name="eliminar_boletin" value="1">
+                                    <button type="submit" class="btn-eliminar-boletin" name="eliminar_boletin" value="1">
                                         <i class="bi bi-trash" aria-hidden="true"></i>
                                         Eliminar
                                     </button>
-                                    <button type="submit" name="actualizar_boletin" value="1">
-                                        <i class="bi bi-pencil" aria-hidden="true"></i>
+                                    <button type="button" class="btn-editar-boletin" onclick="editarBoletin(this)">
+                                        <i class="bi bi-pencil"></i>
                                         Actualizar
                                     </button>
                                 </form>
