@@ -142,13 +142,50 @@ if ($fila = mysqli_fetch_assoc($resultado)) {
             <?php endwhile; ?>
 
             </select>
-            <input type="date" name="fecha-nacimiento" min="2013-01-01" max="2019-01-01" required>
+            <input type="date" name="fecha-nacimiento" id="fecha-nacimiento" min="2013-01-01" max="2019-01-01" required>
+            <script>
+                document.getElementById('fecha-nacimiento').addEventListener('change', function() {
+                    const fecha = this.value;
+                    if (!fecha) return;
+                    const anio = parseInt(fecha.split('-')[0]);
+                    const selectCategoria = document.getElementById('idcategoria');
+                    let idCategoria = "";
+
+                    switch (anio) {
+                        case 2013:
+                            idCategoria = "1"; // Sub-10
+                            break;
+                        case 2014:
+                            idCategoria = "2"; // Sub-11
+                            break;
+                        case 2015:
+                            idCategoria = "3"; // Sub-12
+                            break;
+                        case 2016:
+                            idCategoria = "4"; // Sub-13
+                            break;
+                        case 2017:
+                            idCategoria = "5"; // Sub-14
+                            break;
+                        case 2018:
+                            idCategoria = "6"; // Sub-15
+                            break;
+                        case 2019:
+                            idCategoria = "7"; // Sub-16
+                            break;
+                        case 2020:
+                            idCategoria = "8"; // Sub-17
+                            break;
+                    }
+                    selectCategoria.value = idCategoria;
+                })
+            </script>
             <select name="genero" id="genero" required>
                 <option value="" disabled selected>Seleccionar género</option>
                 <option value="M">Masculino</option>
                 <option value="F">Femenino</option>
             </select>
-            <select name="idcategoria" required>
+            <select name="idcategoria" id="idcategoria" required>
             <option value="">Seleccionar categoría</option>
             <?php while ($categoria = mysqli_fetch_array($queryCategoria)): ?>
                 <option value="<?= $categoria['idCategoria'] ?>">
