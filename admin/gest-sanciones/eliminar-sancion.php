@@ -1,4 +1,5 @@
 <?php
+// Elimina la sanción indicada por su identificador y regresa al listado.
     include(__DIR__ . "/../../conexion-bd/conexion.php");
     $conexion = connection();
 

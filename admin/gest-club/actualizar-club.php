@@ -1,4 +1,6 @@
 <?php
+
+    // Busca el club solicitado para precargar el formulario de edición.
     include(__DIR__ . "/../../conexion-bd/conexion.php");
     $con=connection();
 

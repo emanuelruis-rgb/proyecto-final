@@ -1,5 +1,6 @@
 <?php
 
+// Actualiza los datos del club recibidos desde el formulario de edición.
 include(__DIR__ . "/../../conexion-bd/conexion.php");
 $con = connection();
 

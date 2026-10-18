@@ -16,6 +16,7 @@ $mensaje = "";
 
 // Si llegó el formulario por POST, procesamos la creación.
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+    // Normaliza los campos recibidos y define el marcador inicial del partido.
     $datos = [
         'idClubLocal'     => (int)$_POST['idClubLocal'],
         'idClubVisitante' => (int)$_POST['idClubVisitante'],

@@ -1,4 +1,5 @@
 <?php
+// Carga los clubes y opciones de categoría/competición para el panel de gestión.
 include(__DIR__ . "/../../conexion-bd/conexion.php");
 $con = connection();
 $query = mysqli_query($con, "SELECT * FROM club");
@@ -19,6 +20,7 @@ $conexion = connection();
 $nombreSesion = $_SESSION['nombre'];
 $nombreMostrar = $nombreSesion; // valor por defecto, por si la consulta no encuentra nada
 
+// Consulta el nombre de presentación asociado a la sesión del administrador.
 $stmt = mysqli_prepare($conexion, "SELECT nombreUsuario FROM administrador WHERE nombreUsuario = ?");
 mysqli_stmt_bind_param($stmt, "s", $nombreSesion);
 mysqli_stmt_execute($stmt);

@@ -1,4 +1,5 @@
 <?php
+// Alterna el estado activo del club desde una solicitud POST del administrador.
 session_name('admin_session');
 session_start();
 if (!isset($_SESSION['nombre'])) { header('Location: /proyecto-final/index.php'); exit; }

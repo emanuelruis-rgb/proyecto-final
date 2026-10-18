@@ -15,6 +15,7 @@ $idCategoria   = (int)($_GET['categoria'] ?? ($categorias[0]['idCategoria'] ?? 0
 
 // Si no viene ninguna por la URL, usa la primera
 
+// Calcula estadísticas por club a partir de los partidos jugados de la competición y categoría seleccionadas.
 $sql = "SELECT
     club.nombreClub,
     COUNT(t.idClub)                         AS PJ,

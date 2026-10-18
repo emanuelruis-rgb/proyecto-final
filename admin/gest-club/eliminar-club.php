@@ -1,5 +1,6 @@
 <?php
 
+// Elimina el club indicado y vuelve al listado de administración.
 include(__DIR__ . "/../../conexion-bd/conexion.php");
 $con = connection();
 

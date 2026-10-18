@@ -1,5 +1,6 @@
 <?php
 
+// Obtiene el jugador solicitado y las opciones necesarias para precargar su formulario.
 include(__DIR__ . "/../../conexion-bd/conexion.php");
 $con = connection();
 

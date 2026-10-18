@@ -1,4 +1,5 @@
 <?php
+// Prepara el estado del reglamento y los mensajes de resultado de una carga.
 $carpeta = __DIR__ . '/../uploads/documentos/';
 $archivo = $carpeta . 'reglamento.pdf';
 $existe = file_exists($archivo);
@@ -15,6 +16,7 @@ $mensajeAMostrar = $mensajes[$estado] ?? null;
 
 session_name('admin_session');
 session_start();
+// Solo los administradores autenticados pueden gestionar el documento.
 if (!isset($_SESSION['nombre'])) {
     header('Location: /proyecto-final/index.php');
     exit;

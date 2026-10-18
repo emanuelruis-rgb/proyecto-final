@@ -1,4 +1,5 @@
 <?php
+// Verifica el acceso y la cédula antes de guardar un nuevo jugador.
 require_once(__DIR__ . "/validar-ci.php");
 session_name('admin_session');
 session_start();

@@ -116,6 +116,7 @@ CREATE TABLE `club` (
   `nombrePresidente` varchar(40) NOT NULL,
   `añoCreacion` int(4) NOT NULL,
   `estadio` varchar(50) NOT NULL,
+  `activo` tinyint(1) NOT NULL DEFAULT 1,
   `idCategoria` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 

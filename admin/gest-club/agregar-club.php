@@ -1,4 +1,5 @@
 <?php
+// Restringe el alta de clubes al panel de administración autenticado.
 session_name('admin_session');
 session_start();
 if (!isset($_SESSION['nombre'])) { header('Location: /proyecto-final/index.php'); exit; }
@@ -19,6 +20,7 @@ $relaciones = [
     'club_competicion' => ['idCompeticion', array_map('intval', $_POST['competiciones'] ?? [])],
 ];
 
+// Registra el club y sus asociaciones como una única operación.
 mysqli_begin_transaction($con);
 try {
     $stmt = mysqli_prepare($con, "INSERT INTO club (nombreClub, contraseñaClub, nombrePresidente, añoCreacion, estadio)

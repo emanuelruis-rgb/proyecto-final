@@ -1,5 +1,6 @@
 <?php
 
+// Abre y devuelve la conexión compartida con la base de datos de la liga.
 function connection(){
     $host = "localhost";
     $user = "root";

@@ -1,5 +1,6 @@
 <?php
 
+// Recibe la ficha editada y prepara la actualización del jugador seleccionado.
 include(__DIR__ . "/../../conexion-bd/conexion.php");
 $con = connection();
 
