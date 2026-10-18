@@ -7,7 +7,7 @@ if (!isset($_SESSION['nombre'], $_SESSION['idClub'])) {
     exit;
 }
 
-require_once __DIR__ . '/../conexion-bd/conexion.php';
+require_once __DIR__ . '/../../conexion-bd/conexion.php';
 $conexion = connection();
 
 $resultadoCompeticiones = mysqli_query(
@@ -59,22 +59,22 @@ $posiciones = mysqli_fetch_all(mysqli_stmt_get_result($stmt), MYSQLI_ASSOC);
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Tabla de posiciones</title>
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.13.1/font/bootstrap-icons.min.css">
-    <link rel="stylesheet" href="pagina-principal-club.css?v=6">
-    <link rel="stylesheet" href="../admin/gest-fixture/fixtures-style.css?v=1">
+    <link rel="stylesheet" href="../pagina-principal-club.css?v=6">
+    <link rel="stylesheet" href="../../admin/gest-fixture/fixtures-style.css?v=1">
     <script src="menu-club.js" defer></script>
-    <link rel="icon" type="image/png" href="../img/logo-liga/log-liga-d.png">
+    <link rel="icon" type="image/png" href="../../img/logo-liga/log-liga-b.png">
 </head>
 <body>
     <header>
         <!-- Mantiene al usuario dentro de las secciones de consulta del portal del club. -->
         <nav class="nav-izquierda-container">
-            <a href="indexclub.php">
-                <img src="../img/logo-liga/log-liga-d.png" alt="Logo" class="logo-empresa">
+            <a href="../indexclub.php">
+                <img src="../../img/logo-liga/log-liga-d.png" alt="Logo" class="logo-empresa">
             </a>
             <div class="nav-izquierda-botones-container">
-                <a href="jugadores-club.php" class="nav-izquierda-botones">Jugadores</a>
-                <a href="sanciones.php" class="nav-izquierda-botones">Sanciones</a>
-                <a href="fixture.php" class="nav-izquierda-botones">Fixture</a>
+                <a href="../jugador/jugadores-club.php?tipoClub=propio" class="nav-izquierda-botones">Jugadores</a>
+                <a href="../sancion/sanciones.php" class="nav-izquierda-botones">Sanciones</a>
+                <a href="../fixture/fixture.php" class="nav-izquierda-botones">Fixture</a>
                 <a href="posiciones.php" class="nav-izquierda-botones active" aria-current="page">Tabla de posiciones</a>
             </div>
         </nav>

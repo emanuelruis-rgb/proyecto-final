@@ -21,9 +21,7 @@ $resultado = mysqli_stmt_get_result($stmt);
 if ($fila = mysqli_fetch_assoc($resultado)) {
     $nombreMostrarClub = $fila['nombreClub'];
 }
-
-$tipoClub = $_GET["tipoClub"];
-
+$tipoClub = ($_GET["tipoClub"] ?? "propio") === "ajenos" ? "ajenos" : "propio";
 //Este query es para iterar los jugadores propios alla abajo, en base a club.
 // usa el nombreClubSesion q ya viene de login
 if ($tipoClub == "propio") {
@@ -63,9 +61,7 @@ if ($tipoClub == "propio") {
     WHERE jugador.idClub != $idClub;
     ");
 };
-
 ?>
-
 <!DOCTYPE html>
 <html lang="es">
 <head>
@@ -74,7 +70,7 @@ if ($tipoClub == "propio") {
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Jugadores</title>
     <link rel="stylesheet" href="jugadores-club-style.css">
-    <link rel="icon" type="image/png" href="/img/logo-liga/log-liga-b.png">
+    <link rel="icon" type="image/png" href="../../img/logo-liga/log-liga-b.png">
 </head>
 <body>
     <header> 
@@ -84,16 +80,16 @@ if ($tipoClub == "propio") {
             </a>
             <div class="nav-izquierda-botones-container">
                 <!-- aca van los jugadores propios y despues da la opcion de seleccionar los ajenos-->
-                <a href="" class="nav-izquierda-botones">Jugadores</a>
-                <a href="/proyecto-final/club/sanciones.php" class="nav-izquierda-botones">Sanciones</a>
+                <a href="/proyecto-final/club/jugador/jugadores-club.php?tipoClub=propio" class="nav-izquierda-botones">Jugadores</a>
+                <a href="/proyecto-final/club/sancion/sanciones.php" class="nav-izquierda-botones">Sanciones</a>
+                <a href="/proyecto-final/club/fixture/fixture.php" class="nav-izquierda-botones">Fixture</a>
+                <a href="/proyecto-final/club/tabla-posicion/posiciones.php" class="nav-izquierda-botones">Tabla de posiciones</a>
             </div>
         </nav>
-
         <!-- Identifica el espacio de trabajo sin añadir otra opción al navbar. -->
         <div class="club-header-context" aria-label="Sección actual">
             <span>Jugadores del club</span>
         </div>
-
         <div class="user-menu">
             <button class="user-menu-toggle" onclick="toggleUserMenu()">
                 <i class="bi bi-person-circle"></i>
@@ -101,7 +97,7 @@ if ($tipoClub == "propio") {
             </button>
 
             <div class="user-menu-dropdown" id="userDropdown">
-                <a href="../uploads/documentos/reglamento.pdf" class="user-menu-item" download>
+                <a href="../../uploads/documentos/reglamento.pdf" class="user-menu-item" download>
                     <i class="bi bi-file-earmark-text"></i> Descargar documento
             </a>
             <a href="/proyecto-final/index.php" class="user-menu-item">

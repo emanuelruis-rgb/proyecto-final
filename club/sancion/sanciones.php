@@ -64,7 +64,7 @@ if ($fila = mysqli_fetch_assoc($resultado)) {
     $nombreMostrarClub = $fila['nombreClub'];
 }
 
-require_once __DIR__ . '/boletines-data.php';
+require_once __DIR__ . '/../boletines-data.php';
 
 // Carga los boletines para mostrar solo el resumen en la página principal.
 $boletines = $conexion ? obtenerBoletines($conexion) : [];
@@ -82,9 +82,9 @@ if ($conexion) {
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Sanciones</title>
-    <link rel="stylesheet" href="pagina-principal-club.css?v=6">
+    <link rel="stylesheet" href="../pagina-principal-club.css?v=6">
     <script src="menu-club.js" defer></script>
-    <link rel="icon" type="image/png" href="../img/logo-liga/log-liga-b.png">
+    <link rel="icon" type="image/png" href="../../img/logo-liga/log-liga-b.png">
 </head>
 <body>
     <header> 
@@ -93,10 +93,10 @@ if ($conexion) {
                 <img src="/proyecto-final/img/logo-liga/log-liga-d.png" alt="Logo" class="logo-empresa">
             </a>
             <div class="nav-izquierda-botones-container">
-                <a href="jugadores-club.php" class="nav-izquierda-botones">Jugadores</a>
+                <a href="../jugador/jugadores-club.php?tipoClub=propio" class="nav-izquierda-botones">Jugadores</a>
                 <a href="sanciones.php" class="nav-izquierda-botones active" aria-current="page">Sanciones</a>
-                <a href="fixture.php" class="nav-izquierda-botones">Fixture</a>
-                <a href="posiciones.php" class="nav-izquierda-botones">Tabla de posiciones</a>
+                <a href="../fixture/fixture.php" class="nav-izquierda-botones">Fixture</a>
+                <a href="../tabla-posicion/posiciones.php" class="nav-izquierda-botones">Tabla de posiciones</a>
             </div>
         </nav>
 

@@ -10,7 +10,7 @@ body {
     margin: 0;
     font-family: sans-serif;
     color: var(--text-main);
-    background-image: linear-gradient(180deg, rgba(11, 37, 69, 0.75) 0%, rgba(15, 61, 46, 0.7) 100%), url('../img/fondo.jpg');
+    background-image: linear-gradient(180deg, rgba(11, 37, 69, 0.75) 0%, rgba(15, 61, 46, 0.7) 100%), url('../../img/fondo.jpg');
     background-size: cover;
     background-position: center;
     background-attachment: fixed;

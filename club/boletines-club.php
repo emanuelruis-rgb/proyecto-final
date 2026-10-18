@@ -51,7 +51,7 @@ if ($conexion) {
 				<img src="/proyecto-final/img/logo-liga/log-liga-d.png" alt="Logo" class="logo-empresa">
 			</a>
 			<div class="nav-izquierda-botones-container">
-				<a href="jugadores-club.php" class="nav-izquierda-botones">Jugadores</a>
+				<a href="jugador/jugadores-club.php?tipoClub=propio" class="nav-izquierda-botones">Jugadores</a>
 				<a href="sanciones.php" class="nav-izquierda-botones">Sanciones</a>
 				<a href="fixture.php" class="nav-izquierda-botones">Fixture</a>
 				<a href="posiciones.php" class="nav-izquierda-botones">Tabla de posiciones</a>
