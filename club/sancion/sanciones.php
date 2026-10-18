@@ -153,7 +153,6 @@ if ($conexion) {
                 <tr>
                     <!-- YA ESTAN CAMBIADOS LOS NOMBRES AHORA HAY QUE ADAPTAR EL FORMULARIO DE INTRODUCCION PARA Sanciones
                      EL SISTEMA DE RECUPERACION PARA PONER LAS SANCIONES EN LA TABLA INFERIOR LO HAGO DE CERO -->
-                    <th>ID Sanción</th>
                     <th>CI</th>
                     <th>Nombre</th>
                     <th>Apellido</th>
@@ -172,7 +171,6 @@ if ($conexion) {
                 <?php while ($sancion = mysqli_fetch_array($querySanciones)): ?>
             <tr>
                 <!-- cada uno de estos td define una columna, y busca una columna en la bd, en orden -->
-                <td><?= $sancion['idSancion'] ?></td>
                 <td><?= $sancion['cedula'] ?></td>
                 <td><?= $sancion['nombre'] ?></td>
                 <td><?= $sancion['apellido'] ?></td>

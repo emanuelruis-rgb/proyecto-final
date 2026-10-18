@@ -2,12 +2,11 @@
 -- version 5.2.1
 -- https://www.phpmyadmin.net/
 --
--- Servidor: localhost
--- Tiempo de generación: 16-08-2026 a las 00:38:09
+-- Servidor: 127.0.0.1
+-- Tiempo de generación: 18-10-2026 a las 14:58:40
 -- Versión del servidor: 10.4.32-MariaDB
 -- Versión de PHP: 8.2.12
 
--- Configura la sesión SQL antes de importar la estructura de la liga.
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 START TRANSACTION;
 SET time_zone = "+00:00";
@@ -20,7 +19,6 @@ SET time_zone = "+00:00";
 
 --
 -- Base de datos: `liga-de-futbol`
--- El esquema almacena usuarios, clubes, jugadores, partidos y sanciones.
 --
 
 -- --------------------------------------------------------
@@ -36,6 +34,14 @@ CREATE TABLE `administrador` (
   `contraseña` varchar(20) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
+--
+-- Volcado de datos para la tabla `administrador`
+--
+
+INSERT INTO `administrador` (`idAdmin`, `nombreCompleto`, `nombreUsuario`, `contraseña`) VALUES
+(1, 'Italo Ruis', 'italo', '123456'),
+(2, 'Pepe Sanchez', 'Pepe', '123');
+
 -- --------------------------------------------------------
 
 --
@@ -48,6 +54,15 @@ CREATE TABLE `boletin` (
   `fechaSubida` date NOT NULL,
   `titulo` varchar(40) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Volcado de datos para la tabla `boletin`
+--
+
+INSERT INTO `boletin` (`idBoletin`, `idAdmin`, `fechaSubida`, `titulo`) VALUES
+(1, 1, '2026-09-26', 'Se aplazo la fecha de inicio'),
+(2, 1, '2026-10-02', 'hola.'),
+(3, 1, '2026-10-11', 'chau');
 
 -- --------------------------------------------------------
 
@@ -70,8 +85,23 @@ CREATE TABLE `carnet` (
 
 CREATE TABLE `categoria` (
   `idCategoria` int(11) NOT NULL,
-  `año` int(11) NOT NULL
+  `año` varchar(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Volcado de datos para la tabla `categoria`
+--
+
+INSERT INTO `categoria` (`idCategoria`, `año`) VALUES
+(1, '2013'),
+(2, '2014'),
+(3, '2015'),
+(4, '2016'),
+(5, '2017'),
+(6, '2018'),
+(7, '2019'),
+(8, '2020'),
+(9, 'Femenino');
 
 -- --------------------------------------------------------
 
@@ -85,8 +115,48 @@ CREATE TABLE `club` (
   `contraseñaClub` varchar(20) NOT NULL,
   `nombrePresidente` varchar(40) NOT NULL,
   `añoCreacion` int(4) NOT NULL,
-  `estadio` varchar(50) NOT NULL
+  `estadio` varchar(50) NOT NULL,
+  `idCategoria` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Volcado de datos para la tabla `club`
+--
+
+INSERT INTO `club` (`idClub`, `nombreClub`, `contraseñaClub`, `nombrePresidente`, `añoCreacion`, `estadio`, `idCategoria`) VALUES
+(1, 'Liverpool', 'hola123', 'Pepe Gervasio', 1920, 'Santiago Bernabeu', 1),
+(2, 'Racing', '123456', 'Pepe Gervasio Segundo', 1921, 'Santiago Bernabeu ll', 1);
+
+-- --------------------------------------------------------
+
+--
+-- Estructura de tabla para la tabla `club_categoria`
+--
+
+CREATE TABLE `club_categoria` (
+  `idClub` int(11) NOT NULL,
+  `idCategoria` int(11) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+-- --------------------------------------------------------
+
+--
+-- Estructura de tabla para la tabla `competicion`
+--
+
+CREATE TABLE `competicion` (
+  `idCompeticion` int(11) NOT NULL,
+  `nombreCompeticion` varchar(20) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Volcado de datos para la tabla `competicion`
+--
+
+INSERT INTO `competicion` (`idCompeticion`, `nombreCompeticion`) VALUES
+(1, 'Campeonato'),
+(2, 'Copa de oro'),
+(3, 'Copa de plata');
 
 -- --------------------------------------------------------
 
@@ -112,15 +182,20 @@ CREATE TABLE `jugador` (
   `cedula` varchar(10) NOT NULL,
   `idClub` int(11) NOT NULL,
   `fechaNacimiento` date NOT NULL,
-  `genero` varchar(1) NOT NULL,
+  `genero` varchar(15) NOT NULL,
   `idCategoria` int(11) NOT NULL,
-  -- Masa del jugador en kilogramos para los cálculos físicos.
   `masa` decimal(6,2) NOT NULL,
-  -- Altura del jugador en metros.
   `altura` decimal(4,2) NOT NULL,
-  -- Velocidad del jugador en metros por segundo.
   `velocidad` decimal(6,2) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Volcado de datos para la tabla `jugador`
+--
+
+INSERT INTO `jugador` (`nombre`, `apellido`, `cedula`, `idClub`, `fechaNacimiento`, `genero`, `idCategoria`, `masa`, `altura`, `velocidad`) VALUES
+('Pepe', 'Hernandez', '23848043', 1, '2017-10-10', 'M', 5, 70.00, 1.50, 6.00),
+('italo', 'ruis', '57705017', 1, '2014-12-08', 'M', 1, 70.00, 1.70, 6.00);
 
 -- --------------------------------------------------------
 
@@ -138,8 +213,19 @@ CREATE TABLE `partido` (
   `arbitro` varchar(40) NOT NULL,
   `estadio` varchar(40) NOT NULL,
   `fechaPartido` date NOT NULL,
-  `horaPartido` int(11) NOT NULL
+  `horaPartido` int(11) NOT NULL,
+  `jornada` int(11) NOT NULL DEFAULT 1,
+  `idCompeticion` int(11) NOT NULL,
+  `jugado` tinyint(1) NOT NULL,
+  `idCategoria` int(11) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Volcado de datos para la tabla `partido`
+--
+
+INSERT INTO `partido` (`idPartido`, `idClubLocal`, `idClubVisitante`, `golesLocal`, `golesVisitante`, `duracionPartido`, `arbitro`, `estadio`, `fechaPartido`, `horaPartido`, `jornada`, `idCompeticion`, `jugado`, `idCategoria`) VALUES
+(7, 1, 2, 2, 0, 0, 'Gustavo Herrera', 'Santiago Bernabeu', '2026-12-02', 1230, 1, 1, 1, 1);
 
 -- --------------------------------------------------------
 
@@ -152,8 +238,16 @@ CREATE TABLE `sancion` (
   `tipo` varchar(40) NOT NULL,
   `cedulaJugador` varchar(10) NOT NULL,
   `motivo` varchar(150) NOT NULL,
-  `fechaSuspencion` int(11) NOT NULL
+  `fechaSuspencion` int(11) NOT NULL,
+  `clubSancion` varchar(20) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Volcado de datos para la tabla `sancion`
+--
+
+INSERT INTO `sancion` (`idSancion`, `tipo`, `cedulaJugador`, `motivo`, `fechaSuspencion`, `clubSancion`) VALUES
+(5, 'Amarilla', '23848043', 'Golpeó a un rival.', 2, '1');
 
 --
 -- Índices para tablas volcadas
@@ -189,7 +283,21 @@ ALTER TABLE `categoria`
 -- Indices de la tabla `club`
 --
 ALTER TABLE `club`
-  ADD PRIMARY KEY (`idClub`);
+  ADD PRIMARY KEY (`idClub`),
+  ADD KEY `idCategoria` (`idCategoria`);
+
+--
+-- Indices de la tabla `club_categoria`
+--
+ALTER TABLE `club_categoria`
+  ADD PRIMARY KEY (`idClub`,`idCategoria`),
+  ADD KEY `idCategoria` (`idCategoria`);
+
+--
+-- Indices de la tabla `competicion`
+--
+ALTER TABLE `competicion`
+  ADD PRIMARY KEY (`idCompeticion`);
 
 --
 -- Indices de la tabla `formulario`
@@ -211,7 +319,9 @@ ALTER TABLE `jugador`
 ALTER TABLE `partido`
   ADD PRIMARY KEY (`idPartido`),
   ADD KEY `idClubLocal` (`idClubLocal`),
-  ADD KEY `idClubVisitante` (`idClubVisitante`);
+  ADD KEY `idClubVisitante` (`idClubVisitante`),
+  ADD KEY `idCompeticion` (`idCompeticion`),
+  ADD KEY `idCategoria` (`idCategoria`);
 
 --
 -- Indices de la tabla `sancion`
@@ -228,13 +338,13 @@ ALTER TABLE `sancion`
 -- AUTO_INCREMENT de la tabla `administrador`
 --
 ALTER TABLE `administrador`
-  MODIFY `idAdmin` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `idAdmin` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 
 --
 -- AUTO_INCREMENT de la tabla `boletin`
 --
 ALTER TABLE `boletin`
-  MODIFY `idBoletin` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `idBoletin` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
 
 --
 -- AUTO_INCREMENT de la tabla `carnet`
@@ -246,13 +356,19 @@ ALTER TABLE `carnet`
 -- AUTO_INCREMENT de la tabla `categoria`
 --
 ALTER TABLE `categoria`
-  MODIFY `idCategoria` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `idCategoria` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=10;
 
 --
 -- AUTO_INCREMENT de la tabla `club`
 --
 ALTER TABLE `club`
-  MODIFY `idClub` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `idClub` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
+
+--
+-- AUTO_INCREMENT de la tabla `competicion`
+--
+ALTER TABLE `competicion`
+  MODIFY `idCompeticion` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
 
 --
 -- AUTO_INCREMENT de la tabla `formulario`
@@ -264,13 +380,13 @@ ALTER TABLE `formulario`
 -- AUTO_INCREMENT de la tabla `partido`
 --
 ALTER TABLE `partido`
-  MODIFY `idPartido` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `idPartido` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
 
 --
 -- AUTO_INCREMENT de la tabla `sancion`
 --
 ALTER TABLE `sancion`
-  MODIFY `idSancion` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `idSancion` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
 
 --
 -- Restricciones para tablas volcadas
@@ -289,6 +405,19 @@ ALTER TABLE `carnet`
   ADD CONSTRAINT `carnet_ibfk_1` FOREIGN KEY (`cedulaJugador`) REFERENCES `jugador` (`cedula`) ON UPDATE CASCADE;
 
 --
+-- Filtros para la tabla `club`
+--
+ALTER TABLE `club`
+  ADD CONSTRAINT `club_ibfk_1` FOREIGN KEY (`idCategoria`) REFERENCES `categoria` (`idCategoria`) ON UPDATE CASCADE;
+
+--
+-- Filtros para la tabla `club_categoria`
+--
+ALTER TABLE `club_categoria`
+  ADD CONSTRAINT `club_categoria_ibfk_1` FOREIGN KEY (`idClub`) REFERENCES `club` (`idClub`) ON DELETE CASCADE,
+  ADD CONSTRAINT `club_categoria_ibfk_2` FOREIGN KEY (`idCategoria`) REFERENCES `categoria` (`idCategoria`) ON DELETE CASCADE;
+
+--
 -- Filtros para la tabla `jugador`
 --
 ALTER TABLE `jugador`
@@ -300,7 +429,9 @@ ALTER TABLE `jugador`
 --
 ALTER TABLE `partido`
   ADD CONSTRAINT `partido_ibfk_1` FOREIGN KEY (`idClubLocal`) REFERENCES `club` (`idClub`) ON UPDATE CASCADE,
-  ADD CONSTRAINT `partido_ibfk_2` FOREIGN KEY (`idClubVisitante`) REFERENCES `club` (`idClub`);
+  ADD CONSTRAINT `partido_ibfk_2` FOREIGN KEY (`idClubVisitante`) REFERENCES `club` (`idClub`) ON UPDATE CASCADE,
+  ADD CONSTRAINT `partido_ibfk_3` FOREIGN KEY (`idCompeticion`) REFERENCES `competicion` (`idCompeticion`) ON UPDATE CASCADE,
+  ADD CONSTRAINT `partido_ibfk_4` FOREIGN KEY (`idCategoria`) REFERENCES `categoria` (`idCategoria`) ON UPDATE CASCADE;
 
 --
 -- Filtros para la tabla `sancion`
@@ -312,5 +443,3 @@ COMMIT;
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
 /*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
-
-ALTER TABLE `partido` ADD `jornada` int(11) NOT NULL DEFAULT 1;

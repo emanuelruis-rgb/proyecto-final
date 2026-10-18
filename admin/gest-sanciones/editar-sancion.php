@@ -38,33 +38,38 @@
     <div class="formulario-container">
         <h1>Editar sanción</h1>
         <form action="ejecutar-editar-sancion.php" method="POST">
-            <input type="hidden" name="id-sancion" value="<?= $sancion['idSancion'] ?> (ID de la sanción)">
+            <input type="hidden" name="id-sancion" value="<?= htmlspecialchars((string)$sancion['idSancion'], ENT_QUOTES, 'UTF-8') ?>">
 
             <select name="id-club-sancion" id="select-club" class="select-formulario">
-                <option value="" selected>Seleccionar club del sancionado</option>
+                <option value="" disabled>Seleccionar club del sancionado</option>
                 <!-- este php itera por los clubes y pone un option mas por cada club, con el value siendo el idclub y
                   $club es el array del club y el fetch array busca cada fila con la query de allá arriba-->
                 <?php while ($club = mysqli_fetch_array($queryClubes)): ?>
-                    <option value="<?= $club['idClub'] ?>">
-                <?= $club['nombreClub'] ?>
+                    <option value="<?= htmlspecialchars((string)$club['idClub'], ENT_QUOTES, 'UTF-8') ?>"
+                        <?= (string)$club['idClub'] === (string)$sancion['clubSancion'] ? 'selected' : '' ?>>
+                        <?= htmlspecialchars($club['nombreClub'], ENT_QUOTES, 'UTF-8') ?>
                     </option>
                 <?php endwhile; ?>
             </select>
 
             <!-- se selecciona jugador de los disponibles en el club, y a la BD va su cedula-->
-            <select name="ci-jugador-sancion" id="select-jugador" class="select-formulario">
+            <select name="ci-jugador-sancion"
+                    id="select-jugador"
+                    class="select-formulario"
+                    data-jugador-inicial="<?= htmlspecialchars((string)$sancion['cedulaJugador'], ENT_QUOTES, 'UTF-8') ?>">
                 <option value="" disabled selected>Seleccionar jugador sancionado</option>
-
             </select>
 
             <select name="tipo-sancion" class="select-formulario">
-                <option value="Amarilla">Tarjeta amarilla</option>
-                <option value="Roja">Tarjeta roja</option>
-                <option value="Disciplinaria">Sanción disciplinaria</option>
+                <option value="Amarilla" <?= $sancion['tipo']==='Amarilla' ? 'selected':''?>>Tarjeta amarilla</option>
+                <option value="Roja" <?= $sancion['tipo']==='Roja' ? 'selected':''?>>Tarjeta roja</option>
+                <option value="Disciplinaria" <?= $sancion['tipo']==='Disciplinaria' ? 'selected':''?>>Sanción disciplinaria</option>
             </select>
 
-            <input type="text" name="motivo-sancion" placeholder="Motivo de la sanción" required>
-            <input type="number" name="numero-fechas" placeholder="Cantidad de fechas de suspensión" min="0" required>
+            <input type="text" name="motivo-sancion"
+                    value="<?= htmlspecialchars($sancion['motivo'],ENT_QUOTES, 'UTF-8') ?>" placeholder="Motivo de la sanción" required>
+            <input type="number" name="numero-fechas" 
+                    value="<?= htmlspecialchars((string)$sancion['fechaSuspencion'], ENT_QUOTES, 'UTF-8') ?>" placeholder="Cantidad de fechas de suspensión" min="0" required>
             
             <input type="submit" value="Guardar cambios">
         </form>
