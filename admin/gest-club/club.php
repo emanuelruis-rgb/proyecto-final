@@ -3,6 +3,9 @@ include(__DIR__ . "/../../conexion-bd/conexion.php");
 $con = connection();
 $query = mysqli_query($con, "SELECT * FROM club");
 
+$categorias    = mysqli_fetch_all(mysqli_query($con, "SELECT idCategoria, año FROM categoria ORDER BY año"), MYSQLI_ASSOC);
+$competiciones = mysqli_fetch_all(mysqli_query($con, "SELECT idCompeticion, nombreCompeticion FROM competicion ORDER BY nombreCompeticion"), MYSQLI_ASSOC);
+
 session_name('admin_session');
 session_start();
 if (!isset($_SESSION['nombre'])) {
@@ -92,7 +95,25 @@ if ($fila = mysqli_fetch_assoc($resultado)) {
             <input type="text" name="presidente" placeholder="Presidente">
             <input type="text" name="año-fundacion" placeholder="Año de fundación">
             <input type="text" name="estadio" placeholder="Estadio">
-
+            <fieldset class="categorias-club">
+                <legend>Categorías que integra</legend>
+                <?php foreach ($categorias as $cat): ?>
+                    <label>
+                        <input type="checkbox" name="categorias[]" value="<?= (int)$cat['idCategoria'] ?>">
+                        <?= htmlspecialchars($cat['año']) ?>
+                    </label>
+                <?php endforeach; ?>
+            </fieldset>
+            
+            <fieldset class="competiciones-club">
+                <legend>Competiciones en las que participa</legend>
+                <?php foreach ($competiciones as $comp): ?>
+                    <label>
+                        <input type="checkbox" name="competiciones[]" value="<?= (int)$comp['idCompeticion'] ?>">
+                        <?= htmlspecialchars($comp['nombreCompeticion']) ?>
+                </label>
+                <?php endforeach; ?>
+                </fieldset>
             <input type="submit" value="Agregar">
         </form>
     </div>
@@ -112,18 +133,26 @@ if ($fila = mysqli_fetch_assoc($resultado)) {
             </thead>
             <tbody>
                 <?php while ($row = mysqli_fetch_array($query)): ?>
-                    <tr>
-                        <th><?= $row['nombreClub'] ?></th>
-                        <th><?= $row['nombrePresidente'] ?></th>
-                        <th><?= $row['añoCreacion'] ?></th>
-                        <th><?= $row['estadio'] ?></th>
-                        <th><a href="actualizar-club.php?id=<?= $row['idClub'] ?>" class="users-table--edit"><i class="bi bi-pencil-square"></i></a></th>
-                        <th><a href="eliminar-club.php?id=<?= $row['idClub'] ?>" class="users-table--delete" ><i class="bi bi-trash3-fill"></i></a></th>
+                    <tr class="<?= $row['activo'] ? '':'club-inactivo'?>">
+                        <td><?= htmlspecialchars($row['nombreClub']) ?></td>
+                        <td><?= htmlspecialchars($row['nombrePresidente']) ?></td>
+                        <td><?= $row['añoCreacion'] ?></td>
+                        <td><?= htmlspecialchars($row['estadio']) ?></td>
+                        <td>
+                            <form action="cambiar-estado-club.php" method="POST" class="form-estado">
+                                <input type="hidden" name="id" value="<?=(int)$row['idClub']?>">
+                                <button type="submit" class="btn-estado <?= $row['activo'] ? 'activo':'inactivo'?>"
+                                    title="<?= $row['activo'] ? 'Desactivar club' : 'Activar club' ?>">
+                                    <?= $row['activo'] ? 'Activo' : 'Inactivo' ?>
+                                </button> 
+                            </form>
+                        </td>
+                        <td><a href="actualizar-club.php?id=<?= $row['idClub'] ?>" class="users-table--edit"><i class="bi bi-pencil-square"></i></a></td>
+                        <td><a href="eliminar-club.php?id=<?= $row['idClub'] ?>" class="users-table--delete" ><i class="bi bi-trash3-fill"></i></a></td>
                     </tr>
                 <?php endwhile; ?>
             </tbody>
         </table>
     </div>
-
 </body>
 </html>

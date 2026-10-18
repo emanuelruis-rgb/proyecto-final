@@ -78,3 +78,18 @@
 }
 .user-menu-item:last-child { border-bottom: none; }
 .user-menu-item i { font-size: 1rem; }
+
+.form-estado { margin: 0; }
+.btn-estado {
+    padding: 7px 16px; border: none; border-radius: 6px; color: #fff; cursor: pointer;
+    font-weight: 600; font-size: 0.85rem; transition: background-color 0.2s ease;
+}
+.btn-estado.activo { background: var(--pitch-green); }
+.btn-estado.activo:hover { background: var(--pitch-green-hover); }
+.btn-estado.inactivo { background: #9ca3af; }
+.btn-estado.inactivo:hover { background: #6b7280; }
+.users-table tr.club-inactivo td { opacity: 0.55; }
+
+.categorias-club { border: 1px solid #dcdfe6; border-radius: 6px; padding: 12px 16px; margin: 0; }
+.categorias-club legend { font-size: 0.9rem; color: #6b7280; padding: 0 6px; }
+.categorias-club label { display: inline-flex; align-items: center; gap: 6px; margin: 4px 14px 4px 0; cursor: pointer; }

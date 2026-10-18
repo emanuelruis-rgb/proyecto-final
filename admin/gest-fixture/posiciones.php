@@ -37,12 +37,14 @@ LEFT JOIN (
     FROM partido
     WHERE idCompeticion = ? AND idCategoria = ? AND jugado = 1
 ) AS t ON t.idClub = club.idClub
-WHERE club.idClub IN (SELECT idClub FROM club_categoria WHERE idCategoria = ?)
+WHERE club.activo = 1
+  AND club.idClub IN (SELECT idClub FROM club_categoria WHERE idCategoria = ?)
+  AND club.idClub IN (SELECT idClub FROM club_competicion WHERE idCompeticion = ?)
 GROUP BY club.idClub, club.nombreClub
 ORDER BY Pts DESC, DG DESC, GF DESC, club.nombreClub ASC";
 
 $stmt = mysqli_prepare($con, $sql);
-mysqli_stmt_bind_param($stmt, "iiiii", $idCompeticion, $idCategoria, $idCompeticion, $idCategoria, $idCategoria);
+mysqli_stmt_bind_param($stmt, "iiiiii", $idCompeticion, $idCategoria, $idCompeticion, $idCategoria, $idCategoria, $idCompeticion);
 mysqli_stmt_execute($stmt);
 $posiciones = mysqli_fetch_all(mysqli_stmt_get_result($stmt), MYSQLI_ASSOC);
 ?>
