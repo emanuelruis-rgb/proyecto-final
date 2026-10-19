@@ -9,8 +9,8 @@ function formatoHora($hora) {
 }
 
 // Devuelve los partidos agrupados por fecha.
-// Si $idCompeticion es 0 trae todas las competiciones; si no, solo la indicada.
-function obtenerFixture($con, $idCompeticion = 0) {
+// Un filtro en 0 trae todas las competiciones o categorías.
+function obtenerFixture($con, $idCompeticion = 0, $idCategoria = 0) {
     $sql = "SELECT p.idPartido,
                    p.idCompeticion,
                    p.jugado,
@@ -24,6 +24,7 @@ function obtenerFixture($con, $idCompeticion = 0) {
             JOIN club cl ON p.idClubLocal = cl.idClub
             JOIN club cv ON p.idClubVisitante = cv.idClub
             WHERE (? = 0 OR p.idCompeticion = ?)
+              AND (? = 0 OR p.idCategoria = ?)
             ORDER BY p.fechaPartido, p.horaPartido";
 
     $stmt = mysqli_prepare($con, $sql);
@@ -31,7 +32,7 @@ function obtenerFixture($con, $idCompeticion = 0) {
         return [];
     }
 
-    mysqli_stmt_bind_param($stmt, "ii", $idCompeticion, $idCompeticion);
+    mysqli_stmt_bind_param($stmt, "iiii", $idCompeticion, $idCompeticion, $idCategoria, $idCategoria);
     mysqli_stmt_execute($stmt);
     $result = mysqli_stmt_get_result($stmt);
     if (!$result) {
@@ -64,13 +65,13 @@ function crearPartido($con, $datos) {
     $sql = "INSERT INTO partido
                 (idClubLocal, idClubVisitante, golesLocal, golesVisitante,
                  duracionPartido, arbitro, estadio, fechaPartido, horaPartido,
-                 idCompeticion, jugado)
-            VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
+                 idCompeticion, idCategoria, jugado)
+            VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
 
     $stmt = mysqli_prepare($con, $sql);
     mysqli_stmt_bind_param(
         $stmt,
-        "iiiiisssiii",
+        "iiiiisssiiii",
         $datos['idClubLocal'],
         $datos['idClubVisitante'],
         $datos['golesLocal'],
@@ -81,6 +82,7 @@ function crearPartido($con, $datos) {
         $datos['fechaPartido'],
         $datos['horaPartido'],
         $datos['idCompeticion'],
+        $datos['idCategoria'],
         $datos['jugado']
     );
 

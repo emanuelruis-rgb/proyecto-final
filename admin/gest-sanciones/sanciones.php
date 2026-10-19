@@ -133,7 +133,7 @@ if ($fila = mysqli_fetch_assoc($resultado)) {
          autocompleta la cédula en base al jugador. la sancion agregada va a agregar-sancion.php -->
         <form action="agregar-sancion.php" method="POST">
             <!-- se selecciona club, y de aca a la BD va el id club -->
-            <select name="id-club-sancion" id="select-club" class="select-formulario">
+            <select name="id-club-sancion" id="select-club" class="select-formulario" required>
                 <option value="" disabled selected>Seleccionar club del sancionado</option>
                 <!-- este php itera por los clubes y pone un option mas por cada club, con el value siendo el idclub y
                   $club es el array del club y el fetch array busca cada fila con la query de allá arriba-->
@@ -143,9 +143,14 @@ if ($fila = mysqli_fetch_assoc($resultado)) {
                     </option>
                 <?php endwhile; ?>
             </select>
-
+            <select id="select-categoria" class="select-formulario">
+                <option value="">Todas las categorías</option>
+                <?php foreach ($categorias as $cat): ?>
+                    <option value="<?=(int)$cat['idCategoria']?>"><?=htmlspecialchars($cat['año'])?></option>
+                <?php endforeach; ?>
+            </select>
             <!-- se selecciona jugador de los disponibles en el club, y a la BD va su cedula-->
-            <select name="ci-jugador-sancion" id="select-jugador" class="select-formulario">
+            <select name="ci-jugador-sancion" id="select-jugador" class="select-formulario" required>
                 <option value="" disabled selected>Seleccionar jugador sancionado</option>
 
             </select>

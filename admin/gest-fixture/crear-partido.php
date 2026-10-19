@@ -12,6 +12,10 @@ include(__DIR__ . "/fixtures-data.php");
 
 $con = connection();
 $clubes = obtenerClubes($con);
+$resultadoCompeticiones = mysqli_query($con, "SELECT idCompeticion, nombreCompeticion FROM competicion ORDER BY nombreCompeticion");
+$competiciones = $resultadoCompeticiones ? mysqli_fetch_all($resultadoCompeticiones, MYSQLI_ASSOC) : [];
+$resultadoCategorias = mysqli_query($con, "SELECT idCategoria, `año` FROM categoria ORDER BY `año` DESC");
+$categorias = $resultadoCategorias ? mysqli_fetch_all($resultadoCategorias, MYSQLI_ASSOC) : [];
 $mensaje = "";
 
 // Si llegó el formulario por POST, procesamos la creación.
@@ -27,10 +31,15 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         'golesLocal'      => 0,
         'golesVisitante'  => 0,
         'duracionPartido' => 0,
+        'idCompeticion'   => (int)($_POST['idCompeticion'] ?? 0),
+        'idCategoria'     => (int)($_POST['idCategoria'] ?? 0),
+        'jugado'          => 0,
     ];
 
     if ($datos['idClubLocal'] === $datos['idClubVisitante']) {
         $mensaje = "El club local y visitante no pueden ser el mismo.";
+    } elseif (!$datos['idCompeticion'] || !$datos['idCategoria']) {
+        $mensaje = "Selecciona la competición y la categoría del partido.";
     } elseif (crearPartido($con, $datos)) {
         header("Location: fixtures.php");
         exit;
@@ -71,6 +80,22 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
       <option value="">-- Seleccionar --</option>
       <?php foreach ($clubes as $c): ?>
         <option value="<?= $c['idClub'] ?>"><?= htmlspecialchars($c['nombreClub']) ?></option>
+      <?php endforeach; ?>
+    </select>
+
+    <label>Competición</label>
+    <select name="idCompeticion" required>
+      <option value="">-- Seleccionar --</option>
+      <?php foreach ($competiciones as $competicion): ?>
+        <option value="<?= (int)$competicion['idCompeticion'] ?>"><?= htmlspecialchars($competicion['nombreCompeticion']) ?></option>
+      <?php endforeach; ?>
+    </select>
+
+    <label>Categoría</label>
+    <select name="idCategoria" required>
+      <option value="">-- Seleccionar --</option>
+      <?php foreach ($categorias as $categoria): ?>
+        <option value="<?= (int)$categoria['idCategoria'] ?>"><?= htmlspecialchars($categoria['año']) ?></option>
       <?php endforeach; ?>
     </select>
 

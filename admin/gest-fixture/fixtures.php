@@ -15,7 +15,24 @@ $clubes = obtenerClubes($con);
 $resultadoCompeticiones = mysqli_query($con, "SELECT idCompeticion, nombreCompeticion FROM competicion ORDER BY nombreCompeticion");
 $competiciones = $resultadoCompeticiones ? mysqli_fetch_all($resultadoCompeticiones, MYSQLI_ASSOC) : [];
 $idCompeticionFiltro = (int)($_GET['competicion'] ?? 0);
+$idCategoriaFiltro = (int)($_GET['categoria'] ?? 0);
+$categorias = mysqli_fetch_all(mysqli_query($con, "SELECT idCategoria, `año` FROM categoria ORDER BY `año` DESC"), MYSQLI_ASSOC);
 $mensaje = '';
+
+function clubesHabilitados($con, $d) {
+  $sql = "SELECT COUNT(DISTINCT cc.idClub)
+          FROM club_categoria cc
+          JOIN club_competicion cp ON cp.idClub = cc.idClub
+          JOIN club c ON c.idClub = cc.idClub
+          WHERE cc.idCategoria = ? AND cp.idCompeticion = ? AND c.activo = 1 AND cc.idClub IN (?, ?)";
+  $stmt = mysqli_prepare($con, $sql);
+  mysqli_stmt_bind_param($stmt, "iiii", $d['idCategoria'], $d['idCompeticion'], $d['idClubLocal'], $d['idClubVisitante']);
+  mysqli_stmt_execute($stmt);
+  mysqli_stmt_bind_result($stmt, $cantidad);
+  mysqli_stmt_fetch($stmt);
+  mysqli_stmt_close($stmt);
+  return (int)$cantidad === 2;
+}
 
 // El administrador puede crear partidos o cargar el resultado de uno pendiente.
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
@@ -24,13 +41,14 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $golesLocal = filter_var($_POST['golesLocal'] ?? null, FILTER_VALIDATE_INT);
     $golesVisitante = filter_var($_POST['golesVisitante'] ?? null, FILTER_VALIDATE_INT);
     $competicion = (int)($_POST['competicion'] ?? 0);
+    $categoria = (int)($_POST['categoria'] ?? 0);         
 
     if ($idPartido === false || $idPartido < 1 ||
         $golesLocal === false || $golesLocal < 0 ||
         $golesVisitante === false || $golesVisitante < 0) {
       $mensaje = 'Ingresa un marcador válido para ambos clubes.';
     } elseif (registrarResultado($con, $idPartido, $golesLocal, $golesVisitante)) {
-      header('Location: fixtures.php?competicion=' . $competicion);
+      header('Location: fixtures.php?competicion=' . $competicion . '&categoria=' . $categoria);  
       exit;
     } else {
       $mensaje = 'No se pudo guardar el resultado. Es posible que el partido ya esté jugado.';
@@ -47,14 +65,17 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
       'golesVisitante' => 0,
       'duracionPartido' => 0,
       'idCompeticion' => (int)($_POST['idCompeticion'] ?? 0),
+      'idCategoria' => (int)($_POST['idCategoria'] ?? 0),
       'jugado' => 0,
     ];
 
     // Evita guardar un partido entre el mismo club y valida los datos básicos.
     if ($datos['idClubLocal'] === $datos['idClubVisitante']) {
       $mensaje = 'El club local y visitante no pueden ser el mismo.';
-    } elseif (!$datos['idClubLocal'] || !$datos['idClubVisitante'] || !$datos['fechaPartido'] || !$datos['idCompeticion']) {
-      $mensaje = 'Completa los clubes, la fecha y la competición del partido.';
+     } elseif (!$datos['idClubLocal'] || !$datos['idClubVisitante'] || !$datos['fechaPartido'] || !$datos['idCompeticion'] || !$datos['idCategoria']) {
+      $mensaje = 'Completa los clubes, la fecha, la competición y la categoría del partido.';
+    } elseif (!clubesHabilitados($con, $datos)) {
+      $mensaje = 'Ambos clubes deben estar activos y participar en la competición y la categoría elegidas.';
     } elseif (crearPartido($con, $datos)) {
       header('Location: fixtures.php');
       exit;
@@ -64,7 +85,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
   }
 }
 
-$fixture = obtenerFixture($con, $idCompeticionFiltro);
+$fixture = obtenerFixture($con, $idCompeticionFiltro, $idCategoriaFiltro);
 $nombreMostrar = $_SESSION['nombre'];
 ?>
 <!DOCTYPE html>
@@ -159,6 +180,14 @@ $nombreMostrar = $_SESSION['nombre'];
         <?php endforeach; ?>
       </select>
 
+      <label for="idCategoria">Categoría</label>
+      <select name="idCategoria" id="idCategoria" required>
+        <option value="">Seleccionar</option>
+        <?php foreach ($categorias as $cat): ?>
+          <option value="<?= (int)$cat['idCategoria'] ?>"><?= htmlspecialchars($cat['año']) ?></option>
+        <?php endforeach; ?>
+      </select>
+
       <label for="fechaPartido">Fecha</label>
       <input type="date" name="fechaPartido" id="fechaPartido" min="<?= date('Y-m-d') ?>" required>
 
@@ -174,29 +203,33 @@ $nombreMostrar = $_SESSION['nombre'];
       <button type="submit">Guardar</button>
     </form>
   </section>
-
-  <?php
-    // Si no hay partidos cargados
-    if (!$fixture):
-  ?>
-    <p>No hay partidos cargados todavía.</p>
-  <?php endif; ?>
-
-  <?php if ($fixture): ?>
     <!-- Tabla general para consultar rápidamente todos los partidos del fixture. -->
     <section class="tabla-fixture">
-      <form method="GET">
-        <select name="competicion" onchange="this.form.submit()">
-          <option value="0">Todas las competiciones</option>
-          <?php foreach ($competiciones as $c): ?>
-            <option value="<?= $c['idCompeticion'] ?>" <?= $c['idCompeticion'] == $idCompeticionFiltro ? 'selected' : '' ?>>
-              <?= htmlspecialchars($c['nombreCompeticion']) ?>
-        </option>
-      <?php endforeach; ?>
-    </select>
+    <h1>Tabla de partidos</h1>
+
+    <form method="GET" class="filtros">
+      <select name="competicion" onchange="this.form.submit()">
+        <option value="0">Todas las competiciones</option>
+        <?php foreach ($competiciones as $c): ?>
+          <option value="<?= $c['idCompeticion'] ?>" <?= $c['idCompeticion'] == $idCompeticionFiltro ? 'selected' : '' ?>>
+            <?= htmlspecialchars($c['nombreCompeticion']) ?>
+          </option>
+        <?php endforeach; ?>
+      </select>
+
+      <select name="categoria" onchange="this.form.submit()">
+        <option value="0">Todas las categorías</option>
+        <?php foreach ($categorias as $cat): ?>
+          <option value="<?= (int)$cat['idCategoria'] ?>" <?= $cat['idCategoria'] == $idCategoriaFiltro ? 'selected' : '' ?>>
+            <?= htmlspecialchars($cat['año']) ?>
+          </option>
+        <?php endforeach; ?>
+      </select>
     </form>
 
-      <h1>Tabla de partidos</h1>
+    <?php if (!$fixture): ?>
+      <p class="sin-partidos">No hay partidos para esta selección.</p>
+    <?php else: ?>
       <table>
         <thead>
           <tr>
@@ -226,6 +259,7 @@ $nombreMostrar = $_SESSION['nombre'];
                     <form method="POST" class="resultado-form">
                       <input type="hidden" name="idPartido" value="<?= (int)$p['idPartido'] ?>">
                       <input type="hidden" name="competicion" value="<?= $idCompeticionFiltro ?>">
+                      <input type="hidden" name="categoria" value="<?= $idCategoriaFiltro ?>"> 
                       <label>
                         Local
                         <input type="number" name="golesLocal" min="0" step="1" required>
@@ -247,8 +281,9 @@ $nombreMostrar = $_SESSION['nombre'];
           <?php endforeach; ?>
         </tbody>
       </table>
+      <?php endif; ?>
     </section>
-  <?php endif; ?>
+  
 
   <?php
     // Recorre los partidos agrupados por fecha
