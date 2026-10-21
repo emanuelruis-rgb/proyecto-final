@@ -124,6 +124,7 @@ if ($tipoClub == "propio") {
                         <th>Fecha de nacimiento</th>
                         <th>Género</th>
                         <th>Categoría</th>
+                        <th>Acciones</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -136,6 +137,15 @@ if ($tipoClub == "propio") {
                     <td><?= $jugador['fechaNacimiento'] ?></td>
                     <td><?= $jugador['genero'] ?></td>
                     <td><?= $jugador['año'] ?></td>
+                    <td>
+                        <!-- esto verifica que, si el jugador es del club que tiene sesión abierta, aparece el botón
+                         de subir carnet. sino, aparece solo el de ver carnet -->
+                        <?php if ($jugador['idClub'] == $idClub): ?>
+                            <a href="../carnet/carnet-club.php?cedula=<?= $jugador['cedula'] ?>" class="botones-carnet">Subir carnet</a>
+                        <?php endif; ?>
+
+                        <a href="../carnet/ver-carnet.php?cedula=<?= $jugador['cedula'] ?>" class="botones-carnet">Ver carnet</a>
+                    </td>
                 </tr>
                 <?php endwhile; ?>
             </tbody>
