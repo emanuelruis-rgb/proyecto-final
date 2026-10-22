@@ -96,6 +96,7 @@ $nombreMostrar = $_SESSION['nombre'];
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.13.1/font/bootstrap-icons.min.css">
   <link rel="stylesheet" href="../pagina-principal-admin.css?v=5">
   <link rel="stylesheet" href="fixtures-style.css?v=1">
+  <link rel="stylesheet" href="/proyecto-final/include/style.css?v=1">
   <link rel="icon" type="image/png" href="../../img/logo-liga/log-liga-b.png">
 </head>
 <body>
@@ -331,6 +332,6 @@ $nombreMostrar = $_SESSION['nombre'];
     </div>
   <?php endforeach; ?>
 </main>
-
+    <?php include_once __DIR__ . '/../../include/footer.php'; ?>
 </body>
 </html>

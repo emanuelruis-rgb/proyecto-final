@@ -76,6 +76,7 @@ if ($fila = mysqli_fetch_assoc($resultado)) {
     <title>Gestión de sanciones</title>
     <link rel="stylesheet" href="../pagina-principal-admin.css?v=5">
     <link rel="stylesheet" href="sanciones-style.css?v=1">
+    <link rel="stylesheet" href="/proyecto-final/include/style.css?v=1">
     <link rel="icon" type="image/png" href="../../img/logo-liga/log-liga-b.png">
     <script src="sanciones.js" defer></script>
 </head>
@@ -235,6 +236,6 @@ if ($fila = mysqli_fetch_assoc($resultado)) {
             </tbody>
         </table>
     </div>
-
+    <?php include_once __DIR__ . '/../../include/footer.php'; ?>
 </body>
 </html>

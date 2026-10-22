@@ -56,9 +56,10 @@ $posiciones = mysqli_fetch_all(mysqli_stmt_get_result($stmt), MYSQLI_ASSOC);
   <title>Tabla de posiciones</title>
   <link rel="stylesheet" href="../pagina-principal-admin.css?v=5">
   <link rel="stylesheet" href="fixtures-style.css?v=1">
+  <link rel="stylesheet" href="/proyecto-final/include/style.css?v=1">
   <link rel="icon" type="image/png" href="../../img/logo-liga/log-liga-b.png">
 </head>
-<body>
+<body class="pagina-posiciones">
   <header> 
         <nav class="nav-izquierda-container">
             <a href="/proyecto-final/admin/indexadmin.php">
@@ -135,5 +136,6 @@ $posiciones = mysqli_fetch_all(mysqli_stmt_get_result($stmt), MYSQLI_ASSOC);
       <?php endif; ?>
     </section>
   </main>
+      <?php include_once __DIR__ . '/../../include/footer.php'; ?>
 </body>
 </html>

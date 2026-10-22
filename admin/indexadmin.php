@@ -160,6 +160,7 @@ if ($resultadoBoletines === false) {
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Página principal admins</title>
     <link rel="stylesheet" href="pagina-principal-admin.css?v=6">
+    <link rel="stylesheet" href="/proyecto-final/include/style.css?v=1">
     <link rel="icon" type="image/png" href="../img/logo-liga/log-liga-b.png">
 </head>
 
@@ -431,5 +432,6 @@ document.getElementById('modalEditarBoletin').addEventListener('click', function
             <!-- TERMINA CARRUSEL -->
         </div>
     </div>
+    <?php include_once __DIR__ . '/../include/footer.php'; ?>
 </body>
 </html>
