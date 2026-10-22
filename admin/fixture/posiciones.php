@@ -48,6 +48,8 @@ $stmt = mysqli_prepare($con, $sql);
 mysqli_stmt_bind_param($stmt, "iiiiii", $idCompeticion, $idCategoria, $idCompeticion, $idCategoria, $idCategoria, $idCompeticion);
 mysqli_stmt_execute($stmt);
 $posiciones = mysqli_fetch_all(mysqli_stmt_get_result($stmt), MYSQLI_ASSOC);
+
+$nombreMostrar = $_SESSION['nombre'];
 ?>
 <!DOCTYPE html>
 <html lang="es">
@@ -74,6 +76,37 @@ $posiciones = mysqli_fetch_all(mysqli_stmt_get_result($stmt), MYSQLI_ASSOC);
                 <a href="posiciones.php" class="nav-izquierda-botones active">Tabla de posiciones</a>
             </div>
         </nav>
+
+        <script>
+        function toggleUserMenu() {
+        document.getElementById('userDropdown').classList.toggle('show'); //busca el elemento con la clase UserDropdown y activa/desactiva el menu
+        }
+
+        document.addEventListener('click', function(event) {
+        const menu = document.querySelector('.user-menu');
+        const dropdown = document.getElementById('userDropdown');
+        if (!menu.contains(event.target)) {
+            dropdown.classList.remove('show');
+            }
+        });
+        </script>
+
+        <div class="user-menu">
+            <button class="user-menu-toggle" onclick="toggleUserMenu()">
+                <i class="bi bi-person-circle"></i>
+                <span class="user-menu-name"><?php echo htmlspecialchars($nombreMostrar); ?></span>
+            </button>
+
+            <div class="user-menu-dropdown" id="userDropdown">
+                <a href="/proyecto-final/gest-documentos/documento.php" class="user-menu-item">
+                    <i class="bi bi-file-earmark-text"></i> Subir documento
+            </a>
+            <a href="/proyecto-final/logout.php" class="user-menu-item">
+                <i class="bi bi-box-arrow-right"></i>
+                <span>Cerrar sesión</span>
+            </a>
+            </div>
+        </div>
 </header>
   <!-- Copiá acá el <header> de fixtures.php para mantener el mismo menú -->
 

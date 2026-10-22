@@ -10,45 +10,45 @@ if (!isset($_SESSION['nombre'], $_SESSION['idClub'])) {
 require_once __DIR__ . '/../../conexion-bd/conexion.php';
 $conexion = connection();
 
-$resultadoCompeticiones = mysqli_query(
-    $conexion,
-    'SELECT idCompeticion, nombreCompeticion FROM competicion ORDER BY nombreCompeticion'
-);
-$competiciones = $resultadoCompeticiones
-    ? mysqli_fetch_all($resultadoCompeticiones, MYSQLI_ASSOC)
-    : [];
-$idCompeticion = (int)($_GET['competicion'] ?? ($competiciones[0]['idCompeticion'] ?? 0));
+// Competiciones y categorías para los selectores
+$competiciones = mysqli_fetch_all(mysqli_query($conexion, "SELECT * FROM competicion"), MYSQLI_ASSOC);
+$categorias = mysqli_fetch_all(mysqli_query($conexion, "SELECT idCategoria, año FROM categoria ORDER BY año"), MYSQLI_ASSOC);
 
-// Cada partido jugado aporta una fila para cada equipo, como local y visitante.
-// A partir de esas filas se calculan PJ, victorias, empates, derrotas y goles.
+// Si no viene ninguna por la URL, usa la primera
+$idCompeticion = (int)($_GET['competicion'] ?? ($competiciones[0]['idCompeticion'] ?? 0));
+$idCategoria   = (int)($_GET['categoria'] ?? ($categorias[0]['idCategoria'] ?? 0));
+
+// Calcula estadísticas por club a partir de los partidos jugados de la competición y categoría seleccionadas.
 $sql = "SELECT
-            club.nombreClub,
-            COUNT(t.idClub) AS PJ,
-            COALESCE(SUM(t.gf > t.gc), 0) AS PG,
-            COALESCE(SUM(t.gf = t.gc), 0) AS PE,
-            COALESCE(SUM(t.gf < t.gc), 0) AS PP,
-            COALESCE(SUM(t.gf), 0) AS GF,
-            COALESCE(SUM(t.gc), 0) AS GC,
-            COALESCE(SUM(t.gf) - SUM(t.gc), 0) AS DG,
-            COALESCE(SUM(CASE WHEN t.gf > t.gc THEN 3
-                              WHEN t.gf = t.gc THEN 1
-                              ELSE 0 END), 0) AS Pts
-        FROM club
-        LEFT JOIN (
-            SELECT idClubLocal AS idClub, golesLocal AS gf, golesVisitante AS gc
-            FROM partido
-            WHERE idCompeticion = ? AND jugado = 1
-            UNION ALL
-            SELECT idClubVisitante, golesVisitante, golesLocal
-            FROM partido
-            WHERE idCompeticion = ? AND jugado = 1
-        ) AS t ON t.idClub = club.idClub
-        GROUP BY club.idClub, club.nombreClub
-        ORDER BY Pts DESC, DG DESC, GF DESC, club.nombreClub ASC";
+    club.nombreClub,
+    COUNT(t.idClub)                         AS PJ,
+    COALESCE(SUM(t.gf > t.gc), 0)           AS PG,
+    COALESCE(SUM(t.gf = t.gc), 0)           AS PE,
+    COALESCE(SUM(t.gf < t.gc), 0)           AS PP,
+    COALESCE(SUM(t.gf), 0)                  AS GF,
+    COALESCE(SUM(t.gc), 0)                  AS GC,
+    COALESCE(SUM(t.gf) - SUM(t.gc), 0)      AS DG,
+    COALESCE(SUM(CASE WHEN t.gf > t.gc THEN 3
+                      WHEN t.gf = t.gc THEN 1
+                      ELSE 0 END), 0)       AS Pts
+FROM club
+LEFT JOIN (
+    SELECT idClubLocal AS idClub, golesLocal AS gf, golesVisitante AS gc
+    FROM partido
+    WHERE idCompeticion = ? AND idCategoria = ? AND jugado = 1
+    UNION ALL
+    SELECT idClubVisitante, golesVisitante, golesLocal
+    FROM partido
+    WHERE idCompeticion = ? AND idCategoria = ? AND jugado = 1
+) AS t ON t.idClub = club.idClub
+WHERE club.activo = 1
+  AND club.idClub IN (SELECT idClub FROM club_categoria WHERE idCategoria = ?)
+  AND club.idClub IN (SELECT idClub FROM club_competicion WHERE idCompeticion = ?)
+GROUP BY club.idClub, club.nombreClub
+ORDER BY Pts DESC, DG DESC, GF DESC, club.nombreClub ASC";
 
 $stmt = mysqli_prepare($conexion, $sql);
-// El mismo parámetro filtra los dos lados del UNION por la competición elegida.
-mysqli_stmt_bind_param($stmt, 'ii', $idCompeticion, $idCompeticion);
+mysqli_stmt_bind_param($stmt, 'iiiiii', $idCompeticion, $idCategoria, $idCompeticion, $idCategoria, $idCategoria, $idCompeticion);
 mysqli_stmt_execute($stmt);
 $posiciones = mysqli_fetch_all(mysqli_stmt_get_result($stmt), MYSQLI_ASSOC);
 ?>
@@ -103,13 +103,20 @@ $posiciones = mysqli_fetch_all(mysqli_stmt_get_result($stmt), MYSQLI_ASSOC);
     <main>
         <section class="tabla-fixture">
             <h1>Tabla de posiciones</h1>
-            <form method="GET">
-                <label for="competicion">Competición</label>
-                <select id="competicion" name="competicion" onchange="this.form.submit()">
-                    <?php foreach ($competiciones as $competicion): ?>
-                        <option value="<?= (int)$competicion['idCompeticion'] ?>"
-                            <?= (int)$competicion['idCompeticion'] === $idCompeticion ? 'selected' : '' ?>>
-                            <?= htmlspecialchars($competicion['nombreCompeticion']) ?>
+
+            <form method="GET" class="filtros">
+                <select name="competicion" onchange="this.form.submit()">
+                    <?php foreach ($competiciones as $c): ?>
+                        <option value="<?= (int)$c['idCompeticion'] ?>" <?= (int)$c['idCompeticion'] === $idCompeticion ? 'selected' : '' ?>>
+                            <?= htmlspecialchars($c['nombreCompeticion']) ?>
+                        </option>
+                    <?php endforeach; ?>
+                </select>
+
+                <select name="categoria" onchange="this.form.submit()">
+                    <?php foreach ($categorias as $cat): ?>
+                        <option value="<?= (int)$cat['idCategoria'] ?>" <?= (int)$cat['idCategoria'] === $idCategoria ? 'selected' : '' ?>>
+                            <?= htmlspecialchars($cat['año']) ?>
                         </option>
                     <?php endforeach; ?>
                 </select>

@@ -132,6 +132,7 @@ if ($fila = mysqli_fetch_assoc($resultado)) {
                     <th>Estadio</th>
                     <th></th>
                     <th></th>
+                    <th></th>
                 </tr>
             </thead>
             <tbody>

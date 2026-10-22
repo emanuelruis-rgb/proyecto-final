@@ -124,6 +124,7 @@ if ($conexion) {
             </div>
         </div>
     </header>
+    <main></br></br>
     <div class="tabla">
         <h2>Sanciones registradas</h2>
         <form class="filtros" method="GET" class="filtros-sanciones">
@@ -184,6 +185,7 @@ if ($conexion) {
             </tbody>
         </table>
     </div>
+    </main>
     <?php include_once __DIR__ . '/../../include/footer.php'; ?>
 </body>
 </html>
