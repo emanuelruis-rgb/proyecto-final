@@ -1,4 +1,3 @@
-</br>
 <footer class="footer">
     <div class="footer-contenido">
 
@@ -27,11 +26,11 @@
         <div class="footer-enlaces">
             <h4>Información legal</h4>
 
-            <a href="/proyecto-final/politica-privacidad.php">
+            <a href="/proyecto-final/include/politica-privacidad.php">
                 Política de privacidad
             </a>
 
-            <a href="/proyecto-final/terminos-condiciones.php">
+            <a href="/proyecto-final/include/terminos-condiciones.php">
                 Términos y condiciones
             </a>
         </div>

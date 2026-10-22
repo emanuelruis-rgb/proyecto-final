@@ -54,9 +54,10 @@ $posiciones = mysqli_fetch_all(mysqli_stmt_get_result($stmt), MYSQLI_ASSOC);
 <head>
   <meta charset="UTF-8">
   <title>Tabla de posiciones</title>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.13.1/font/bootstrap-icons.min.css">
   <link rel="stylesheet" href="../pagina-principal-admin.css?v=5">
   <link rel="stylesheet" href="fixtures-style.css?v=1">
-  <link rel="stylesheet" href="/proyecto-final/include/style.css?v=1">
+  <link rel="stylesheet" href="/proyecto-final/include/css/style.css?v=1">
   <link rel="icon" type="image/png" href="../../img/logo-liga/log-liga-b.png">
 </head>
 <body class="pagina-posiciones">
@@ -66,10 +67,10 @@ $posiciones = mysqli_fetch_all(mysqli_stmt_get_result($stmt), MYSQLI_ASSOC);
                 <img src="/proyecto-final/img/logo-liga/log-liga-b.png" alt="Logo" class="logo-liga">
             </a>
             <div class="nav-izquierda-botones-container">
-                <a href="../gest-jugador/jugador.php" class="nav-izquierda-botones">Jugadores</a>
-                <a href="../gest-club/club.php" class="nav-izquierda-botones ">Clubes</a>
-                <a href="../gest-fixture/fixtures.php" class="nav-izquierda-botones">Fixture</a>                
-                <a href="../gest-sanciones/sanciones.php" class="nav-izquierda-botones">Sanciones</a>
+                <a href="../jugador/jugador.php" class="nav-izquierda-botones">Jugadores</a>
+                <a href="../club/club.php" class="nav-izquierda-botones ">Clubes</a>
+                <a href="fixtures.php" class="nav-izquierda-botones">Fixture</a>                
+                <a href="../sanciones/sanciones.php" class="nav-izquierda-botones">Sanciones</a>
                 <a href="posiciones.php" class="nav-izquierda-botones active">Tabla de posiciones</a>
             </div>
         </nav>
@@ -99,7 +100,7 @@ $posiciones = mysqli_fetch_all(mysqli_stmt_get_result($stmt), MYSQLI_ASSOC);
 </form>
 
       <?php if (!$posiciones): ?>
-        <p>Todavía no hay partidos jugados en esta competición. Cargá los resultados desde <a href="/proyecto-final/admin/gest-fixture/fixtures.php?competicion=<?= $idCompeticion ?>">Fixture</a> para calcular las posiciones.</p>
+        <p>Todavía no hay partidos jugados en esta competición. Cargá los resultados desde <a href="/proyecto-final/admin/fixture/fixtures.php?competicion=<?= $idCompeticion ?>">Fixture</a> para calcular las posiciones.</p>
       <?php else: ?>
         <table>
           <thead>

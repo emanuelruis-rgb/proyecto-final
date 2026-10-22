@@ -53,7 +53,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 <head>
   <meta charset="UTF-8">
   <title>Nuevo partido</title>
-  <link rel="stylesheet" href="/proyecto-final/admin/gest-fixture/fixtures-style.css">
+  <link rel="stylesheet" href="/proyecto-final/admin/fixture/fixtures-style.css">
 </head>
 <body>
 
