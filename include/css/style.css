@@ -1,0 +1,140 @@
+
+/* ===== PIE DE PÁGINA ===== */
+.footer {
+    margin-top: auto;
+    flex-shrink: 0;
+    padding: 28px 5% 15px;
+    background: rgba(5, 18, 14, 0.97);
+    color: #f5f5f5;
+    border-top: 2px solid #c9a227;
+    text-align: left;
+}
+
+.footer-contenido,
+.footer-inferior {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 20px;
+}
+
+.footer-contenido {
+    padding-bottom: 22px;
+}
+
+/* ===== MARCA ===== */
+.footer-marca {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+}
+
+.footer-logo {
+    color: #c9a227;
+    font-size: 35px;
+    flex-shrink: 0;
+}
+
+.footer-marca h3 {
+    margin: 0 0 5px;
+    color: #c9a227;
+    font-size: 18px;
+}
+
+.footer-marca p {
+    margin: 0;
+    color: #b9c7c1;
+    font-size: 12px;
+    line-height: 1.5;
+}
+
+/* ===== CONTACTO Y ENLACES LEGALES ===== */
+.footer-contacto,
+.footer-enlaces {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.footer-contacto h4,
+.footer-enlaces h4 {
+    margin: 0 0 5px;
+    color: #c9a227;
+    font-size: 14px;
+}
+
+.footer-contacto a,
+.footer-enlaces a {
+    color: #e0e7e3;
+    font-size: 13px;
+    text-decoration: none;
+    overflow-wrap: anywhere;
+    transition: color 0.2s;
+}
+
+.footer-contacto a {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.footer-contacto a i {
+    color: #c9a227;
+    flex-shrink: 0;
+}
+
+.footer-contacto a:hover,
+.footer-enlaces a:hover {
+    color: #c9a227;
+    text-decoration: underline;
+}
+
+/* ===== COPYRIGHT ===== */
+.footer-inferior {
+    padding-top: 15px;
+    border-top: 1px solid rgba(201, 162, 39, 0.25);
+    color: #aab8b1;
+    font-size: 12px;
+}
+
+.footer-inferior p {
+    margin: 0;
+}
+
+.footer-inferior i {
+    margin-right: 4px;
+    color: #c9a227;
+    font-size: 14px;
+    vertical-align: -1px;
+}
+
+.footer-inferior span {
+    color: #c9a227;
+}
+
+/* ===== TABLETS Y CELULARES ===== */
+@media (max-width: 600px) {
+    .footer {
+        padding: 24px 18px 15px;
+    }
+
+    .footer-contenido,
+    .footer-inferior {
+        flex-direction: column;
+        align-items: flex-start;
+    }
+
+    .footer-contenido {
+        gap: 25px;
+    }
+
+    .footer-contacto,
+    .footer-enlaces {
+        width: 100%;
+    }
+
+    .footer-enlaces {
+        gap: 12px;
+    }
+}

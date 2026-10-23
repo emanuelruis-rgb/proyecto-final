@@ -41,6 +41,7 @@ if ($conexion) {
 	<title>Boletines | Club</title>
 	<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.13.1/font/bootstrap-icons.min.css">
 	<link rel="stylesheet" href="pagina-principal-club.css?v=6">
+	<link rel="stylesheet" href="/proyecto-final/include/css/style.css?v=1">
 	<script src="menu-club.js" defer></script>
 	<link rel="icon" type="image/png" href="../img/logo-liga/log-liga-b.png">
 </head>
@@ -52,9 +53,9 @@ if ($conexion) {
 			</a>
 			<div class="nav-izquierda-botones-container">
 				<a href="jugador/jugadores-club.php?tipoClub=propio" class="nav-izquierda-botones">Jugadores</a>
-				<a href="sanciones.php" class="nav-izquierda-botones">Sanciones</a>
-				<a href="fixture.php" class="nav-izquierda-botones">Fixture</a>
-				<a href="posiciones.php" class="nav-izquierda-botones">Tabla de posiciones</a>
+				<a href="sancion/sanciones.php" class="nav-izquierda-botones">Sanciones</a>
+				<a href="fixture/fixture.php" class="nav-izquierda-botones">Fixture</a>
+				<a href="tabla-posicion/posiciones.php" class="nav-izquierda-botones">Tabla de posiciones</a>
 			</div>
 		</nav>
 
@@ -71,10 +72,10 @@ if ($conexion) {
 			</button>
 
 			<div class="user-menu-dropdown" id="userDropdown">
-				<a href="../uploads/documentos/reglamento.pdf" class="user-menu-item" download>
+				<a href="/proyecto-final/uploads/documentos/reglamento.pdf" class="user-menu-item" download>
 					<i class="bi bi-file-earmark-text"></i> Descargar documento
 				</a>
-				<a href="/proyecto-final/logout.php" class="user-menu-item">
+				<a href="/proyecto-final/logout.php?rol=club" class="user-menu-item">
 					<i class="bi bi-box-arrow-right"></i>
 					<span>Cerrar sesión</span>
 				</a>
@@ -122,5 +123,6 @@ if ($conexion) {
 			</section>
 		<?php endif; ?>
 	</main>
+	<?php include_once __DIR__ . '/../include/footer.php'; ?>
 </body>
 </html>

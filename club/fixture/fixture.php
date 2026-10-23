@@ -8,7 +8,7 @@ if (!isset($_SESSION['nombre'], $_SESSION['idClub'])) {
 }
 
 require_once __DIR__ . '/../../conexion-bd/conexion.php';
-require_once __DIR__ . '/../../admin/gest-fixture/fixtures-data.php';
+require_once __DIR__ . '/../../admin/fixture/fixtures-data.php';
 
 $conexion = connection();
 // El filtro es opcional: cero muestra todas las competiciones.
@@ -31,7 +31,8 @@ $fixture = obtenerFixture($conexion, $idCompeticion);
     <title>Fixture de la liga</title>
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.13.1/font/bootstrap-icons.min.css">
     <link rel="stylesheet" href="../pagina-principal-club.css?v=6">
-    <link rel="stylesheet" href="../../admin/gest-fixture/fixtures-style.css?v=1">
+    <link rel="stylesheet" href="../../admin/fixture/fixtures-style.css?v=1">
+    <link rel="stylesheet" href="/proyecto-final/include/css/style.css?v=1">
     <script src="../menu-club.js" defer></script>
     <link rel="icon" type="image/png" href="../../img/logo-liga/log-liga-b.png">
 </head>
@@ -59,10 +60,10 @@ $fixture = obtenerFixture($conexion, $idCompeticion);
                 <span class="user-menu-name"><?= htmlspecialchars($_SESSION['nombre']) ?></span>
             </button>
             <div class="user-menu-dropdown" id="userDropdown">
-                <a href="../uploads/documentos/reglamento.pdf" class="user-menu-item" download>
+                <a href="/proyecto-final/uploads/documentos/reglamento.pdf" class="user-menu-item" download>
                     <i class="bi bi-file-earmark-text"></i> Descargar documento
                 </a>
-                <a href="/proyecto-final/logout.php" class="user-menu-item">
+                <a href="/proyecto-final/logout.php?rol=club" class="user-menu-item">
                     <i class="bi bi-box-arrow-right"></i>
                     <span>Cerrar sesión</span>
                 </a>
@@ -121,5 +122,6 @@ $fixture = obtenerFixture($conexion, $idCompeticion);
             <?php endif; ?>
         </section>
     </main>
+    <?php include_once __DIR__ . '/../../include/footer.php'; ?>
 </body>
 </html>

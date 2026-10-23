@@ -1,6 +1,9 @@
-:root { --sombra: 0 8px 30px rgba(0, 0, 0, 0.25); }
+/* Estilos propios de las páginas de fixture.
+   Variables (--navy, --sombra, etc.), header, menú de usuario y filtros vienen de pagina-principal-admin.css */
 
 main { max-width: 800px; margin: 30px auto; padding: 0 20px; }
+body.pagina-posiciones { display: flex; flex-direction: column; min-height: 100vh; }
+body.pagina-posiciones > main { flex: 1; width: 100%; box-sizing: border-box; }
 main > p { color: #fff; font-weight: 600; text-shadow: 0 2px 5px rgba(0, 0, 0, 0.65); }
 main > p > a { color: var(--pitch-green); text-decoration: none; font-size: 14px; }
 main > p > a:hover { text-decoration: underline; }
@@ -10,11 +13,14 @@ footer { text-align: center; padding: 20px; color: #6b7280; font-size: 13px; }
 
 /* ===== Tarjetas (alta, tabla general y partidos) ===== */
 .tabla-alta-fixture, .tabla-fixture, .partidos { background: #fff; box-shadow: var(--sombra); }
-.tabla-alta-fixture, .tabla-fixture { border-radius: 6px; overflow-x: auto; margin-bottom: 30px; }
+
+/* overflow hidden: el título y los filtros quedan fijos, solo .tabla-scroll se desplaza */
+.tabla-alta-fixture, .tabla-fixture { border-radius: 6px; overflow: hidden; margin-bottom: 30px; }
 
 .tabla-alta-fixture h1, .tabla-fixture h1 {
     background: var(--navy); color: #fff; font-size: 1.2rem; margin: 0; padding: 14px 16px;
 }
+.tabla-fixture h1 { text-align: center; text-shadow: 0 2px 8px rgba(0, 0, 0, 0.5); }
 
 /* ===== Formularios ===== */
 form {
@@ -55,12 +61,24 @@ form button:hover { background: var(--pitch-green-hover); }
 }
 
 /* ===== Tabla general ===== */
+/* Solo esta capa scrollea horizontalmente */
+.tabla-scroll { overflow-x: auto; }
+
 .tabla-fixture table { width: 100%; border-collapse: collapse; white-space: nowrap; }
 .tabla-fixture th, .tabla-fixture td {
     padding: 14px 16px; text-align: left; font-size: 0.9rem; border-bottom: 1px solid #e5e7eb;
 }
 .tabla-fixture th { color: var(--navy); }
 .tabla-fixture tr:last-child td { border-bottom: none; }
+
+/* Filtros dentro de la tarjeta: pisan el estilo global de "form".
+   Los estilos de inputs, selects y botones vienen de .filtros en el CSS general. */
+.tabla-fixture .filtros {
+    flex-direction: row; flex-wrap: wrap;
+    background: transparent; box-shadow: none;
+    margin: 0; padding: 16px; box-sizing: border-box;
+}
+.tabla-fixture .filtros button { margin-top: 0; }
 
 /* ===== Partidos por jornada ===== */
 h2.jornada {
@@ -83,54 +101,20 @@ h2.jornada {
 /* ===== Eliminar y mensajes ===== */
 .eliminar {
     display: inline-flex; align-items: center; justify-content: center;
-    background: #dc3545; color: #fff; text-decoration: none; font-size: 16px;
+    background: var(--danger); color: #fff; text-decoration: none; font-size: 16px;
     padding: 7px 12px; border-radius: 6px; margin-left: 12px; flex-shrink: 0;
     transition: background-color 0.2s ease;
 }
-.eliminar:hover { background: #bd2130; }
+.eliminar:hover { background: var(--danger-hover); }
 .mensaje-error {
     background: #fde8e8; color: #b91c1c; border: 1px solid #f5b5b5;
     padding: 10px 16px; border-radius: 6px; margin-bottom: 20px; font-size: 15px;
 }
 
-/* ===== Menú de usuario ===== */
-.user-menu { position: relative; display: inline-block; }
-.user-menu-toggle {
-    display: flex; align-items: center; gap: 8px; height: 46px; padding: 0 16px 0 10px;
-    background: transparent; border: 2px solid var(--gold); border-radius: 23px;
-    color: #fff; font-size: 0.95rem; font-weight: 600; cursor: pointer; transition: 0.25s;
-}
-.user-menu-toggle i { font-size: 1.6rem; }
-.user-menu-toggle:hover, .user-menu-item:hover { background: var(--gold); color: var(--navy); }
+.sin-partidos { margin: 0; padding: 20px 16px; text-align: center; color: #6b7280; }
+.tabla-alta-fixture .mensaje-error { margin: 16px 24px 0; }
 
-.user-menu-dropdown {
-    display: none; position: absolute; right: 0; top: calc(100% + 14px); z-index: 1000;
-    min-width: 200px; background: var(--navy); border: 1px solid var(--gold); border-radius: 10px;
-    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.5); overflow: hidden;
-    opacity: 0; transform: translateY(-8px); transition: opacity 0.2s ease, transform 0.2s ease;
+/* ===== Responsive ===== */
+@media (max-width: 600px) {
+    .tabla-fixture th, .tabla-fixture td { padding: 10px; font-size: 0.8rem; }
 }
-.user-menu-dropdown.show { display: block; opacity: 1; transform: translateY(0); }
-.user-menu-dropdown::before {
-    content: ""; position: absolute; top: -8px; right: 14px;
-    border: 8px solid transparent; border-top: 0; border-bottom-color: var(--navy);
-}
-.user-menu-item {
-    display: flex; align-items: center; gap: 10px; padding: 12px 16px; color: #fff;
-    text-decoration: none; font-size: 0.9rem; border-bottom: 1px solid rgba(255, 255, 255, 0.08); transition: 0.2s;
-}
-.user-menu-item:last-child { border-bottom: none; }
-.user-menu-item i { font-size: 1rem; }
-
-/* Tabla general del fixture (usa --navy y --sombra del CSS general) */
-.tabla-fixture { background: #fff; border-radius: 6px; box-shadow: var(--sombra); overflow-x: auto; margin-bottom: 30px; }
-.tabla-fixture h1 {
-    background: var(--navy); color: #fff; font-size: 1.2rem; margin: 0; padding: 14px 16px;
-    text-align: center; text-shadow: 0 2px 8px rgba(0, 0, 0, 0.5);
-}
-.tabla-fixture table { width: 100%; border-collapse: collapse; white-space: nowrap; }
-.tabla-fixture th, .tabla-fixture td { padding: 14px 16px; text-align: left; font-size: 0.9rem; border-bottom: 1px solid #e5e7eb; }
-.tabla-fixture th { color: var(--navy); }
-.tabla-fixture tr:last-child td { border-bottom: none; }
-
-.tabla-fixture .filtros { flex-direction: row; flex-wrap: wrap; background: transparent; box-shadow: none; margin: 0; padding: 16px; }
-.tabla-fixture .filtros select { flex: 1 1 200px; }

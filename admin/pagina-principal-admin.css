@@ -1,6 +1,7 @@
 :root {
     --navy: #0A1510; --navy-soft: #3E5C76; --pitch-green: #3C8A3E; --pitch-green-hover: #2f6f31;
     --gold: #C9A227; --text-main: #2C3E50;
+    --danger: #dc3545; --danger-hover: #bd2130;
     --grad-verde: linear-gradient(135deg, var(--pitch-green), var(--pitch-green-hover));
     --sombra: 0 8px 30px rgba(0, 0, 0, 0.25); /* compartida con las páginas de gestión */
 }
@@ -34,9 +35,21 @@ header {
 
 /* ===== Layout ===== */
 .layout-abajo-header { display: flex; justify-content: center; min-height: calc(100vh - 90px); }
+/* Agrupa las herramientas principales frente a la gestión de boletines. */
 .dashboard-container {
-    flex: 1; width: 100%; box-sizing: border-box; display: flex; flex-direction: column; align-items: center;
-    padding: 42px 30px 60px; color: #fff; font-family: Georgia, 'Times New Roman', Times, serif;
+    flex: 1; width: 100%; box-sizing: border-box; display: grid;
+    grid-template-columns: minmax(0, 1.15fr) minmax(320px, 0.85fr);
+    grid-template-areas: "principal boletines"; align-items: start; gap: 28px;
+    padding: 30px; color: #fff; font-family: Georgia, 'Times New Roman', Times, serif;
+}
+.boletines-columna { grid-area: boletines; min-width: 0; }
+.admin-principal-columna { grid-area: principal; min-width: 0; }
+
+@media (max-width: 760px) {
+    .dashboard-container {
+        grid-template-columns: 1fr; grid-template-areas: "principal" "boletines";
+        gap: 24px; padding: 22px 18px 30px;
+    }
 }
 
 /* ===== Tarjetas del panel (introducción y boletín) ===== */
@@ -161,9 +174,9 @@ header {
 .carruselb, .btn-carrusel { background: var(--navy); }
 .carruselb { min-width: 150px; padding: 10px 16px; }
 .btn-carrusel { min-width: 105px; padding: 9px 16px; }
-.btn-eliminar-img { background: #dc3545; min-width: 150px; padding: 10px 14px; }
+.btn-eliminar-img { background: var(--danger); min-width: 150px; padding: 10px 14px; }
 .carruselb:hover, .btn-carrusel:hover { background: var(--gold); color: var(--navy); }
-.btn-eliminar-img:hover { background: #bd2130; }
+.btn-eliminar-img:hover { background: var(--danger-hover); }
 .btn-eliminar-img:disabled { background: #9ca3af; cursor: not-allowed; }
 
 .sidebar-btn:hover { background: #4F7090; transition: 0.3s; }
@@ -196,6 +209,56 @@ header {
 }
 .user-menu-item:last-child { border-bottom: none; }
 .user-menu-item i { font-size: 1rem; }
+
+/* ===== Filtros (búsqueda, selects y limpiar filtros) ===== */
+.filtros {
+    display: flex; flex-wrap: wrap; align-items: center; gap: 14px;
+    background: transparent; padding: 0; margin: 0 0 20px;
+    width: 100%; max-width: none; box-sizing: border-box;
+}
+
+/* Buscador */
+.filtros input[type="text"] {
+    flex: 2 1 260px; min-width: 0; padding: 10px 14px;
+    border: 1px solid #dcdfe6; border-radius: 6px; background: #fff;
+    font-size: 0.95rem; color: var(--text-main); outline: none;
+    transition: border-color 0.2s ease, box-shadow 0.2s ease;
+}
+
+/* Botón Buscar */
+.filtros button[type="submit"] {
+    padding: 10px 20px; border: none; border-radius: 6px;
+    background: var(--pitch-green); color: #fff;
+    font-size: 0.9rem; font-weight: 600; cursor: pointer; white-space: nowrap;
+    transition: background-color 0.2s ease;
+}
+.filtros button[type="submit"]:hover { background: var(--pitch-green-hover); }
+
+/* Selects con flecha */
+.filtros select {
+    flex: 1 1 220px; min-width: 0; padding: 10px 40px 10px 14px;
+    border: 1px solid #dcdfe6; border-radius: 6px; background-color: #fff;
+    font-size: 0.95rem; color: var(--text-main); cursor: pointer; outline: none;
+    appearance: none;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8' fill='none' stroke='%232C3E50' stroke-width='2'%3E%3Cpath d='M1 1l5 5 5-5'/%3E%3C/svg%3E");
+    background-repeat: no-repeat; background-position: right 14px center;
+    transition: border-color 0.2s ease, box-shadow 0.2s ease;
+}
+
+.filtros input[type="text"]:focus,
+.filtros select:focus {
+    border-color: var(--pitch-green);
+    box-shadow: 0 0 0 3px rgba(60, 138, 62, 0.15);
+}
+
+/* Botón Limpiar filtros (rojo con borde) */
+.limpiar-filtros {
+    display: inline-flex; align-items: center; gap: 6px; padding: 10px 16px;
+    border: 1px solid var(--danger); border-radius: 6px; background: transparent;
+    color: var(--danger); font-size: 0.9rem; font-weight: 600; text-decoration: none; white-space: nowrap;
+    transition: background-color 0.2s ease, color 0.2s ease;
+}
+.limpiar-filtros:hover { background: var(--danger); color: #fff; }
 
 /* ===== Documentos ===== */
 .documentos-card {

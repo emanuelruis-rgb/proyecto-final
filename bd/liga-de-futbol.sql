@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Servidor: 127.0.0.1
--- Tiempo de generación: 18-10-2026 a las 14:58:40
+-- Tiempo de generación: 19-10-2026 a las 03:17:03
 -- Versión del servidor: 10.4.32-MariaDB
 -- Versión de PHP: 8.2.12
 
@@ -116,17 +116,17 @@ CREATE TABLE `club` (
   `nombrePresidente` varchar(40) NOT NULL,
   `añoCreacion` int(4) NOT NULL,
   `estadio` varchar(50) NOT NULL,
-  `activo` tinyint(1) NOT NULL DEFAULT 1,
-  `idCategoria` int(11) NOT NULL
+  `activo` tinyint(1) NOT NULL DEFAULT 1
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
 -- Volcado de datos para la tabla `club`
 --
 
-INSERT INTO `club` (`idClub`, `nombreClub`, `contraseñaClub`, `nombrePresidente`, `añoCreacion`, `estadio`, `idCategoria`) VALUES
+INSERT INTO `club` (`idClub`, `nombreClub`, `contraseñaClub`, `nombrePresidente`, `añoCreacion`, `estadio`, `activo`) VALUES
 (1, 'Liverpool', 'hola123', 'Pepe Gervasio', 1920, 'Santiago Bernabeu', 1),
-(2, 'Racing', '123456', 'Pepe Gervasio Segundo', 1921, 'Santiago Bernabeu ll', 1);
+(2, 'Racing', '123456', 'Pepe Gervasio Segundo', 1921, 'Santiago Bernabeu ll', 1),
+(6, 'Nacional', 'hola', 'Bairo', 1899, 'Gran Parque Central', 1);
 
 -- --------------------------------------------------------
 
@@ -138,6 +138,37 @@ CREATE TABLE `club_categoria` (
   `idClub` int(11) NOT NULL,
   `idCategoria` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Volcado de datos para la tabla `club_categoria`
+--
+
+INSERT INTO `club_categoria` (`idClub`, `idCategoria`) VALUES
+(1, 1),
+(1, 5),
+(2, 1),
+(6, 2),
+(6, 7);
+
+-- --------------------------------------------------------
+
+--
+-- Estructura de tabla para la tabla `club_competicion`
+--
+
+CREATE TABLE `club_competicion` (
+  `idClub` int(11) NOT NULL,
+  `idCompeticion` int(11) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Volcado de datos para la tabla `club_competicion`
+--
+
+INSERT INTO `club_competicion` (`idClub`, `idCompeticion`) VALUES
+(1, 1),
+(2, 1),
+(6, 1);
 
 -- --------------------------------------------------------
 
@@ -226,7 +257,8 @@ CREATE TABLE `partido` (
 --
 
 INSERT INTO `partido` (`idPartido`, `idClubLocal`, `idClubVisitante`, `golesLocal`, `golesVisitante`, `duracionPartido`, `arbitro`, `estadio`, `fechaPartido`, `horaPartido`, `jornada`, `idCompeticion`, `jugado`, `idCategoria`) VALUES
-(7, 1, 2, 2, 0, 0, 'Gustavo Herrera', 'Santiago Bernabeu', '2026-12-02', 1230, 1, 1, 1, 1);
+(7, 1, 2, 2, 0, 0, 'Gustavo Herrera', 'Santiago Bernabeu', '2026-12-02', 1230, 1, 1, 1, 1),
+(9, 1, 2, 0, 0, 0, 'Gustavo Herrera', 'Arena do Gremio', '2026-12-12', 1230, 1, 1, 1, 1);
 
 -- --------------------------------------------------------
 
@@ -248,7 +280,9 @@ CREATE TABLE `sancion` (
 --
 
 INSERT INTO `sancion` (`idSancion`, `tipo`, `cedulaJugador`, `motivo`, `fechaSuspencion`, `clubSancion`) VALUES
-(5, 'Amarilla', '23848043', 'Golpeó a un rival.', 2, '1');
+(5, 'Amarilla', '23848043', 'Golpeó a un rival.', 3, '1'),
+(6, 'Amarilla', '57705017', 'Golpeó a un rival.', 4, '1'),
+(7, 'Amarilla', '57705017', 'Golpeó a un rival.', 6, '1');
 
 --
 -- Índices para tablas volcadas
@@ -284,8 +318,7 @@ ALTER TABLE `categoria`
 -- Indices de la tabla `club`
 --
 ALTER TABLE `club`
-  ADD PRIMARY KEY (`idClub`),
-  ADD KEY `idCategoria` (`idCategoria`);
+  ADD PRIMARY KEY (`idClub`);
 
 --
 -- Indices de la tabla `club_categoria`
@@ -293,6 +326,13 @@ ALTER TABLE `club`
 ALTER TABLE `club_categoria`
   ADD PRIMARY KEY (`idClub`,`idCategoria`),
   ADD KEY `idCategoria` (`idCategoria`);
+
+--
+-- Indices de la tabla `club_competicion`
+--
+ALTER TABLE `club_competicion`
+  ADD PRIMARY KEY (`idClub`,`idCompeticion`),
+  ADD KEY `idCompeticion` (`idCompeticion`);
 
 --
 -- Indices de la tabla `competicion`
@@ -363,7 +403,7 @@ ALTER TABLE `categoria`
 -- AUTO_INCREMENT de la tabla `club`
 --
 ALTER TABLE `club`
-  MODIFY `idClub` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
+  MODIFY `idClub` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
 
 --
 -- AUTO_INCREMENT de la tabla `competicion`
@@ -381,13 +421,13 @@ ALTER TABLE `formulario`
 -- AUTO_INCREMENT de la tabla `partido`
 --
 ALTER TABLE `partido`
-  MODIFY `idPartido` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
+  MODIFY `idPartido` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=10;
 
 --
 -- AUTO_INCREMENT de la tabla `sancion`
 --
 ALTER TABLE `sancion`
-  MODIFY `idSancion` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
+  MODIFY `idSancion` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
 
 --
 -- Restricciones para tablas volcadas
@@ -406,17 +446,18 @@ ALTER TABLE `carnet`
   ADD CONSTRAINT `carnet_ibfk_1` FOREIGN KEY (`cedulaJugador`) REFERENCES `jugador` (`cedula`) ON UPDATE CASCADE;
 
 --
--- Filtros para la tabla `club`
---
-ALTER TABLE `club`
-  ADD CONSTRAINT `club_ibfk_1` FOREIGN KEY (`idCategoria`) REFERENCES `categoria` (`idCategoria`) ON UPDATE CASCADE;
-
---
 -- Filtros para la tabla `club_categoria`
 --
 ALTER TABLE `club_categoria`
   ADD CONSTRAINT `club_categoria_ibfk_1` FOREIGN KEY (`idClub`) REFERENCES `club` (`idClub`) ON DELETE CASCADE,
   ADD CONSTRAINT `club_categoria_ibfk_2` FOREIGN KEY (`idCategoria`) REFERENCES `categoria` (`idCategoria`) ON DELETE CASCADE;
+
+--
+-- Filtros para la tabla `club_competicion`
+--
+ALTER TABLE `club_competicion`
+  ADD CONSTRAINT `club_competicion_ibfk_1` FOREIGN KEY (`idClub`) REFERENCES `club` (`idClub`) ON DELETE CASCADE,
+  ADD CONSTRAINT `club_competicion_ibfk_2` FOREIGN KEY (`idCompeticion`) REFERENCES `competicion` (`idCompeticion`) ON DELETE CASCADE;
 
 --
 -- Filtros para la tabla `jugador`

@@ -83,6 +83,7 @@ if ($conexion) {
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Sanciones</title>
     <link rel="stylesheet" href="../pagina-principal-club.css?v=6">
+    <link rel="stylesheet" href="/proyecto-final/include/css/style.css?v=1">
     <script src="menu-club.js" defer></script>
     <link rel="icon" type="image/png" href="../../img/logo-liga/log-liga-b.png">
 </head>
@@ -113,16 +114,17 @@ if ($conexion) {
             </button>
 
             <div class="user-menu-dropdown" id="userDropdown">
-                <a href="../uploads/documentos/reglamento.pdf" class="user-menu-item" download>
+                <a href="/proyecto-final/uploads/documentos/reglamento.pdf" class="user-menu-item" download>
                     <i class="bi bi-file-earmark-text"></i> Descargar documento
             </a>
-            <a href="/proyecto-final/index.php" class="user-menu-item">
+            <a href="/proyecto-final/logout.php?rol=club" class="user-menu-item">
                 <i class="bi bi-box-arrow-right"></i>
                 <span>Cerrar sesión</span>
             </a>
             </div>
         </div>
     </header>
+    <main></br></br>
     <div class="tabla">
         <h2>Sanciones registradas</h2>
         <form class="filtros" method="GET" class="filtros-sanciones">
@@ -183,5 +185,7 @@ if ($conexion) {
             </tbody>
         </table>
     </div>
+    </main>
+    <?php include_once __DIR__ . '/../../include/footer.php'; ?>
 </body>
 </html>

@@ -2,7 +2,38 @@
 // Carga los clubes y opciones de categoría/competición para el panel de gestión.
 include(__DIR__ . "/../../conexion-bd/conexion.php");
 $con = connection();
-$query = mysqli_query($con, "SELECT * FROM club");
+
+$idCategoriaFiltro = (int)($_GET['categoria'] ?? 0);
+$idCompeticionFiltro = (int)($_GET['competicion'] ?? 0);
+$busqueda = trim($_GET['buscar'] ?? '');
+
+$filtros = [];
+
+if ($busqueda !== '') {
+    $busquedaSQL = mysqli_real_escape_string($con, $busqueda);
+    $filtros[] = "club.nombreClub LIKE '%$busquedaSQL%'";
+}
+
+if ($idCategoriaFiltro > 0) {
+    $filtros[] = "EXISTS (
+        SELECT 1
+        FROM club_categoria cc
+        WHERE cc.idClub = club.idClub
+        AND cc.idCategoria = $idCategoriaFiltro
+    )";
+}
+
+if ($idCompeticionFiltro > 0) {
+    $filtros[] = "EXISTS (
+        SELECT 1
+        FROM club_competicion cp
+        WHERE cp.idClub = club.idClub
+        AND cp.idCompeticion = $idCompeticionFiltro
+    )";
+}
+
+$where = count($filtros) > 0 ? "WHERE " . implode(" AND ", $filtros): "";
+$query = mysqli_query($con, "SELECT * FROM club $where ORDER BY nombreClub ASC");
 
 $categorias    = mysqli_fetch_all(mysqli_query($con, "SELECT idCategoria, año FROM categoria ORDER BY año"), MYSQLI_ASSOC);
 $competiciones = mysqli_fetch_all(mysqli_query($con, "SELECT idCompeticion, nombreCompeticion FROM competicion ORDER BY nombreCompeticion"), MYSQLI_ASSOC);
@@ -39,6 +70,7 @@ if ($fila = mysqli_fetch_assoc($resultado)) {
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.13.1/font/bootstrap-icons.min.css">
     <link rel="stylesheet" href="../pagina-principal-admin.css?v=5">
     <link rel="stylesheet" href="club-style.css?v=1">
+    <link rel="stylesheet" href="/proyecto-final/include/css/style.css?v=1">
     <link rel="icon" type="image/png" href="../../img/logo-liga/log-liga-b.png">
 </head>
 <body>
@@ -49,11 +81,11 @@ if ($fila = mysqli_fetch_assoc($resultado)) {
                 <img src="/proyecto-final/img/logo-liga/log-liga-b.png" alt="Logo" class="logo-liga">
             </a>
             <div class="nav-izquierda-botones-container">
-                <a href="../gest-jugador/jugador.php" class="nav-izquierda-botones">Jugadores</a>
-                <a href="../gest-club/club.php" class="nav-izquierda-botones active">Clubes</a>
-                <a href="../gest-fixture/fixtures.php" class="nav-izquierda-botones">Fixture</a>                
-                <a href="../gest-sanciones/sanciones.php" class="nav-izquierda-botones">Sanciones</a>
-                <a href="../gest-fixture/posiciones.php" class="nav-izquierda-botones">Tabla de posiciones</a>
+                <a href="../jugador/jugador.php" class="nav-izquierda-botones">Jugadores</a>
+                <a href="club.php" class="nav-izquierda-botones active">Clubes</a>
+                <a href="../fixture/fixtures.php" class="nav-izquierda-botones">Fixture</a>                
+                <a href="../sanciones/sanciones.php" class="nav-izquierda-botones">Sanciones</a>
+                <a href="../fixture/posiciones.php" class="nav-izquierda-botones">Tabla de posiciones</a>
             </div>
         </nav>
 
@@ -78,10 +110,10 @@ if ($fila = mysqli_fetch_assoc($resultado)) {
             </button>
 
             <div class="user-menu-dropdown" id="userDropdown">
-                <a href="../gest-documentos/documento.php" class="user-menu-item">
+                <a href="/proyecto-final/gest-documentos/documento.php" class="user-menu-item">
                     <i class="bi bi-file-earmark-text"></i> Subir documento
             </a>
-            <a href="/proyecto-final/index.php" class="user-menu-item">
+            <a href="/proyecto-final/logout.php?rol=admin" class="user-menu-item">
                 <i class="bi bi-box-arrow-right"></i>
                 <span>Cerrar sesión</span>
             </a>
@@ -122,6 +154,45 @@ if ($fila = mysqli_fetch_assoc($resultado)) {
 <br><br>
     <div class="users-table">
         <h2>Clubes registrados</h2>
+        <form method="GET" class="filtros">
+
+    <input
+        type="text"
+        id="buscador"
+        name="buscar"
+        placeholder="Buscar club..."
+        value="<?= htmlspecialchars($busqueda, ENT_QUOTES, 'UTF-8') ?>"
+    >
+    <button type="submit">Buscar</button>
+    <select name="categoria" onchange="this.form.submit()">
+        <option value="0">Todas las categorías</option>
+
+        <?php foreach ($categorias as $cat): ?>
+            <option
+                value="<?= (int)$cat['idCategoria'] ?>"
+                <?= $idCategoriaFiltro === (int)$cat['idCategoria'] ? 'selected' : '' ?>
+            >
+                <?= htmlspecialchars($cat['año']) ?>
+            </option>
+        <?php endforeach; ?>
+    </select>
+
+    <select name="competicion" onchange="this.form.submit()">
+        <option value="0">Todas las competiciones</option>
+
+        <?php foreach ($competiciones as $comp): ?>
+            <option
+                value="<?= (int)$comp['idCompeticion'] ?>"
+                <?= $idCompeticionFiltro === (int)$comp['idCompeticion'] ? 'selected' : '' ?>
+            >
+                <?= htmlspecialchars($comp['nombreCompeticion']) ?>
+            </option>
+        <?php endforeach; ?>
+    </select>
+
+    <a href="club.php" class="limpiar-filtros">Limpiar filtros</a>
+
+</form>
         <table>
             <thead>
                 <tr>
@@ -129,6 +200,7 @@ if ($fila = mysqli_fetch_assoc($resultado)) {
                     <th>Presidente</th>
                     <th>Año de fundación</th>
                     <th>Estadio</th>
+                    <th></th>
                     <th></th>
                     <th></th>
                 </tr>
@@ -156,5 +228,7 @@ if ($fila = mysqli_fetch_assoc($resultado)) {
             </tbody>
         </table>
     </div>
+    <?php include_once __DIR__ . '/../../include/footer.php'; ?>
+    <script src="/proyecto-final/include/buscador.js"></script>
 </body>
 </html>

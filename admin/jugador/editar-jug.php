@@ -32,7 +32,7 @@ $sql = "UPDATE jugador SET
 $query = mysqli_query($con, $sql);
 
 if ($query) {
-    header("Location: /proyecto-final/admin/gest-jugador/jugador.php");
+    header("Location: /proyecto-final/admin/jugador/jugador.php");
     exit();
 } else {
     echo "Error al actualizar el jugador: " . mysqli_error($con);

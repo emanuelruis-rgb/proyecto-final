@@ -18,6 +18,19 @@
 
     /*query que busca los clubes para ponerlos en los option de select clubes */
     $queryClubes = mysqli_query($conexion, "SELECT * FROM club");
+
+    /* categorías para el selector (igual que en sanciones.php) */
+    $categorias = mysqli_fetch_all(
+        mysqli_query($conexion, "SELECT idCategoria, `año` FROM categoria ORDER BY `año` DESC"),
+        MYSQLI_ASSOC
+    );
+
+    /* la categoría no está en la sanción sino en el jugador, así que se busca la del jugador sancionado
+    para dejarla seleccionada */
+    $cedulaActual = $sancion['cedulaJugador'];
+    $queryJugador = mysqli_query($conexion, "SELECT idCategoria FROM jugador WHERE cedula = '$cedulaActual'");
+    $jugadorActual = mysqli_fetch_assoc($queryJugador);
+    $categoriaActual = $jugadorActual['idCategoria'] ?? '';
 ?>
 
 <!DOCTYPE html>
@@ -52,12 +65,25 @@
                 <?php endwhile; ?>
             </select>
 
+            <!-- filtra los jugadores por categoría. No tiene name: no se guarda en la sanción,
+            porque la categoría es del jugador -->
+            <select id="select-categoria" class="select-formulario">
+                <option value="">Todas las categorías</option>
+                <?php foreach ($categorias as $cat): ?>
+                    <option value="<?= (int)$cat['idCategoria'] ?>"
+                        <?= (string)$cat['idCategoria'] === (string)$categoriaActual ? 'selected' : '' ?>>
+                        <?= htmlspecialchars($cat['año']) ?>
+                    </option>
+                <?php endforeach; ?>
+            </select>
+
             <!-- se selecciona jugador de los disponibles en el club, y a la BD va su cedula-->
             <select name="ci-jugador-sancion"
-                    id="select-jugador"
-                    class="select-formulario"
-                    data-jugador-inicial="<?= htmlspecialchars((string)$sancion['cedulaJugador'], ENT_QUOTES, 'UTF-8') ?>">
-                <option value="" disabled selected>Seleccionar jugador sancionado</option>
+                id="select-jugador"
+                class="select-formulario"
+                required
+                data-jugador-inicial="<?= htmlspecialchars((string)$sancion['cedulaJugador'], ENT_QUOTES, 'UTF-8') ?>">
+                    <option value="" disabled selected>Seleccionar jugador sancionado</option>
             </select>
 
             <select name="tipo-sancion" class="select-formulario">

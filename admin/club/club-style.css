@@ -1,4 +1,4 @@
-:root { --sombra: 0 8px 30px rgba(0, 0, 0, 0.25); }
+:root { --sombra: 0 8px 30px rgba(0, 0, 0, 0.25); --danger: #dc3545; --danger-hover: #bd2130; }
 
 /* ===== Formularios (Crear y Editar) ===== */
 .users-form {
