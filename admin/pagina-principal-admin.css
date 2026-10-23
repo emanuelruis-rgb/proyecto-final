@@ -319,3 +319,17 @@ header {
     background: #3b8746; color: #fff; width: 100%;
     &:hover { background: #2f6d37; }
 }
+
+.botones-carnet {
+    color: var(--gold);
+    background-color: var(--navy);
+    padding: 10px;
+    border: 1px solid var(--navy);
+    border-radius: 15px;
+    font-weight: 500;
+    font-size: 1.1rem;
+    margin-top: 15px;
+    margin-bottom: 15px;
+    text-decoration: none;
+    transition: background-color 0.2s ease, color 0.2s ease;
+}
