@@ -92,6 +92,7 @@ $nombreMostrar = $_SESSION['nombre'];
 <html lang="es">
 <head>
   <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Gestión del fixture</title>
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.13.1/font/bootstrap-icons.min.css">
   <link rel="stylesheet" href="../pagina-principal-admin.css?v=5">
@@ -226,11 +227,14 @@ $nombreMostrar = $_SESSION['nombre'];
           </option>
         <?php endforeach; ?>
       </select>
+
+      <a href="fixtures.php" class="limpiar-filtros">Limpiar filtros</a>
     </form>
 
     <?php if (!$fixture): ?>
       <p class="sin-partidos">No hay partidos para esta selección.</p>
     <?php else: ?>
+      <div class="tabla-scroll">
       <table>
         <thead>
           <tr>
@@ -282,7 +286,8 @@ $nombreMostrar = $_SESSION['nombre'];
           <?php endforeach; ?>
         </tbody>
       </table>
-      <?php endif; ?>
+      </div>
+    <?php endif; ?>
     </section>
   
 

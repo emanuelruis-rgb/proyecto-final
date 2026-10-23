@@ -12,10 +12,7 @@ require_once(__DIR__ . "/../../conexion-bd/conexion.php");
 $conexion = connection();
 $con = $conexion;
 
-$categorias = mysqli_fetch_all(
-    mysqli_query($conexion, "SELECT idCategoria, `año` FROM categoria ORDER BY `año` DESC"),
-    MYSQLI_ASSOC
-);
+$categorias = mysqli_fetch_all(mysqli_query($con, "SELECT idCategoria, `año` FROM categoria ORDER BY `año` DESC"), MYSQLI_ASSOC);
 /* esta query hace join de jugador y club para poder no solo tener todos los datos del jugador
 sino que también los del club. asi ponemos, en vez de idclub, ponemos nombreClub */
 /*
@@ -23,6 +20,33 @@ sino que también los del club. asi ponemos, en vez de idclub, ponemos nombreClu
     P = m x g, donde m es la masa en kg y g = 9,81 m/s².
     El resultado se expresa en Newtons (N), por eso se muestra como fuerzaPeso.
 */
+$idCategoriaFiltro = (int)($_GET['categoria'] ?? 0);
+$idClubFiltro = (int)($_GET['club'] ?? 0);
+$busqueda = trim($_GET['buscar'] ?? '');
+$filtros = [];
+
+if ($idCategoriaFiltro > 0) {
+    $filtros[] = "jugador.idCategoria = $idCategoriaFiltro";
+}
+
+if ($idClubFiltro > 0) {
+    $filtros[] = "jugador.idClub = $idClubFiltro";
+}
+
+if ($busqueda !== '') {
+    $busquedaSQL = mysqli_real_escape_string($con, $busqueda);
+
+    $filtros[] = "(
+        jugador.nombre LIKE '%$busquedaSQL%'
+        OR jugador.apellido LIKE '%$busquedaSQL%'
+        OR jugador.cedula LIKE '%$busquedaSQL%'
+    )";
+}
+
+$where = count($filtros) > 0
+    ? "WHERE " . implode(" AND ", $filtros)
+    : "";
+
 $query = mysqli_query($con, "
     SELECT
         jugador.idClub,
@@ -43,6 +67,7 @@ $query = mysqli_query($con, "
         ON jugador.idClub = club.idClub
     INNER JOIN categoria
         ON jugador.idCategoria = categoria.idCategoria
+    $where
 ");
 $queryCategoria = mysqli_query($con, "SELECT * FROM categoria");
 $queryClub = mysqli_query($con, "SELECT * FROM club");
@@ -145,41 +170,34 @@ if ($fila = mysqli_fetch_assoc($resultado)) {
             </select>
             <input type="date" name="fecha-nacimiento" id="fecha-nacimiento" min="2013-01-01" max="2019-01-01" required>
             <script>
-                document.getElementById('fecha-nacimiento').addEventListener('change', function() {
-                    const fecha = this.value;
-                    if (!fecha) return;
-                    const anio = parseInt(fecha.split('-')[0]);
-                    const selectCategoria = document.getElementById('idcategoria');
-                    let idCategoria = "";
+                document.addEventListener('DOMContentLoaded', function() {
+                    function seleccionarCategoria() {
+                        const fecha = document.getElementById('fecha-nacimiento').value;
+                        const selectCategoria = document.getElementById('idcategoria');
+                        const genero = document.getElementById('genero').value;
+                        let idCategoria = "";
 
-                    switch (anio) {
-                        case 2013:
-                            idCategoria = "1"; // Sub-10
-                            break;
-                        case 2014:
-                            idCategoria = "2"; // Sub-11
-                            break;
-                        case 2015:
-                            idCategoria = "3"; // Sub-12
-                            break;
-                        case 2016:
-                            idCategoria = "4"; // Sub-13
-                            break;
-                        case 2017:
-                            idCategoria = "5"; // Sub-14
-                            break;
-                        case 2018:
-                            idCategoria = "6"; // Sub-15
-                            break;
-                        case 2019:
-                            idCategoria = "7"; // Sub-16
-                            break;
-                        case 2020:
-                            idCategoria = "8"; // Sub-17
-                            break;
+                        if(genero === "F") {
+                            idCategoria = "9";
+                        } else if (fecha) {
+                            const anio = parseInt(fecha.split('-')[0]);
+
+                            switch (anio) {
+                                case 2013: idCategoria = "1"; break;
+                                case 2014: idCategoria = "2"; break;
+                                case 2015: idCategoria = "3"; break;
+                                case 2016: idCategoria = "4"; break;
+                                case 2017: idCategoria = "5"; break;
+                                case 2018: idCategoria = "6"; break;
+                                case 2019: idCategoria = "7"; break;
+                                case 2020: idCategoria = "8"; break;
+                            }
+                        }
+                        selectCategoria.value = idCategoria;
                     }
-                    selectCategoria.value = idCategoria;
-                })
+                    document.getElementById('fecha-nacimiento').addEventListener('change', seleccionarCategoria);
+                    document.getElementById('genero').addEventListener('change', seleccionarCategoria);
+                });
             </script>
             <select name="genero" id="genero" required>
                 <option value="" disabled selected>Seleccionar género</option>
@@ -207,6 +225,41 @@ if ($fila = mysqli_fetch_assoc($resultado)) {
 <br><br>
     <div class="users-table">
         <h2>Jugadores registrados</h2>
+        <form method="GET" class="filtros">
+        <input
+            type="text"
+            name="buscar"
+            placeholder="Buscar por nombre, apellido o cédula..."
+            value="<?= htmlspecialchars($busqueda, ENT_QUOTES, 'UTF-8') ?>"
+        >
+
+        <button type="submit">Buscar</button>
+        <select name="club" onchange="this.form.submit()">
+    <option value="0">Todos los clubes</option>
+
+    <?php
+    $clubesFiltro = mysqli_query($con, "SELECT idClub, nombreClub FROM club ORDER BY nombreClub ASC");
+    while ($club = mysqli_fetch_assoc($clubesFiltro)):
+    ?>
+        <option
+            value="<?= (int)$club['idClub'] ?>"
+            <?= (int)$club['idClub'] === $idClubFiltro ? 'selected' : '' ?>>
+            <?= htmlspecialchars($club['nombreClub']) ?>
+        </option>
+    <?php endwhile; ?>
+</select>
+
+      <select name="categoria" onchange="this.form.submit()">
+        <option value="0">Todas las categorías</option>
+        <?php foreach ($categorias as $cat): ?>
+          <option value="<?= (int)$cat['idCategoria'] ?>" <?= $cat['idCategoria'] == $idCategoriaFiltro ? 'selected' : '' ?>>
+            <?= htmlspecialchars($cat['año']) ?>
+          </option>
+        <?php endforeach; ?>
+      </select>
+
+      <a href="jugador.php" class="limpiar-filtros">Limpiar filtros</a>
+    </form>
         <table>
             <thead>
                 <tr>

@@ -2,7 +2,38 @@
 // Carga los clubes y opciones de categoría/competición para el panel de gestión.
 include(__DIR__ . "/../../conexion-bd/conexion.php");
 $con = connection();
-$query = mysqli_query($con, "SELECT * FROM club");
+
+$idCategoriaFiltro = (int)($_GET['categoria'] ?? 0);
+$idCompeticionFiltro = (int)($_GET['competicion'] ?? 0);
+$busqueda = trim($_GET['buscar'] ?? '');
+
+$filtros = [];
+
+if ($busqueda !== '') {
+    $busquedaSQL = mysqli_real_escape_string($con, $busqueda);
+    $filtros[] = "club.nombreClub LIKE '%$busquedaSQL%'";
+}
+
+if ($idCategoriaFiltro > 0) {
+    $filtros[] = "EXISTS (
+        SELECT 1
+        FROM club_categoria cc
+        WHERE cc.idClub = club.idClub
+        AND cc.idCategoria = $idCategoriaFiltro
+    )";
+}
+
+if ($idCompeticionFiltro > 0) {
+    $filtros[] = "EXISTS (
+        SELECT 1
+        FROM club_competicion cp
+        WHERE cp.idClub = club.idClub
+        AND cp.idCompeticion = $idCompeticionFiltro
+    )";
+}
+
+$where = count($filtros) > 0 ? "WHERE " . implode(" AND ", $filtros): "";
+$query = mysqli_query($con, "SELECT * FROM club $where ORDER BY nombreClub ASC");
 
 $categorias    = mysqli_fetch_all(mysqli_query($con, "SELECT idCategoria, año FROM categoria ORDER BY año"), MYSQLI_ASSOC);
 $competiciones = mysqli_fetch_all(mysqli_query($con, "SELECT idCompeticion, nombreCompeticion FROM competicion ORDER BY nombreCompeticion"), MYSQLI_ASSOC);
@@ -123,6 +154,44 @@ if ($fila = mysqli_fetch_assoc($resultado)) {
 <br><br>
     <div class="users-table">
         <h2>Clubes registrados</h2>
+        <form method="GET" class="filtros">
+
+    <input
+        type="text"
+        name="buscar"
+        placeholder="Buscar club..."
+        value="<?= htmlspecialchars($busqueda, ENT_QUOTES, 'UTF-8') ?>"
+    >
+    <button type="submit">Buscar</button>
+    <select name="categoria" onchange="this.form.submit()">
+        <option value="0">Todas las categorías</option>
+
+        <?php foreach ($categorias as $cat): ?>
+            <option
+                value="<?= (int)$cat['idCategoria'] ?>"
+                <?= $idCategoriaFiltro === (int)$cat['idCategoria'] ? 'selected' : '' ?>
+            >
+                <?= htmlspecialchars($cat['año']) ?>
+            </option>
+        <?php endforeach; ?>
+    </select>
+
+    <select name="competicion" onchange="this.form.submit()">
+        <option value="0">Todas las competiciones</option>
+
+        <?php foreach ($competiciones as $comp): ?>
+            <option
+                value="<?= (int)$comp['idCompeticion'] ?>"
+                <?= $idCompeticionFiltro === (int)$comp['idCompeticion'] ? 'selected' : '' ?>
+            >
+                <?= htmlspecialchars($comp['nombreCompeticion']) ?>
+            </option>
+        <?php endforeach; ?>
+    </select>
+
+    <a href="club.php" class="limpiar-filtros">Limpiar filtros</a>
+
+</form>
         <table>
             <thead>
                 <tr>
