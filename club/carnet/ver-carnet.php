@@ -4,7 +4,7 @@ $cedula = $_GET['cedula'];
 
 $carpetaCarnets = __DIR__ . "/carnets/";
 
-// Busca el carnet del jugador usando su cédula y cualquier extensión.
+// Busca el carnet del jugador usando su cédula y cualquier extensión
 $archivos = glob($carpetaCarnets . $cedula . ".*");
 
 // Si no se recibió una cédula o no se encontró el carnet, detiene el programa.

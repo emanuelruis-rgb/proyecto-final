@@ -221,8 +221,11 @@ if ($fila = mysqli_fetch_assoc($resultado)) {
                     <th>Altura (m)</th>
                     <th>Velocidad (m/s)</th>
                     <th>Fuerza peso (N)</th>
-                    <th></th>
-                    <th></th>
+                    <th>Editar</th>
+                    <th>Eliminar</th>
+                    <th>Carnets
+                    </th>
+                    <th>Vencido</th>
                 </tr>
             </thead>
             <tbody>
@@ -241,6 +244,11 @@ if ($fila = mysqli_fetch_assoc($resultado)) {
                         <th><?= number_format($row['fuerzaPeso'], 2) ?></th>
                         <th><a href="actualizar-jug.php?id=<?= $row['cedula'] ?>" class="users-table--edit"><i class="bi bi-pencil-square"></i></a></th>
                         <th><a href="eliminar-jug.php?id=<?= $row['cedula'] ?>" class="users-table--delete" ><i class="bi bi-trash3-fill"></i></a></th>
+                        <td>
+                            <!-- actualmente no encuentra CI) -->
+                            <a href="/proyecto-final/club/carnet/ver-carnet.php?cedula=<?= urlencode($row['cedula']) ?>"
+                            class="botones-carnet">Ver carnet</a>
+                        </td>
                     </tr>
                 <?php endwhile; ?>
             </tbody>
