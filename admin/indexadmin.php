@@ -159,7 +159,7 @@ if ($resultadoBoletines === false) {
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Página principal admins</title>
-    <link rel="stylesheet" href="pagina-principal-admin.css?v=6">
+    <link rel="stylesheet" href="pagina-principal-admin.css?v=9">
     <link rel="stylesheet" href="/proyecto-final/include/css/style.css?v=1">
     <link rel="icon" type="image/png" href="../img/logo-liga/log-liga-b.png">
 </head>
@@ -265,130 +265,135 @@ document.getElementById('modalEditarBoletin').addEventListener('click', function
 
     <div class="layout-abajo-header">
         <div class="dashboard-container">
-            <section class="admin-introduccion" aria-labelledby="titulo-admin">
-                <div class="admin-introduccion-icono" aria-hidden="true">
-                    <i class="bi bi-speedometer2"></i>
-                </div>
-                <div>
-                    <p class="admin-introduccion-etiqueta">Panel de administración</p>
-                    <h1 id="titulo-admin">Bienvenido a la página principal</h1>
-                    <p class="admin-introduccion-descripcion">Gestiona la información de la liga y mantén actualizadas las comunicaciones de los clubes.</p>
-                </div>
-            </section>
-
-            <!-- Formulario que permite publicar sin usar phpMyAdmin. -->
-            <section class="publicar-boletin" id="publicar-boletin" aria-labelledby="titulo-publicar-boletin">
-                <div>
-                    <p class="publicar-boletin-etiqueta">Comunicaciones</p>
-                    <h2 id="titulo-publicar-boletin">Publicar boletín</h2>
-                    <p>El comunicado aparecerá en la sección de boletines de los clubes.</p>
-                </div>
-                <form method="POST" class="publicar-boletin-form">
-                    <label for="titulo-boletin">Título del boletín</label>
-                    <div class="publicar-boletin-campo">
-                        <input type="text" id="titulo-boletin" name="titulo" maxlength="40" required placeholder="Ej. Cambio de horario de la jornada">
-                        <button type="submit" name="agregar_boletin"><i class="bi bi-send" aria-hidden="true"></i> Publicar</button>
-                    </div>
-                </form>
-                <?php if ($mensajeBoletin !== ''): ?>
-                    <p class="mensaje-boletin <?php echo $tipoMensajeBoletin; ?>">
-                        <?php echo htmlspecialchars($mensajeBoletin); ?>
-                    </p>
-                <?php endif; ?>
-            </section>
-
-            <!-- Lista los comunicados existentes y ofrece borrado individual desde el panel. -->
-            <section class="gestionar-boletines" id="gestionar-boletines" aria-labelledby="titulo-gestionar-boletines">
-                <div class="gestionar-boletines-encabezado">
+            <!-- Mantiene la gestión de boletines en una columna independiente. -->
+            <div class="boletines-columna">
+                <section class="publicar-boletin" id="publicar-boletin" aria-labelledby="titulo-publicar-boletin">
                     <div>
-                        <p class="publicar-boletin-etiqueta">Administración</p>
-                        <h2 id="titulo-gestionar-boletines">Boletines publicados</h2>
+                        <p class="publicar-boletin-etiqueta">Comunicaciones</p>
+                        <h2 id="titulo-publicar-boletin">Publicar boletín</h2>
+                        <p>El comunicado aparecerá en la sección de boletines de los clubes.</p>
                     </div>
-                    <span class="boletines-cantidad"><?php echo count($boletines); ?></span>
-                </div>
+                    <form method="POST" class="publicar-boletin-form">
+                        <label for="titulo-boletin">Título del boletín</label>
+                        <div class="publicar-boletin-campo">
+                            <input type="text" id="titulo-boletin" name="titulo" maxlength="40" required placeholder="Ej. Cambio de horario de la jornada">
+                            <button type="submit" name="agregar_boletin"><i class="bi bi-send" aria-hidden="true"></i> Publicar</button>
+                        </div>
+                    </form>
+                    <?php if ($mensajeBoletin !== ''): ?>
+                        <p class="mensaje-boletin <?php echo $tipoMensajeBoletin; ?>">
+                            <?php echo htmlspecialchars($mensajeBoletin); ?>
+                        </p>
+                    <?php endif; ?>
+                </section>
 
-                <?php if ($mensajeEliminacionBoletin !== ''): ?>
-                    <p class="mensaje-boletin <?php echo $tipoMensajeEliminacionBoletin; ?>" role="status">
-                        <?php echo htmlspecialchars($mensajeEliminacionBoletin); ?>
-                    </p>
-                <?php endif; ?>
-
-                <?php if (empty($boletines)): ?>
-                    <p class="boletines-sin-registros">Todavía no hay boletines publicados para eliminar.</p>
-                <?php else: ?>
-                    <ul class="boletines-admin-lista">
-                        <?php foreach ($boletines as $boletin): ?>
-                            <li class="boletin-admin-item">
-                                <div class="boletin-admin-detalle">
-                                    <h3><?php echo htmlspecialchars($boletin['titulo']); ?></h3>
-                                    <time datetime="<?php echo htmlspecialchars($boletin['fechaSubida']); ?>">
-                                        Publicado el <?php echo htmlspecialchars(date('d/m/Y', strtotime($boletin['fechaSubida']))); ?>
-                                    </time>
-                                </div>
-                                <form method="POST" class="boletin-admin-eliminar" onsubmit="return confirm('¿Eliminar este boletín? Esta acción no se puede deshacer.');">
-                                    <input type="hidden" name="idBoletin" value="<?php echo (int) $boletin['idBoletin']; ?>">
-                                    <input type="hidden" name="csrf_token" value="<?php echo htmlspecialchars($tokenCsrfBoletines); ?>">
-                                    <button type="submit" class="btn-eliminar-boletin" name="eliminar_boletin" value="1">
-                                        <i class="bi bi-trash" aria-hidden="true"></i>
-                                        Eliminar
-                                    </button>
-                                    <button type="button" class="btn-editar-boletin" onclick="editarBoletin(this)">
-                                        <i class="bi bi-pencil"></i>
-                                        Actualizar
-                                    </button>
-                                </form>
-                            </li>
-                        <?php endforeach; ?>
-                    </ul>
-                <?php endif; ?>
-            </section>
-
-            <!-- Carrusel manual: el usuario cambia la imagen con los botones. -->
-            <div class="carrusel-wrapper">
-                <div class="carrusel">
-                    <div class="slides">
-                        <?php
-                        // Busca imágenes válidas en la carpeta del carrusel.
-                        $carpetaImg = "../img/carrusel/";
-                        $imagenes = glob($carpetaImg . "*.{jpg,jpeg,png,webp,gif}", GLOB_BRACE);
-
-                        // Informa si todavía no hay imágenes cargadas.
-                        if (empty($imagenes)) {
-                            echo "<p>No hay imágenes cargadas todavía.</p>";
-                        }
-
-                        // Genera una diapositiva por cada imagen disponible.
-                        foreach ($imagenes as $ruta) {
-                            $nombreArchivo = basename($ruta);
-                            echo '<div class="slide-item" data-archivo="' . htmlspecialchars($nombreArchivo) . '">';
-                            echo '  <img src="' . htmlspecialchars($ruta) . '" alt="Imagen carrusel">';
-                            echo '</div>';
-                        }
-                        ?>
+                <!-- Lista los comunicados existentes y ofrece borrado individual desde el panel. -->
+                <section class="gestionar-boletines" id="gestionar-boletines" aria-labelledby="titulo-gestionar-boletines">
+                    <div class="gestionar-boletines-encabezado">
+                        <div>
+                            <p class="publicar-boletin-etiqueta">Administración</p>
+                            <h2 id="titulo-gestionar-boletines">Boletines publicados</h2>
+                        </div>
+                        <span class="boletines-cantidad"><?php echo count($boletines); ?></span>
                     </div>
-                </div>
 
-                <!-- Permite cambiar la imagen visible sin movimiento automático. -->
-                <div class="controles-carrusel">
-                    <button type="button" id="anteriorCarrusel" class="btn-carrusel">Anterior</button>
-                    <span id="indicadorCarrusel">Imagen 1</span>
-                    <button type="button" id="siguienteCarrusel" class="btn-carrusel">Siguiente</button>
-                </div>
+                    <?php if ($mensajeEliminacionBoletin !== ''): ?>
+                        <p class="mensaje-boletin <?php echo $tipoMensajeEliminacionBoletin; ?>" role="status">
+                            <?php echo htmlspecialchars($mensajeEliminacionBoletin); ?>
+                        </p>
+                    <?php endif; ?>
 
-                <!-- Acciones de administración ubicadas debajo del carrusel. -->
-                <div class="acciones-carrusel">
-                    <form action="subir_imagen.php" method="POST" enctype="multipart/form-data" id="formCarrusel">
-                        <input type="file" name="nuevaImagen[]" id="carruselb" accept="image/*" multiple style="display:none;">
-                        <button type="button" class="carruselb" onclick="document.getElementById('carruselb').click();">
-                            Agregar imágenes
-                        </button>
-                    </form>
+                    <?php if (empty($boletines)): ?>
+                        <p class="boletines-sin-registros">Todavía no hay boletines publicados para eliminar.</p>
+                    <?php else: ?>
+                        <ul class="boletines-admin-lista">
+                            <?php foreach ($boletines as $boletin): ?>
+                                <li class="boletin-admin-item">
+                                    <div class="boletin-admin-detalle">
+                                        <h3><?php echo htmlspecialchars($boletin['titulo']); ?></h3>
+                                        <time datetime="<?php echo htmlspecialchars($boletin['fechaSubida']); ?>">
+                                            Publicado el <?php echo htmlspecialchars(date('d/m/Y', strtotime($boletin['fechaSubida']))); ?>
+                                        </time>
+                                    </div>
+                                    <form method="POST" class="boletin-admin-eliminar" onsubmit="return confirm('¿Eliminar este boletín? Esta acción no se puede deshacer.');">
+                                        <input type="hidden" name="idBoletin" value="<?php echo (int) $boletin['idBoletin']; ?>">
+                                        <input type="hidden" name="csrf_token" value="<?php echo htmlspecialchars($tokenCsrfBoletines); ?>">
+                                        <button type="submit" class="btn-eliminar-boletin" name="eliminar_boletin" value="1">
+                                            <i class="bi bi-trash" aria-hidden="true"></i>
+                                            Eliminar
+                                        </button>
+                                        <button type="button" class="btn-editar-boletin" onclick="editarBoletin(this)">
+                                            <i class="bi bi-pencil"></i>
+                                            Actualizar
+                                        </button>
+                                    </form>
+                                </li>
+                            <?php endforeach; ?>
+                        </ul>
+                    <?php endif; ?>
+                </section>
+            </div>
 
-                    <form action="eliminar_imagen.php" method="GET" onsubmit="return confirm('¿Eliminar la imagen que se está mostrando?');">
-                        <!-- El archivo se actualiza según la diapositiva visible. -->
-                        <input type="hidden" name="archivo" id="imagenAEliminar">
-                        <button type="submit" class="btn-eliminar-img" id="botonEliminarImagen">Eliminar imagen actual</button>
-                    </form>
+            <!-- Reúne bienvenida, carrusel y publicación en la columna principal. -->
+            <div class="admin-principal-columna">
+                <section class="admin-introduccion" aria-labelledby="titulo-admin">
+                    <div class="admin-introduccion-icono" aria-hidden="true">
+                        <i class="bi bi-speedometer2"></i>
+                    </div>
+                    <div>
+                        <p class="admin-introduccion-etiqueta">Panel de administración</p>
+                        <h1 id="titulo-admin">Bienvenido a la página principal</h1>
+                        <p class="admin-introduccion-descripcion">Gestiona la información de la liga y mantén actualizadas las comunicaciones de los clubes.</p>
+                    </div>
+                </section>
+
+                <!-- Carrusel manual: el usuario cambia la imagen con los botones. -->
+                <div class="carrusel-wrapper">
+                    <div class="carrusel">
+                        <div class="slides">
+                            <?php
+                            // Busca imágenes válidas en la carpeta del carrusel.
+                            $carpetaImg = "../img/carrusel/";
+                            $imagenes = glob($carpetaImg . "*.{jpg,jpeg,png,webp,gif}", GLOB_BRACE);
+
+                            // Informa si todavía no hay imágenes cargadas.
+                            if (empty($imagenes)) {
+                                echo "<p>No hay imágenes cargadas todavía.</p>";
+                            }
+
+                            // Genera una diapositiva por cada imagen disponible.
+                            foreach ($imagenes as $ruta) {
+                                $nombreArchivo = basename($ruta);
+                                echo '<div class="slide-item" data-archivo="' . htmlspecialchars($nombreArchivo) . '">';
+                                echo '  <img src="' . htmlspecialchars($ruta) . '" alt="Imagen carrusel">';
+                                echo '</div>';
+                            }
+                            ?>
+                        </div>
+                    </div>
+
+                    <!-- Permite cambiar la imagen visible sin movimiento automático. -->
+                    <div class="controles-carrusel">
+                        <button type="button" id="anteriorCarrusel" class="btn-carrusel">Anterior</button>
+                        <span id="indicadorCarrusel">Imagen 1</span>
+                        <button type="button" id="siguienteCarrusel" class="btn-carrusel">Siguiente</button>
+                    </div>
+
+                    <!-- Acciones de administración ubicadas debajo del carrusel. -->
+                    <div class="acciones-carrusel">
+                        <form action="subir_imagen.php" method="POST" enctype="multipart/form-data" id="formCarrusel">
+                            <input type="file" name="nuevaImagen[]" id="carruselb" accept="image/*" multiple style="display:none;">
+                            <button type="button" class="carruselb" onclick="document.getElementById('carruselb').click();">
+                                Agregar imágenes
+                            </button>
+                        </form>
+
+                        <form action="eliminar_imagen.php" method="GET" onsubmit="return confirm('¿Eliminar la imagen que se está mostrando?');">
+                            <!-- El archivo se actualiza según la diapositiva visible. -->
+                            <input type="hidden" name="archivo" id="imagenAEliminar">
+                            <button type="submit" class="btn-eliminar-img" id="botonEliminarImagen">Eliminar imagen actual</button>
+                        </form>
+                    </div>
                 </div>
 
                 <!-- Envía el formulario automáticamente después de seleccionar archivos. -->

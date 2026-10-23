@@ -35,9 +35,21 @@ header {
 
 /* ===== Layout ===== */
 .layout-abajo-header { display: flex; justify-content: center; min-height: calc(100vh - 90px); }
+/* Agrupa las herramientas principales frente a la gestión de boletines. */
 .dashboard-container {
-    flex: 1; width: 100%; box-sizing: border-box; display: flex; flex-direction: column; align-items: center;
-    padding: 42px 30px 60px; color: #fff; font-family: Georgia, 'Times New Roman', Times, serif;
+    flex: 1; width: 100%; box-sizing: border-box; display: grid;
+    grid-template-columns: minmax(0, 1.15fr) minmax(320px, 0.85fr);
+    grid-template-areas: "principal boletines"; align-items: start; gap: 28px;
+    padding: 30px; color: #fff; font-family: Georgia, 'Times New Roman', Times, serif;
+}
+.boletines-columna { grid-area: boletines; min-width: 0; }
+.admin-principal-columna { grid-area: principal; min-width: 0; }
+
+@media (max-width: 760px) {
+    .dashboard-container {
+        grid-template-columns: 1fr; grid-template-areas: "principal" "boletines";
+        gap: 24px; padding: 22px 18px 30px;
+    }
 }
 
 /* ===== Tarjetas del panel (introducción y boletín) ===== */
