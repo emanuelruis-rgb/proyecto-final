@@ -92,7 +92,7 @@ $posiciones = mysqli_fetch_all(mysqli_stmt_get_result($stmt), MYSQLI_ASSOC);
                 <a href="/proyecto-final/uploads/documentos/reglamento.pdf" class="user-menu-item" download>
                     <i class="bi bi-file-earmark-text"></i> Descargar documento
                 </a>
-                <a href="/proyecto-final/logout.php" class="user-menu-item">
+                <a href="/proyecto-final/logout.php?rol=club" class="user-menu-item">
                     <i class="bi bi-box-arrow-right"></i>
                     <span>Cerrar sesión</span>
                 </a>

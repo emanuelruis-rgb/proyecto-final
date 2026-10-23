@@ -142,7 +142,7 @@ if ($fila = mysqli_fetch_assoc($resultado)) {
                 <a href="/proyecto-final/gest-documentos/documento.php" class="user-menu-item">
                     <i class="bi bi-file-earmark-text"></i> Subir documento
             </a>
-            <a href="/proyecto-final/logout.php" class="user-menu-item">
+            <a href="/proyecto-final/logout.php?rol=admin" class="user-menu-item">
                 <i class="bi bi-box-arrow-right"></i>
                 <span>Cerrar sesión</span>
             </a>
@@ -229,6 +229,7 @@ if ($fila = mysqli_fetch_assoc($resultado)) {
         <input
             type="text"
             name="buscar"
+            id="buscador"
             placeholder="Buscar por nombre, apellido o cédula..."
             value="<?= htmlspecialchars($busqueda, ENT_QUOTES, 'UTF-8') ?>"
         >
@@ -302,5 +303,6 @@ if ($fila = mysqli_fetch_assoc($resultado)) {
         </div>
     </div>
         <?php include_once __DIR__ . '/../../include/footer.php'; ?>
+        <script src="/proyecto-final/include/buscador.js"></script>
 </body>
 </html>

@@ -119,7 +119,7 @@ if ($fila = mysqli_fetch_assoc($resultado)) {
                 <a href="/proyecto-final/gest-documentos/documento.php" class="user-menu-item">
                     <i class="bi bi-file-earmark-text"></i> Subir documento
             </a>
-            <a href="/proyecto-final/logout.php" class="user-menu-item">
+            <a href="/proyecto-final/logout.php?rol=admin" class="user-menu-item">
                 <i class="bi bi-box-arrow-right"></i>
                 <span>Cerrar sesión</span>
             </a>
