@@ -38,7 +38,7 @@ $fixture = obtenerFixture($conexion, $idCompeticion, $idCategoria);
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Fixture de la liga</title>
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.13.1/font/bootstrap-icons.min.css">
-    <link rel="stylesheet" href="../pagina-principal-club.css?v=6">
+    <link rel="stylesheet" href="../pagina-principal-club.css?v=7">
     <link rel="stylesheet" href="../../admin/fixture/fixtures-style.css?v=1">
     <link rel="stylesheet" href="/proyecto-final/include/css/style.css?v=1">
     <script src="../menu-club.js" defer></script>

@@ -153,9 +153,9 @@ if ($fila = mysqli_fetch_assoc($resultado)) {
     <div class="users-form">
         <h1>Ingresar un jugador</h1>
         <form action="agregar-jug.php" method="POST">
-            <input type="text" name="nombre" placeholder="Nombre">
-            <input type="text" name="apellido" placeholder="Apellido">
-            <input type="text" name="cedula" placeholder="Cédula">
+            <input type="text" name="nombre" placeholder="Nombre" required>
+            <input type="text" name="apellido" placeholder="Apellido" required>
+            <input type="text" name="cedula" placeholder="Cédula" required>
             <?php if($errorCedula): ?>
                 <small style="color:red;"><?=htmlspecialchars($errorCedula) ?></small>
             <?php endif; ?>

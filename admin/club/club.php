@@ -124,11 +124,11 @@ if ($fila = mysqli_fetch_assoc($resultado)) {
     <div class="users-form">
         <h1>Crear club</h1>
         <form action="agregar-club.php" method="POST" enctype="multipart/form-data">
-            <input type="text" name="nombre" placeholder="Nombre">
-            <input type="password" name="contraseña" placeholder="Contraseña">
-            <input type="text" name="presidente" placeholder="Presidente">
-            <input type="text" name="año-fundacion" placeholder="Año de fundación">
-            <input type="text" name="estadio" placeholder="Estadio">
+            <input type="text" name="nombre" placeholder="Nombre" required>
+            <input type="password" name="contraseña" placeholder="Contraseña" required>
+            <input type="text" name="presidente" placeholder="Presidente" required>
+            <input type="text" name="año-fundacion" placeholder="Año de fundación" required>
+            <input type="text" name="estadio" placeholder="Estadio" required>
             <label for="logoClub">Logo del club:</label>
             <input type="file" name="logoClub" id="logoClub" accept="image/png, image/jpeg, image/webp">
             <fieldset class="categorias-club">
