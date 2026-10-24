@@ -69,7 +69,7 @@ if ($fila = mysqli_fetch_assoc($resultado)) {
     <title>Gestión de clubes</title>
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.13.1/font/bootstrap-icons.min.css">
     <link rel="stylesheet" href="../pagina-principal-admin.css?v=5">
-    <link rel="stylesheet" href="club-style.css?v=1">
+    <link rel="stylesheet" href="club-style.css?v=2">
     <link rel="stylesheet" href="/proyecto-final/include/css/style.css?v=1">
     <link rel="icon" type="image/png" href="../../img/logo-liga/log-liga-b.png">
 </head>
@@ -123,12 +123,14 @@ if ($fila = mysqli_fetch_assoc($resultado)) {
 <br><br>
     <div class="users-form">
         <h1>Crear club</h1>
-        <form action="agregar-club.php" method="POST">
+        <form action="agregar-club.php" method="POST" enctype="multipart/form-data">
             <input type="text" name="nombre" placeholder="Nombre">
             <input type="password" name="contraseña" placeholder="Contraseña">
             <input type="text" name="presidente" placeholder="Presidente">
             <input type="text" name="año-fundacion" placeholder="Año de fundación">
             <input type="text" name="estadio" placeholder="Estadio">
+            <label for="logoClub">Logo del club:</label>
+            <input type="file" name="logoClub" id="logoClub" accept="image/png, image/jpeg, image/webp">
             <fieldset class="categorias-club">
                 <legend>Categorías que integra</legend>
                 <?php foreach ($categorias as $cat): ?>

@@ -1,0 +1,58 @@
+/* ===== Pantalla ===== */
+* { box-sizing: border-box; }
+body { margin: 0; font-family: Arial, sans-serif; font-size: 12px; background: #e5e7eb; }
+
+/* Barra con los botones (no se imprime) */
+.barra { max-width: 800px; margin: 20px auto; padding: 0 12px; display: flex; gap: 10px; flex-wrap: wrap; align-items: center; }
+.barra a, .barra button {
+    padding: 10px 18px; border: none; border-radius: 6px; background: #3C8A3E; color: #fff;
+    font-size: 14px; font-weight: 700; text-decoration: none; cursor: pointer;
+}
+.barra .secundario { background: #fff; color: #0A1510; border: 1px solid #ccc; }
+.barra select {
+    flex: 1 1 200px; padding: 10px 14px; border: 1px solid #ccc; border-radius: 6px;
+    background: #fff; font-size: 14px;
+}
+
+/* ===== Hoja A4 ===== */
+.hoja { width: 210mm; min-height: 297mm; margin: 0 auto 20px; padding: 12mm; background: #fff; }
+
+/* Encabezado con logo, club y categoría */
+.encabezado { display: flex; align-items: center; gap: 16px; border-bottom: 2px solid #000; padding-bottom: 8px; margin-bottom: 10px; }
+.encabezado img { width: 70px; height: 70px; object-fit: contain; }
+.encabezado h1 { margin: 0; font-size: 22px; }
+.encabezado p { margin: 2px 0 0; font-size: 15px; font-weight: 700; }
+
+/* Campos para completar a mano (técnico, delegado, etc.) */
+.campos { display: grid; grid-template-columns: 1fr 1fr; gap: 8px 16px; margin-bottom: 10px; }
+.campo { border-bottom: 1px solid #000; min-height: 22px; padding-top: 6px; }
+
+/* Títulos de sección */
+h2 { margin: 12px 0 0; padding: 4px 8px; background: #000; color: #fff; font-size: 13px; }
+h2 small { margin-left: 8px; font-weight: 400; }
+
+/* Tablas */
+table { width: 100%; border-collapse: collapse; }
+th, td { border: 1px solid #000; height: 7.5mm; padding: 2px 6px; text-align: left; }
+th { background: #eee; }
+.numero { width: 30px; text-align: center; }
+
+/* Dorso */
+.observaciones { border: 1px solid #000; min-height: 55mm; }
+.resultado { margin-top: 10px; font-size: 13px; font-weight: 700; }
+.resultado span { display: inline-block; width: 60px; margin: 0 20px 0 6px; border-bottom: 1px solid #000; }
+.firmas { display: flex; justify-content: space-around; margin-top: 45px; }
+.firma { width: 40%; padding-top: 4px; border-top: 1px solid #000; text-align: center; }
+
+/* ===== Mientras se genera el PDF (clase puesta por descargarPDF) ===== */
+#planilla { width: 210mm; margin: 0 auto; }
+.exportando .hoja { margin: 0; height: 296mm; min-height: 0; overflow: hidden; } /* una hoja = una página A4 */
+.exportando .hoja + .hoja { page-break-before: always; }                       /* el dorso empieza en página nueva */
+
+/* ===== Impresión ===== */
+@page { size: A4; margin: 0; }
+@media print {
+    body { background: #fff; }
+    .barra { display: none; }                 /* oculta los botones */
+    .hoja { margin: 0; page-break-after: always; }  /* cada .hoja es una página */
+}

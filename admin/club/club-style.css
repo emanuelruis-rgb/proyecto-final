@@ -20,6 +20,16 @@
 .users-form input[type="text"]:focus, .users-form input[type="password"]:focus, .users-form select:focus {
     border-color: var(--pitch-green); box-shadow: 0 0 0 3px rgba(60, 138, 62, 0.15);
 }
+.users-form input[type="file"] {
+    width: 100%; padding: 8px; border: 1px solid #dcdfe6; border-radius: 6px;
+    color: #2C3E50; background: #f8fafc; box-sizing: border-box;
+}
+.users-form input[type="file"]::file-selector-button {
+    margin-right: 12px; padding: 9px 14px; border: none; border-radius: 5px;
+    color: #fff; background: var(--navy); font-weight: 600; cursor: pointer;
+    transition: background-color 0.2s ease;
+}
+.users-form input[type="file"]::file-selector-button:hover { background: var(--navy-soft); }
 .users-form input[type="submit"] {
     background: var(--pitch-green); color: #fff; border: none; padding: 14px; border-radius: 6px;
     font-size: 0.95rem; font-weight: 700; cursor: pointer; margin-top: 10px;
