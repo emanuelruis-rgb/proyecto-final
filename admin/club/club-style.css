@@ -103,3 +103,89 @@
 .categorias-club { border: 1px solid #dcdfe6; border-radius: 6px; padding: 12px 16px; margin: 0; }
 .categorias-club legend { font-size: 0.9rem; color: #6b7280; padding: 0 6px; }
 .categorias-club label { display: inline-flex; align-items: center; gap: 6px; margin: 4px 14px 4px 0; cursor: pointer; }
+
+/* Reorganiza el encabezado cuando los enlaces no caben en una sola fila. */
+@media (max-width: 760px) {
+    header {
+        height: auto;
+        min-height: 88px;
+        padding: 14px 20px;
+        flex-wrap: wrap;
+        justify-content: center;
+    }
+
+    .nav-izquierda-container {
+        width: 100%;
+        flex: 0 0 100%;
+        flex-direction: column;
+        align-items: stretch;
+        gap: 8px;
+    }
+
+    .nav-izquierda-container > a {
+        align-self: center;
+    }
+
+    .nav-izquierda-botones-container {
+        display: grid;
+        width: 100%;
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+        justify-content: center;
+        gap: 4px 8px;
+    }
+
+    .nav-izquierda-botones {
+        height: auto;
+        min-height: 40px;
+        padding: 6px 4px;
+        text-align: center;
+        font-size: 13px;
+    }
+
+    .user-menu {
+        margin-top: 8px;
+    }
+}
+
+/* Reduce espacios y permite deslizar la tabla sin alterar sus columnas. */
+@media (max-width: 600px) {
+    .users-form,
+    .users-table {
+        width: calc(100% - 24px);
+    }
+
+    .users-form {
+        margin: 24px auto;
+        padding: 24px 18px;
+    }
+
+    .users-form h1 {
+        margin: -24px -18px 20px;
+    }
+
+    .users-form fieldset {
+        max-width: 100%;
+        box-sizing: border-box;
+    }
+
+    .users-table {
+        margin-bottom: 24px;
+        padding: 18px 12px;
+    }
+
+    .users-table table {
+        min-width: 700px;
+    }
+
+    .users-table .filtros {
+        align-items: stretch;
+    }
+
+    .users-table .filtros input[type="text"],
+    .users-table .filtros button[type="submit"],
+    .users-table .filtros select,
+    .users-table .limpiar-filtros {
+        width: 100%;
+        box-sizing: border-box;
+    }
+}

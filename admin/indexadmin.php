@@ -159,7 +159,7 @@ if ($resultadoBoletines === false) {
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Página principal admins</title>
-    <link rel="stylesheet" href="pagina-principal-admin.css?v=9">
+    <link rel="stylesheet" href="pagina-principal-admin.css?v=10">
     <link rel="stylesheet" href="/proyecto-final/include/css/style.css?v=1">
     <link rel="icon" type="image/png" href="../img/logo-liga/log-liga-b.png">
 </head>

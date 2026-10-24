@@ -69,8 +69,9 @@ if ($tipoClub == "propio") {
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Jugadores</title>
-    <link rel="stylesheet" href="jugadores-club-style.css">
+    <link rel="stylesheet" href="jugadores-club-style.css?v=2">
     <link rel="stylesheet" href="/proyecto-final/include/css/style.css?v=1">
+    <script src="../menu-club.js" defer></script>
     <link rel="icon" type="image/png" href="../../img/logo-liga/log-liga-b.png">
 </head>
 <body>

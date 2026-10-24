@@ -84,7 +84,7 @@ if ($conexion) {
     <title>Sanciones</title>
     <link rel="stylesheet" href="../pagina-principal-club.css?v=6">
     <link rel="stylesheet" href="/proyecto-final/include/css/style.css?v=1">
-    <script src="menu-club.js" defer></script>
+    <script src="../menu-club.js" defer></script>
     <link rel="icon" type="image/png" href="../../img/logo-liga/log-liga-b.png">
 </head>
 <body>

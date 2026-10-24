@@ -55,9 +55,10 @@ $nombreMostrar = $_SESSION['nombre'];
 <html lang="es">
 <head>
   <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Tabla de posiciones</title>
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.13.1/font/bootstrap-icons.min.css">
-  <link rel="stylesheet" href="../pagina-principal-admin.css?v=5">
+  <link rel="stylesheet" href="../pagina-principal-admin.css?v=10">
   <link rel="stylesheet" href="fixtures-style.css?v=1">
   <link rel="stylesheet" href="/proyecto-final/include/css/style.css?v=1">
   <link rel="icon" type="image/png" href="../../img/logo-liga/log-liga-b.png">
