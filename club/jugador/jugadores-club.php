@@ -85,6 +85,7 @@ if ($tipoClub == "propio") {
                 <a href="/proyecto-final/club/sancion/sanciones.php" class="nav-izquierda-botones">Sanciones</a>
                 <a href="/proyecto-final/club/fixture/fixture.php" class="nav-izquierda-botones">Fixture</a>
                 <a href="/proyecto-final/club/tabla-posicion/posiciones.php" class="nav-izquierda-botones">Tabla de posiciones</a>
+                <a href="/proyecto-final/club/jugadore/lista-jugadores.php" class="nav-izquierda-botones">Lista de jugadores</a>
             </div>
         </nav>
         <!-- Identifica el espacio de trabajo sin añadir otra opción al navbar. -->

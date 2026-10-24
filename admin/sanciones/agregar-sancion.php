@@ -17,4 +17,11 @@
 
     header("Location: sanciones.php");
     exit();
+
+    $tipo   = $_POST['tipo-sancion'] ?? '';
+$fechas = (int)($_POST['numero-fechas'] ?? 0);
+
+if ($tipo === 'Amarilla') {
+    $fechas = 0; // la amarilla nunca lleva fechas de suspensión
+}
 ?>

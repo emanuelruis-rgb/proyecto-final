@@ -31,6 +31,13 @@
     $queryJugador = mysqli_query($conexion, "SELECT idCategoria FROM jugador WHERE cedula = '$cedulaActual'");
     $jugadorActual = mysqli_fetch_assoc($queryJugador);
     $categoriaActual = $jugadorActual['idCategoria'] ?? '';
+
+    $tipo   = $_POST['tipo-sancion'] ?? '';
+$fechas = (int)($_POST['numero-fechas'] ?? 0);
+
+if ($tipo === 'Amarilla') {
+    $fechas = 0; // la amarilla nunca lleva fechas de suspensión
+}
 ?>
 
 <!DOCTYPE html>

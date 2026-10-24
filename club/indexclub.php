@@ -56,7 +56,7 @@ if ($conexion) {
                 <a href="sancion/sanciones.php" class="nav-izquierda-botones">Sanciones</a>
                 <a href="fixture/fixture.php" class="nav-izquierda-botones">Fixture</a>
                 <a href="tabla-posicion/posiciones.php" class="nav-izquierda-botones">Tabla de posiciones</a>
-                <a href="/proyecto-final/club/fixture/planilla.php">Descargar planilla de partido</a>
+                <a href="/proyecto-final/club/fixture/planilla.php" class="nav-izquierda-botones">Descargar planilla de partido</a>
             </div>
         </nav>
 

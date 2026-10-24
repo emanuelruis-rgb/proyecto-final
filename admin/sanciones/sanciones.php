@@ -156,7 +156,7 @@ if ($fila = mysqli_fetch_assoc($resultado)) {
 
             </select>
 
-            <select name="tipo-sancion" class="select-formulario">
+            <select name="tipo-sancion" id="tipo-sancion" class="select-formulario">
                 <option value="" disabled selected>Tipo de sanción</option>
                 <option value="Amarilla">Tarjeta amarilla</option>
                 <option value="Roja">Tarjeta roja</option>
@@ -164,7 +164,7 @@ if ($fila = mysqli_fetch_assoc($resultado)) {
             </select>
 
             <input type="text" name="motivo-sancion" placeholder="Motivo de la sanción" required>
-            <input type="number" name="numero-fechas" placeholder="Cantidad de fechas de suspensión" min="0" required>
+            <input type="number" name="numero-fechas" id="numero-fechas" placeholder="Cantidad de fechas de suspensión" min="0" required>
             
             <input type="submit" value="Agregar">
         </form>
@@ -228,7 +228,7 @@ if ($fila = mysqli_fetch_assoc($resultado)) {
                 <td><?= htmlspecialchars($sancion['categoria'] ?? '-') ?></td> 
                 <td><?= $sancion['tipo'] ?></td>
                 <td><?= $sancion['motivo'] ?></td>
-                <td><?= $sancion['fechaSuspencion'] ?></td>
+                <td><?= $sancion['tipo'] === 'Amarilla' ? '-' : $sancion['fechaSuspencion'] ?></td>
                 <th><a href="editar-sancion.php?idSancion=<?= $sancion['idSancion'] ?>" class="tabla--edit"><i class="bi bi-pencil-square"></i></a></th>
                 <th><a href="eliminar-sancion.php?idSancion=<?= $sancion['idSancion'] ?>" class="tabla--delete" ><i class="bi bi-trash3-fill"></i></a></th>
             </tr>

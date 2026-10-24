@@ -43,3 +43,20 @@ if (selectCategoria) {
 if (selectClub.value) {
     cargarJugadores();
 }
+
+document.addEventListener("DOMContentLoaded", function () {
+    const tipo = document.getElementById("tipo-sancion");
+    const fechas = document.getElementById("numero-fechas");
+
+    function actualizarCampoFechas() {
+        if (tipo.value === "Amarilla") {
+            fechas.value = 0;       // la amarilla no suspende: se guarda 0
+            fechas.hidden = true;   // y el campo no se muestra
+        } else {
+            fechas.hidden = false;
+            if (fechas.value === "0") fechas.value = ""; // limpia el 0 automático al cambiar de tipo
+        }
+    }
+
+    tipo.addEventListener("change", actualizarCampoFechas);
+});

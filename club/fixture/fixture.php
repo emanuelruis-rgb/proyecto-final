@@ -21,7 +21,15 @@ $competiciones = $resultadoCompeticiones
     : [];
 $idCompeticion = (int)($_GET['competicion'] ?? 0);
 // Reutiliza la consulta común del fixture, sin cargar acciones administrativas.
-$fixture = obtenerFixture($conexion, $idCompeticion);
+// Categorías para el filtro (el cero muestra todas)
+$categorias = mysqli_fetch_all(
+    mysqli_query($conexion, 'SELECT idCategoria, `año` FROM categoria ORDER BY `año` DESC'),
+    MYSQLI_ASSOC
+);
+$idCategoria = (int)($_GET['categoria'] ?? 0);
+
+// Reutiliza la consulta común del fixture, ahora filtrando también por categoría.
+$fixture = obtenerFixture($conexion, $idCompeticion, $idCategoria);
 ?>
 <!DOCTYPE html>
 <html lang="es">
@@ -48,6 +56,7 @@ $fixture = obtenerFixture($conexion, $idCompeticion);
                 <a href="../sancion/sanciones.php" class="nav-izquierda-botones">Sanciones</a>
                 <a href="fixture.php" class="nav-izquierda-botones active" aria-current="page">Fixture</a>
                 <a href="../tabla-posicion/posiciones.php" class="nav-izquierda-botones">Tabla de posiciones</a>
+                <a href="../tabla-posicion/posiciones.php" class="nav-izquierda-botones">Descargar fixture</a>
             </div>
         </nav>
         <div class="club-header-context" aria-label="Sección actual">
@@ -85,10 +94,20 @@ $fixture = obtenerFixture($conexion, $idCompeticion);
                         </option>
                     <?php endforeach; ?>
                 </select>
+                <label for="categoria">Categoría</label>
+<select id="categoria" name="categoria" onchange="this.form.submit()">
+    <option value="0">Todas las categorías</option>
+    <?php foreach ($categorias as $cat): ?>
+        <option value="<?= (int)$cat['idCategoria'] ?>"
+            <?= (int)$cat['idCategoria'] === $idCategoria ? 'selected' : '' ?>>
+            <?= htmlspecialchars($cat['año']) ?>
+        </option>
+    <?php endforeach; ?>
+</select>
             </form>
 
             <?php if (!$fixture): ?>
-                <p>No hay partidos cargados todavía.</p>
+                <p>No hay partidos para esta selección.</p>
             <?php else: ?>
                 <!-- Se muestran horarios pendientes o marcadores finales, nunca controles de edición. -->
                 <table>
