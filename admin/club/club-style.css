@@ -49,6 +49,12 @@
 .users-table th { font-weight: 600; }
 .users-table td { border-bottom: 1px solid #eef2f5; color: #2C3E50; }
 .users-table tbody tr:hover { background: #f8fafc; }
+.users-table .club-logo-celda { width: 64px; }
+.users-table .club-logo {
+    display: block; width: 48px; height: 48px; object-fit: contain;
+    border-radius: 6px; background: #fff;
+}
+.users-table .club-sin-logo { color: #6b7280; font-size: 0.8rem; }
 
 /* Botones Editar / Eliminar */
 .users-table--edit, .users-table--delete {

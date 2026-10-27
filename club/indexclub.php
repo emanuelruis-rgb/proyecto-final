@@ -11,14 +11,17 @@ $conexion = connection();
 
 $nombreSesionClub = $_SESSION['nombre'] ?? '';
 $nombreMostrarClub = $nombreSesionClub !== '' ? $nombreSesionClub : 'Club';
+$logoClub = null; // Deja el logo vacío por defecto si el club no tiene uno cargado.
 
-$stmt = mysqli_prepare($conexion, "SELECT nombreClub FROM club WHERE nombreClub = ?");
-mysqli_stmt_bind_param($stmt, "s", $nombreSesionClub);
-mysqli_stmt_execute($stmt);
-$resultado = mysqli_stmt_get_result($stmt);
+$stmt = mysqli_prepare($conexion, "SELECT nombreClub, logoClub FROM club WHERE idClub = ?"); // Busca el nombre y el logo del club de la sesión.
+$idClub = (int)$_SESSION['idClub']; // Obtiene el identificador de club guardado al iniciar sesión.
+mysqli_stmt_bind_param($stmt, "i", $idClub); // Asocia el identificador de forma segura a la consulta.
+mysqli_stmt_execute($stmt); // Ejecuta la búsqueda del club.
+$resultado = mysqli_stmt_get_result($stmt); // Obtiene el resultado para leer sus datos.
 
 if ($fila = mysqli_fetch_assoc($resultado)) {
-    $nombreMostrarClub = $fila['nombreClub'];
+    $nombreMostrarClub = $fila['nombreClub']; // Actualiza el nombre mostrado con el nombre registrado del club.
+    $logoClub = $fila['logoClub']; // Guarda la ruta de su logo para usarla en el encabezado.
 }
 
 require_once __DIR__ . '/boletines-data.php';
@@ -39,7 +42,7 @@ if ($conexion) {
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Página principal clubes</title>
-    <link rel="stylesheet" href="pagina-principal-club.css?v=7">
+    <link rel="stylesheet" href="pagina-principal-club.css?v=8"> <!-- Cambia la versión para que el navegador cargue los estilos actualizados. -->
     <link rel="stylesheet" href="/proyecto-final/include/css/style.css?v=1">
     <script src="menu-club.js" defer></script>
     <link rel="icon" type="image/png" href="../img/logo-liga/log-liga-b.png">
@@ -68,8 +71,17 @@ if ($conexion) {
 
         <div class="user-menu">
             <button class="user-menu-toggle" onclick="toggleUserMenu()">
-                <i class="bi bi-person-circle"></i>
-                <span class="user-menu-name"><?php echo htmlspecialchars($nombreMostrarClub); ?></span>
+                <?php if (!empty($logoClub)): ?>
+                    <!-- Muestra el logo subido cuando el club tiene uno registrado. -->
+                    <img
+                        class="club-logo-menu"
+                        src="/proyecto-final/<?= htmlspecialchars($logoClub, ENT_QUOTES, 'UTF-8') ?>"
+                        alt="Logo de <?= htmlspecialchars($nombreMostrarClub, ENT_QUOTES, 'UTF-8') ?>"
+                    >
+                <?php else: ?>
+                    <i class="bi bi-person-circle"></i> <!-- Conserva el ícono si el club no tiene logo. -->
+                <?php endif; ?>
+                <span class="user-menu-name"><?php echo htmlspecialchars($nombreMostrarClub); ?></span> <!-- Muestra el nombre del club junto al logo o ícono. -->
             </button>
 
             <div class="user-menu-dropdown" id="userDropdown">

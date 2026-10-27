@@ -137,6 +137,11 @@ main, body > .tabla { flex: 1; }
     color: #fff; font-size: 0.95rem; font-weight: 600; cursor: pointer; transition: 0.25s;
 }
 .user-menu-toggle i { font-size: 1.6rem; }
+/* Define el tamaño y la presentación del logo dentro del botón del club. */
+.club-logo-menu {
+    width: 28px; height: 28px; flex: 0 0 28px; object-fit: contain; /* Mantiene el logo compacto y completo sin deformarlo. */
+    border-radius: 50%; background: #fff; /* Le da forma circular y un fondo blanco. */
+}
 .user-menu-toggle:hover, .user-menu-item:hover { background: var(--gold); color: var(--navy); }
 
 .user-menu-dropdown {

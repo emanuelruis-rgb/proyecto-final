@@ -69,7 +69,7 @@ if ($fila = mysqli_fetch_assoc($resultado)) {
     <title>Gestión de clubes</title>
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.13.1/font/bootstrap-icons.min.css">
     <link rel="stylesheet" href="../pagina-principal-admin.css?v=5">
-    <link rel="stylesheet" href="club-style.css?v=2">
+    <link rel="stylesheet" href="club-style.css?v=3">
     <link rel="stylesheet" href="/proyecto-final/include/css/style.css?v=1">
     <link rel="icon" type="image/png" href="../../img/logo-liga/log-liga-b.png">
 </head>
@@ -198,6 +198,7 @@ if ($fila = mysqli_fetch_assoc($resultado)) {
         <table>
             <thead>
                 <tr>
+                    <th>Logo</th>
                     <th>Nombre</th>
                     <th>Presidente</th>
                     <th>Año de fundación</th>
@@ -210,6 +211,17 @@ if ($fila = mysqli_fetch_assoc($resultado)) {
             <tbody>
                 <?php while ($row = mysqli_fetch_array($query)): ?>
                     <tr class="<?= $row['activo'] ? '':'club-inactivo'?>">
+                        <td class="club-logo-celda">
+                            <?php if (!empty($row['logoClub'])): ?>
+                                <img
+                                    class="club-logo"
+                                    src="/proyecto-final/<?= htmlspecialchars($row['logoClub'], ENT_QUOTES, 'UTF-8') ?>"
+                                    alt="Logo de <?= htmlspecialchars($row['nombreClub'], ENT_QUOTES, 'UTF-8') ?>"
+                                >
+                            <?php else: ?>
+                                <span class="club-sin-logo">Sin logo</span>
+                            <?php endif; ?>
+                        </td>
                         <td><?= htmlspecialchars($row['nombreClub']) ?></td>
                         <td><?= htmlspecialchars($row['nombrePresidente']) ?></td>
                         <td><?= $row['añoCreacion'] ?></td>
