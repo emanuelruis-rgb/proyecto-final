@@ -67,7 +67,7 @@ $fixture = obtenerFixture($conexion, $idCompeticion, $idCategoria);
                 <a href="../sancion/sanciones.php" class="nav-izquierda-botones">Sanciones</a>
                 <a href="fixture.php" class="nav-izquierda-botones active" aria-current="page">Fixture</a>
                 <a href="../tabla-posicion/posiciones.php" class="nav-izquierda-botones">Tabla de posiciones</a>
-                <a href="../tabla-posicion/posiciones.php" class="nav-izquierda-botones">Descargar fixture</a>
+                <a href="imprimir-fixture.php" class="nav-izquierda-botones">Descargar fixture</a>
             </div>
         </nav>
         <div class="club-header-context" aria-label="Sección actual">

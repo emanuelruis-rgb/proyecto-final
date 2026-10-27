@@ -18,6 +18,8 @@ $idCompeticionFiltro = (int)($_GET['competicion'] ?? 0);
 $idCategoriaFiltro = (int)($_GET['categoria'] ?? 0);
 $categorias = mysqli_fetch_all(mysqli_query($con, "SELECT idCategoria, `año` FROM categoria ORDER BY `año` DESC"), MYSQLI_ASSOC);
 $mensaje = '';
+$idFechaFiltro = (int)($_GET['fecha'] ?? 0);   // filtro por número de fecha (0 = todas)
+$numerosFecha = obtenerNumerosFecha($con);
 
 function clubesHabilitados($con, $d) {
   $sql = "SELECT COUNT(DISTINCT cc.idClub)
@@ -36,23 +38,17 @@ function clubesHabilitados($con, $d) {
 
 // El administrador puede crear partidos o cargar el resultado de uno pendiente.
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-  if (isset($_POST['guardarResultado'])) {
-    $idPartido = filter_var($_POST['idPartido'] ?? null, FILTER_VALIDATE_INT);
-    $golesLocal = filter_var($_POST['golesLocal'] ?? null, FILTER_VALIDATE_INT);
-    $golesVisitante = filter_var($_POST['golesVisitante'] ?? null, FILTER_VALIDATE_INT);
-    $competicion = (int)($_POST['competicion'] ?? 0);
-    $categoria = (int)($_POST['categoria'] ?? 0);         
+  if (isset($_POST['guardarPartido'])) {
+    $guardado = guardarPartido($con, (int)($_POST['idPartido'] ?? 0), $_POST['estado'] ?? '',
+      max(0, (int)($_POST['golesLocal'] ?? 0)), max(0, (int)($_POST['golesVisitante'] ?? 0)));
 
-    if ($idPartido === false || $idPartido < 1 ||
-        $golesLocal === false || $golesLocal < 0 ||
-        $golesVisitante === false || $golesVisitante < 0) {
-      $mensaje = 'Ingresa un marcador válido para ambos clubes.';
-    } elseif (registrarResultado($con, $idPartido, $golesLocal, $golesVisitante)) {
-      header('Location: fixtures.php?competicion=' . $competicion . '&categoria=' . $categoria);  
+    // Si salió bien, vuelve a la misma página conservando los filtros
+    if ($guardado) {
+      header('Location: fixtures.php?' . http_build_query(['competicion' => (int)($_POST['competicion'] ?? 0),
+        'categoria' => (int)($_POST['categoria'] ?? 0), 'fecha' => (int)($_POST['fecha'] ?? 0)]));
       exit;
-    } else {
-      $mensaje = 'No se pudo guardar el resultado. Es posible que el partido ya esté jugado.';
     }
+    $mensaje = 'No se pudo guardar el partido.';
   } else {
     $datos = [
       'idClubLocal' => (int)($_POST['idClubLocal'] ?? 0),
@@ -66,16 +62,19 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
       'duracionPartido' => 0,
       'idCompeticion' => (int)($_POST['idCompeticion'] ?? 0),
       'idCategoria' => (int)($_POST['idCategoria'] ?? 0),
+      'numeroFecha' => (int)($_POST['numeroFecha'] ?? 0),
       'jugado' => 0,
     ];
 
     // Evita guardar un partido entre el mismo club y valida los datos básicos.
     if ($datos['idClubLocal'] === $datos['idClubVisitante']) {
       $mensaje = 'El club local y visitante no pueden ser el mismo.';
-     } elseif (!$datos['idClubLocal'] || !$datos['idClubVisitante'] || !$datos['fechaPartido'] || !$datos['idCompeticion'] || !$datos['idCategoria']) {
-      $mensaje = 'Completa los clubes, la fecha, la competición y la categoría del partido.';
+     } elseif (!$datos['idClubLocal'] || !$datos['idClubVisitante'] || !$datos['fechaPartido'] || !$datos['idCompeticion'] || !$datos['idCategoria'] || $datos['numeroFecha'] < 1) {
+      $mensaje = 'Completa los clubes, el número de fecha, el día, la competición y la categoría del partido.';
     } elseif (!clubesHabilitados($con, $datos)) {
       $mensaje = 'Ambos clubes deben estar activos y participar en la competición y la categoría elegidas.';
+    } elseif (clubYaJuegaEnFecha($con, $datos)) {
+      $mensaje = 'Alguno de los clubes ya tiene un partido en esa fecha del campeonato.';
     } elseif (crearPartido($con, $datos)) {
       header('Location: fixtures.php');
       exit;
@@ -85,7 +84,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
   }
 }
 
-$fixture = obtenerFixture($con, $idCompeticionFiltro, $idCategoriaFiltro);
+$fixture = obtenerFixture($con, $idCompeticionFiltro, $idCategoriaFiltro, $idFechaFiltro);
 $nombreMostrar = $_SESSION['nombre'];
 ?>
 <!DOCTYPE html>
@@ -95,10 +94,11 @@ $nombreMostrar = $_SESSION['nombre'];
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Gestión del fixture</title>
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.13.1/font/bootstrap-icons.min.css">
-  <link rel="stylesheet" href="../pagina-principal-admin.css?v=10">
-  <link rel="stylesheet" href="fixtures-style.css?v=1">
+  <link rel="stylesheet" href="../pagina-principal-admin.css?v=5">
+  <link rel="stylesheet" href="fixtures-style.css?v=3">
   <link rel="stylesheet" href="/proyecto-final/include/css/style.css?v=1">
   <link rel="icon" type="image/png" href="../../img/logo-liga/log-liga-b.png">
+  <script src="partido-panel.js?v=1" defer></script>
 </head>
 <body>
   <header> 
@@ -139,7 +139,7 @@ $nombreMostrar = $_SESSION['nombre'];
                 <a href="/proyecto-final/gest-documentos/documento.php" class="user-menu-item">
                     <i class="bi bi-file-earmark-text"></i> Subir documento
             </a>
-            <a href="/proyecto-final/logout.php?rol=admin" class="user-menu-item">
+            <a href="/proyecto-final/logout.php" class="user-menu-item">
                 <i class="bi bi-box-arrow-right"></i>
                 <span>Cerrar sesión</span>
             </a>
@@ -190,7 +190,10 @@ $nombreMostrar = $_SESSION['nombre'];
         <?php endforeach; ?>
       </select>
 
-      <label for="fechaPartido">Fecha</label>
+      <label for="numeroFecha">Número de fecha del campeonato</label>
+      <input type="number" name="numeroFecha" id="numeroFecha" min="1" placeholder="1" required>
+
+      <label for="fechaPartido">Día del partido</label>
       <input type="date" name="fechaPartido" id="fechaPartido" min="<?= date('Y-m-d') ?>" required>
 
       <label for="horaPartido">Hora</label>
@@ -228,7 +231,19 @@ $nombreMostrar = $_SESSION['nombre'];
         <?php endforeach; ?>
       </select>
 
+            <select name="fecha" onchange="this.form.submit()">
+        <option value="0">Todas las fechas</option>
+        <?php foreach ($numerosFecha as $n): ?>
+          <option value="<?= $n ?>" <?= $n === $idFechaFiltro ? 'selected' : '' ?>>Fecha <?= $n ?></option>
+        <?php endforeach; ?>
+      </select>
+
       <a href="fixtures.php" class="limpiar-filtros">Limpiar filtros</a>
+      <a class="imprimir-fixture" href="imprimir.fixture.php?<?= htmlspecialchars(http_build_query([
+        'competicion' => $idCompeticionFiltro,
+        'categoria' => $idCategoriaFiltro,
+        'fecha' => $idFechaFiltro,
+      ]), ENT_QUOTES, 'UTF-8') ?>">Imprimir fixture</a>
     </form>
 
     <?php if (!$fixture): ?>
@@ -238,7 +253,7 @@ $nombreMostrar = $_SESSION['nombre'];
       <table>
         <thead>
           <tr>
-            <th>Fecha</th>
+            <th>Fecha / día</th>
             <th>Club local</th>
             <th>Club visitante</th>
             <th>Hora / resultado</th>
@@ -246,36 +261,43 @@ $nombreMostrar = $_SESSION['nombre'];
           </tr>
         </thead>
         <tbody>
-          <?php foreach ($fixture as $partidos): ?>
+          <?php foreach ($fixture as $numeroFecha => $partidos): ?>
             <?php foreach ($partidos as $p): ?>
               <tr>
-                <td><?= date('d/m/Y', strtotime($p['fechaPartido'])) ?></td>
+                <td>Fecha <?= (int)$numeroFecha ?> · <?= date('d/m/Y', strtotime($p['fechaPartido'])) ?></td>
                 <td><?= htmlspecialchars($p['local']) ?></td>
                 <td><?= htmlspecialchars($p['visitante']) ?></td>
                 <td>
-                  <?php if (!$p['jugado']): ?>
-                    <?= formatoHora($p['horaPartido']) ?>
-                  <?php else: ?>
-                    <?= (int)$p['golesLocal'] ?> - <?= (int)$p['golesVisitante'] ?>
-                  <?php endif; ?>
+                  <?= htmlspecialchars(textoResultado($p)) ?>
                 </td>
                 <td>
-                  <?php if (!$p['jugado']): ?>
-                    <form method="POST" class="resultado-form">
+                  <!-- Menú desplegable del partido: estado y marcador -->
+                  <details class="panel-partido">
+                    <summary>Gestionar partido</summary>
+                    <form method="POST" class="panel-form">
                       <input type="hidden" name="idPartido" value="<?= (int)$p['idPartido'] ?>">
                       <input type="hidden" name="competicion" value="<?= $idCompeticionFiltro ?>">
-                      <input type="hidden" name="categoria" value="<?= $idCategoriaFiltro ?>"> 
-                      <label>
-                        Local
-                        <input type="number" name="golesLocal" min="0" step="1" required>
+                      <input type="hidden" name="categoria" value="<?= $idCategoriaFiltro ?>">
+                      <input type="hidden" name="fecha" value="<?= $idFechaFiltro ?>">
+                      <label>Estado
+                        <!-- Al cambiar el estado, se muestra u oculta el marcador (solo un partido "jugado" lo tiene) -->
+                        <select name="estado" class="sel-estado">
+                          <?php foreach (['pendiente' => 'Pendiente', 'jugado' => 'Jugado'] as $valor => $texto): ?>
+                            <option value="<?= $valor ?>" <?= $p['estado'] === $valor ? 'selected' : '' ?>><?= $texto ?></option>
+                          <?php endforeach; ?>
+                        </select>
                       </label>
-                      <label>
-                        Visitante
-                        <input type="number" name="golesVisitante" min="0" step="1" required>
-                      </label>
-                      <button type="submit" name="guardarResultado" value="1">Guardar resultado</button>
+                      <div class="bloque-marcador" <?= $p['estado'] !== 'jugado' ? 'hidden' : '' ?>>
+                        <label>Goles <?= htmlspecialchars($p['local']) ?>
+                          <input type="number" name="golesLocal" min="0" max="30" value="<?= (int)$p['golesLocal'] ?>">
+                        </label>
+                        <label>Goles <?= htmlspecialchars($p['visitante']) ?>
+                          <input type="number" name="golesVisitante" min="0" max="30" value="<?= (int)$p['golesVisitante'] ?>">
+                        </label>
+                      </div>
+                      <button type="submit" name="guardarPartido" value="1">Guardar</button>
                     </form>
-                  <?php endif; ?>
+                  </details>
                   <!-- Elimina el partido seleccionado sin mostrar un formulario de alta. -->
                   <a href="eliminar-partido.php?id=<?= $p['idPartido'] ?>"
                      class="eliminar"
@@ -291,51 +313,25 @@ $nombreMostrar = $_SESSION['nombre'];
     </section>
   
 
-  <?php
-    // Recorre los partidos agrupados por fecha
-    foreach ($fixture as $fecha => $partidos):
-  ?>
-    <?php
-      // Muestra la fecha del partido
-    ?>
-    <h2 class="jornada">Fecha: <?= date('d/m/Y', strtotime($fecha)) ?></h2>
+  <!-- Una tarjeta por cada fecha del campeonato -->
+  <?php foreach ($fixture as $numeroFecha => $partidos): ?>
+    <h2 class="jornada">Fecha <?= (int)$numeroFecha ?></h2>
     <div class="partidos">
-      <?php
-        // Recorre cada partido de esa fecha
-        foreach ($partidos as $p):
-      ?>
+      <?php foreach ($partidos as $p): ?>
         <div class="partido">
-          <?php
-            // Muestra el equipo local
-          ?>
           <div class="equipo local"><?= htmlspecialchars($p['local']) ?></div>
+          <!-- Marcador si ya se jugó; si no, la hora (o "Pospuesto" / "Suspendido") -->
           <div class="centro">
-            <?php if (!$p['jugado']): ?>
-              <?php
-                // Muestra la hora del partido
-              ?>
-                <div class="hora"><?= formatoHora($p['horaPartido']) ?></div>
-            <?php else: ?>
-              <?php
-                // Muestra el marcador final
-              ?>
-              <div class="resultado"><?= (int)$p['golesLocal'] ?> - <?= (int)$p['golesVisitante'] ?></div>
-            <?php endif; ?>
+            <div class="<?= $p['estado'] === 'jugado' ? 'resultado' : 'hora' ?>"><?= htmlspecialchars(textoResultado($p)) ?></div>
           </div>
-          <?php
-            // Muestra el equipo visitante
-          ?>
           <div class="equipo visita"><?= htmlspecialchars($p['visitante']) ?></div>
-          <?php
-            // Enlace para eliminar el partido
-          ?>
-          <a href="eliminar-partido.php?id=<?= $p['idPartido'] ?>"
-             class="eliminar"
+          <a href="eliminar-partido.php?id=<?= (int)$p['idPartido'] ?>" class="eliminar"
              onclick="return confirm('¿Eliminar este partido?')"><i class="bi bi-trash3-fill"></i></a>
         </div>
       <?php endforeach; ?>
     </div>
   <?php endforeach; ?>
+
 </main>
     <?php include_once __DIR__ . '/../../include/footer.php'; ?>
 </body>

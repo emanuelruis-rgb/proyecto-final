@@ -79,6 +79,13 @@ form button:hover { background: var(--pitch-green-hover); }
     margin: 0; padding: 16px; box-sizing: border-box;
 }
 .tabla-fixture .filtros button { margin-top: 0; }
+.imprimir-fixture {
+    display: inline-flex; align-items: center; justify-content: center;
+    padding: 9px 14px; border-radius: 6px; background: var(--pitch-green);
+    color: #fff; font-size: 0.9rem; font-weight: 700; text-decoration: none;
+    transition: background-color 0.2s ease;
+}
+.imprimir-fixture:hover { background: var(--pitch-green-hover); }
 
 /* ===== Partidos por jornada ===== */
 h2.jornada {
@@ -98,6 +105,32 @@ h2.jornada {
 .resultado { font-size: 1.1rem; font-weight: 700; color: var(--navy); }
 .hora { font-size: 0.8rem; color: #6b7280; }
 
+/* ===== Panel para actualizar el estado y el resultado ===== */
+.panel-partido { position: relative; min-width: 150px; }
+.panel-partido summary {
+    width: fit-content; padding: 8px 11px; border: 1px solid #d5dfd8;
+    border-radius: 6px; color: var(--navy); font-size: 0.85rem;
+    font-weight: 700; cursor: pointer; list-style: none;
+    background: #f5f8f6;
+}
+.panel-partido summary::-webkit-details-marker { display: none; }
+.panel-partido summary::after { content: "+"; margin-left: 8px; color: var(--pitch-green); }
+.panel-partido[open] summary::after { content: "-"; }
+.panel-partido[open] summary { border-color: var(--pitch-green); background: #edf6ee; }
+.tabla-fixture form.panel-form {
+    display: grid; grid-template-columns: minmax(150px, 1fr);
+    gap: 10px; min-width: 220px; margin: 8px 0 0; padding: 14px;
+    border: 1px solid #e1e8e3; border-radius: 8px; box-shadow: 0 8px 22px rgba(17, 40, 30, 0.12);
+    white-space: normal;
+}
+.panel-form label { display: grid; gap: 5px; margin: 0; color: var(--navy); font-size: 0.8rem; font-weight: 700; }
+.panel-form select, .panel-form input { width: 100%; box-sizing: border-box; padding: 8px 9px; font-size: 0.9rem; }
+.panel-form .bloque-marcador { display: grid; grid-template-columns: repeat(2, minmax(90px, 1fr)); gap: 8px; }
+.panel-form button { margin: 0; padding: 9px 12px; }
+.panel-form [hidden] { display: none !important; }
+.tabla-fixture tbody td:last-child { display: flex; align-items: flex-start; gap: 8px; }
+.tabla-fixture tbody td:last-child .panel-partido { flex: 0 0 auto; }
+
 /* ===== Eliminar y mensajes ===== */
 .eliminar {
     display: inline-flex; align-items: center; justify-content: center;
@@ -105,6 +138,7 @@ h2.jornada {
     padding: 7px 12px; border-radius: 6px; margin-left: 12px; flex-shrink: 0;
     transition: background-color 0.2s ease;
 }
+.tabla-fixture tbody td:last-child > .eliminar { margin-left: 0; }
 .eliminar:hover { background: var(--danger-hover); }
 .mensaje-error {
     background: #fde8e8; color: #b91c1c; border: 1px solid #f5b5b5;
@@ -117,4 +151,5 @@ h2.jornada {
 /* ===== Responsive ===== */
 @media (max-width: 600px) {
     .tabla-fixture th, .tabla-fixture td { padding: 10px; font-size: 0.8rem; }
+    .tabla-fixture form.panel-form { min-width: 190px; }
 }

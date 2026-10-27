@@ -72,6 +72,7 @@ if ($tipoClub == "propio") {
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Jugadores</title>
     <link rel="stylesheet" href="jugadores-club-style.css?v=3">
+    <link rel="stylesheet" href="../pagina-principal-club.css?v=8">
     <link rel="stylesheet" href="/proyecto-final/include/css/style.css?v=1">
     <script src="../menu-club.js" defer></script>
     <link rel="icon" type="image/png" href="../../img/logo-liga/log-liga-b.png">
@@ -83,12 +84,10 @@ if ($tipoClub == "propio") {
                 <img src="/proyecto-final/img/logo-liga/log-liga-d.png" alt="Logo" class="logo-empresa">
             </a>
             <div class="nav-izquierda-botones-container">
-                <!-- aca van los jugadores propios y despues da la opcion de seleccionar los ajenos-->
-                <a href="/proyecto-final/club/jugador/jugadores-club.php?tipoClub=propio" class="nav-izquierda-botones">Jugadores</a>
+                <a href="/proyecto-final/club/jugador/jugadores-club.php?tipoClub=propio" class="nav-izquierda-botones active" aria-current="page">Jugadores</a>
                 <a href="/proyecto-final/club/sancion/sanciones.php" class="nav-izquierda-botones">Sanciones</a>
                 <a href="/proyecto-final/club/fixture/fixture.php" class="nav-izquierda-botones">Fixture</a>
                 <a href="/proyecto-final/club/tabla-posicion/posiciones.php" class="nav-izquierda-botones">Tabla de posiciones</a>
-                <a href="/proyecto-final/club/jugadore/lista-jugadores.php" class="nav-izquierda-botones">Lista de jugadores</a>
             </div>
         </nav>
         <!-- Identifica el espacio de trabajo sin añadir otra opción al navbar. -->
@@ -120,6 +119,7 @@ if ($tipoClub == "propio") {
         <div class="boton-alternar-tabla-container">
             <a href="jugadores-club.php?tipoClub=propio" class="boton-alternar-tabla">Nuestros jugadores</a>
             <a href="jugadores-club.php?tipoClub=ajenos" class="boton-alternar-tabla">Jugadores ajenos</a>
+            <a href="imprimir-jugadores.php" class="boton-alternar-tabla">Imprimir lista de jugadores</a>
         </div>
 
         <div class="tabla">
