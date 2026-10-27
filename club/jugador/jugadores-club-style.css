@@ -428,6 +428,15 @@ h1{
   font-size: 1.6rem;
 }
 
+.club-logo-menu {
+  width: 28px;
+  height: 28px;
+  flex: 0 0 28px;
+  object-fit: contain;
+  border-radius: 50%;
+  background: #fff;
+}
+
 .user-menu-toggle:hover {
   background-color: var(--gold);
   color: var(--navy);

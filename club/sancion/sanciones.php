@@ -54,14 +54,17 @@ mysqli_stmt_execute($stmtSanciones);
 $querySanciones = mysqli_stmt_get_result($stmtSanciones);
 $nombreSesionClub = $_SESSION['nombre'] ?? '';
 $nombreMostrarClub = $nombreSesionClub !== '' ? $nombreSesionClub : 'Club';
+$logoClub = null;
 
-$stmt = mysqli_prepare($conexion, "SELECT nombreClub FROM club WHERE nombreClub = ?");
-mysqli_stmt_bind_param($stmt, "s", $nombreSesionClub);
+$stmt = mysqli_prepare($conexion, "SELECT nombreClub, logoClub FROM club WHERE idClub = ?");
+$idClub = (int)$_SESSION['idClub'];
+mysqli_stmt_bind_param($stmt, "i", $idClub);
 mysqli_stmt_execute($stmt);
 $resultado = mysqli_stmt_get_result($stmt);
 
 if ($fila = mysqli_fetch_assoc($resultado)) {
     $nombreMostrarClub = $fila['nombreClub'];
+    $logoClub = $fila['logoClub'];
 }
 
 require_once __DIR__ . '/../boletines-data.php';
@@ -82,7 +85,7 @@ if ($conexion) {
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Sanciones</title>
-    <link rel="stylesheet" href="../pagina-principal-club.css?v=7">
+    <link rel="stylesheet" href="../pagina-principal-club.css?v=8">
     <link rel="stylesheet" href="/proyecto-final/include/css/style.css?v=1">
     <script src="../menu-club.js" defer></script>
     <link rel="icon" type="image/png" href="../../img/logo-liga/log-liga-b.png">
@@ -109,7 +112,11 @@ if ($conexion) {
 
         <div class="user-menu">
             <button class="user-menu-toggle" onclick="toggleUserMenu()">
-                <i class="bi bi-person-circle"></i>
+                <?php if (!empty($logoClub)): ?>
+                    <img class="club-logo-menu" src="/proyecto-final/<?= htmlspecialchars($logoClub, ENT_QUOTES, 'UTF-8') ?>" alt="Logo de <?= htmlspecialchars($nombreMostrarClub, ENT_QUOTES, 'UTF-8') ?>">
+                <?php else: ?>
+                    <i class="bi bi-person-circle"></i>
+                <?php endif; ?>
                 <span class="user-menu-name"><?php echo htmlspecialchars($nombreMostrarClub); ?></span>
             </button>
 

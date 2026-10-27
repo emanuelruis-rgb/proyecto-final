@@ -11,6 +11,17 @@ require_once __DIR__ . '/../../conexion-bd/conexion.php';
 require_once __DIR__ . '/../../admin/fixture/fixtures-data.php';
 
 $conexion = connection();
+$logoClub = null;
+$nombreMostrarClub = $_SESSION['nombre'] ?? 'Club';
+$stmtClub = mysqli_prepare($conexion, 'SELECT nombreClub, logoClub FROM club WHERE idClub = ?');
+$idClubSesion = (int)$_SESSION['idClub'];
+mysqli_stmt_bind_param($stmtClub, 'i', $idClubSesion);
+mysqli_stmt_execute($stmtClub);
+$resultadoClub = mysqli_stmt_get_result($stmtClub);
+if ($clubSesion = mysqli_fetch_assoc($resultadoClub)) {
+    $nombreMostrarClub = $clubSesion['nombreClub'];
+    $logoClub = $clubSesion['logoClub'];
+}
 // El filtro es opcional: cero muestra todas las competiciones.
 $resultadoCompeticiones = mysqli_query(
     $conexion,
@@ -38,7 +49,7 @@ $fixture = obtenerFixture($conexion, $idCompeticion, $idCategoria);
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Fixture de la liga</title>
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.13.1/font/bootstrap-icons.min.css">
-    <link rel="stylesheet" href="../pagina-principal-club.css?v=7">
+    <link rel="stylesheet" href="../pagina-principal-club.css?v=8">
     <link rel="stylesheet" href="../../admin/fixture/fixtures-style.css?v=1">
     <link rel="stylesheet" href="/proyecto-final/include/css/style.css?v=1">
     <script src="../menu-club.js" defer></script>
@@ -65,8 +76,12 @@ $fixture = obtenerFixture($conexion, $idCompeticion, $idCategoria);
         </div>
         <div class="user-menu">
             <button class="user-menu-toggle" onclick="toggleUserMenu()">
-                <i class="bi bi-person-circle"></i>
-                <span class="user-menu-name"><?= htmlspecialchars($_SESSION['nombre']) ?></span>
+                <?php if (!empty($logoClub)): ?>
+                    <img class="club-logo-menu" src="/proyecto-final/<?= htmlspecialchars($logoClub, ENT_QUOTES, 'UTF-8') ?>" alt="Logo de <?= htmlspecialchars($nombreMostrarClub, ENT_QUOTES, 'UTF-8') ?>">
+                <?php else: ?>
+                    <i class="bi bi-person-circle"></i>
+                <?php endif; ?>
+                <span class="user-menu-name"><?= htmlspecialchars($nombreMostrarClub) ?></span>
             </button>
             <div class="user-menu-dropdown" id="userDropdown">
                 <a href="/proyecto-final/uploads/documentos/reglamento.pdf" class="user-menu-item" download>
