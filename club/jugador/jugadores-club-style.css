@@ -262,6 +262,47 @@ header {
     color: var(--navy);
 }
 
+/* mensajes de error de "no hay carnet subido" */
+.mensaje-carnet-pagina {
+    min-height: 75vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 30px 20px;
+}
+
+.mensaje-carnet-vacio h1 {
+    margin-bottom: 12px;
+    font-size: 25px;
+}
+
+.mensaje-carnet-vacio {
+    width: 100%;
+    max-width: 480px;
+    padding: 40px 30px;
+    padding-top: 20px;
+    text-align: center;
+    background-color: #ffffff;
+    border: 1px solid #e2e8e5;
+    border-radius: 16px;
+    box-shadow: 0 8px 25px rgba(0, 0, 0, 0.07);
+}
+
+.mensaje-carnet-boton {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 15px;
+    padding: 12px 20px;
+    border-radius: 8px;
+    background-color: #174c3c;
+    color: white;
+    text-decoration: none;
+    font-weight: 600;
+    transition: background-color 0.2s;
+}
+/* terminan mensajes de error de "no hay carnet subido" */
+
 .subir-carnet-container input[type="file"]::file-selector-button {
     background: var(--navy);
     color: var(--gold);

@@ -47,11 +47,19 @@ $where = count($filtros) > 0
     ? "WHERE " . implode(" AND ", $filtros)
     : "";
 
+
+//la query para poder encontrar todos los datos necesarios para mostrar en la tabla.
+//en la parte de carnet, lo que está entre paréntesis se ejecuta, y busca en base a cedula del jugador
+// y a la cedulaJugador de carnet, y ahí busca fechaVencimiento
 $query = mysqli_query($con, "
     SELECT
         jugador.idClub,
         club.nombreClub,
         jugador.cedula,
+        (SELECT carnet.fechaVencimiento
+        FROM carnet
+        WHERE carnet.cedulaJugador = jugador.cedula
+        LIMIT 1) AS fechaVencimiento,
         jugador.nombre,
         jugador.apellido,
         jugador.fechaNacimiento,
@@ -201,7 +209,7 @@ if ($fila = mysqli_fetch_assoc($resultado)) {
             </script>
             <select name="genero" id="genero" required>
                 <option value="" disabled selected>Seleccionar género</option>
-                <option value="M">Masculino</option>
+                <option value="H">Masculino</option>
                 <option value="F">Femenino</option>
             </select>
             <select name="idcategoria" id="idcategoria" required>
@@ -300,9 +308,20 @@ if ($fila = mysqli_fetch_assoc($resultado)) {
                         <th><a href="actualizar-jug.php?id=<?= $row['cedula'] ?>" class="users-table--edit"><i class="bi bi-pencil-square"></i></a></th>
                         <th><a href="eliminar-jug.php?id=<?= $row['cedula'] ?>" class="users-table--delete" ><i class="bi bi-trash3-fill"></i></a></th>
                         <td>
-                            <!-- actualmente no encuentra CI) -->
+                            <!-- esto genera el boton para poder ver el carnet. urlencode es para generar un link, formatea -->
                             <a href="/proyecto-final/club/carnet/ver-carnet.php?cedula=<?= urlencode($row['cedula']) ?>"
                             class="botones-carnet">Ver carnet</a>
+                        </td>
+                        <td>
+                            <!-- esto busca con un if corto. si hay fechaVencimiento, y fecha vencimiento es anterior al dìa de hoy,
+                            muestra vencido, en culaquier otro caso, muestra no-->
+                            <?php
+                                if (!empty($row['fechaVencimiento']) && $row['fechaVencimiento'] < date('Y-m-d')) {
+                                    echo 'Vencido';
+                                } else {
+                                    echo 'No';
+                                }
+                            ?>
                         </td>
                     </tr>
                 <?php endwhile; ?>
