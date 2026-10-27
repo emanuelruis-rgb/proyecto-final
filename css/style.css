@@ -111,6 +111,34 @@ h1 {
     margin: 18px 0 0;
 }
 
+.mensaje-exito {
+    /* Diferencia visualmente la confirmación de los avisos de error. */
+    color: #b7f7c5;
+    font-size: 14px;
+    font-weight: 700;
+    margin: 18px 0 0;
+}
+
+.cambio-credenciales {
+    /* Separa el acceso principal de las opciones de administración de cuenta. */
+    margin-top: 24px;
+    text-align: left;
+}
+
+.cambio-credenciales summary {
+    /* Hace evidente que el título abre un formulario adicional. */
+    color: var(--gold);
+    cursor: pointer;
+    font-size: 14px;
+    font-weight: 700;
+    text-align: center;
+}
+
+.cambio-credenciales form {
+    /* Mantiene el formulario alineado con los campos del login. */
+    margin-top: 8px;
+}
+
 @media (max-width: 480px) {
     .login-container {
         padding: 34px 24px 28px;

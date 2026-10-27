@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Servidor: 127.0.0.1
--- Tiempo de generación: 19-10-2026 a las 03:17:03
+-- Tiempo de generación: 26-10-2026 a las 11:39:14
 -- Versión del servidor: 10.4.32-MariaDB
 -- Versión de PHP: 8.2.12
 
@@ -60,9 +60,7 @@ CREATE TABLE `boletin` (
 --
 
 INSERT INTO `boletin` (`idBoletin`, `idAdmin`, `fechaSubida`, `titulo`) VALUES
-(1, 1, '2026-09-26', 'Se aplazo la fecha de inicio'),
-(2, 1, '2026-10-02', 'hola.'),
-(3, 1, '2026-10-11', 'chau');
+(1, 1, '2026-09-26', 'Se aplazo la fecha de inicio');
 
 -- --------------------------------------------------------
 
@@ -116,17 +114,18 @@ CREATE TABLE `club` (
   `nombrePresidente` varchar(40) NOT NULL,
   `añoCreacion` int(4) NOT NULL,
   `estadio` varchar(50) NOT NULL,
-  `activo` tinyint(1) NOT NULL DEFAULT 1
+  `activo` tinyint(1) NOT NULL DEFAULT 1,
+  `logoClub` varchar(255) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
 -- Volcado de datos para la tabla `club`
 --
 
-INSERT INTO `club` (`idClub`, `nombreClub`, `contraseñaClub`, `nombrePresidente`, `añoCreacion`, `estadio`, `activo`) VALUES
-(1, 'Liverpool', 'hola123', 'Pepe Gervasio', 1920, 'Santiago Bernabeu', 1),
-(2, 'Racing', '123456', 'Pepe Gervasio Segundo', 1921, 'Santiago Bernabeu ll', 1),
-(6, 'Nacional', 'hola', 'Bairo', 1899, 'Gran Parque Central', 1);
+INSERT INTO `club` (`idClub`, `nombreClub`, `contraseñaClub`, `nombrePresidente`, `añoCreacion`, `estadio`, `activo`, `logoClub`) VALUES
+(1, 'Liverpool', 'hola123', 'Pepe Gervasio', 1920, 'Santiago Bernabeu', 1, 'admin/club/logos/e0ab5ffabf4d7667.png'),
+(2, 'Racing', '123456', 'Pepe Gervasio Segundo', 1921, 'Santiago Bernabeu ll', 1, NULL),
+(7, 'Nacional', '1234', 'Bairo', 1899, 'Gran Parque Central', 1, 'admin/club/logos/27f99962f63706c8.png');
 
 -- --------------------------------------------------------
 
@@ -145,10 +144,12 @@ CREATE TABLE `club_categoria` (
 
 INSERT INTO `club_categoria` (`idClub`, `idCategoria`) VALUES
 (1, 1),
+(1, 2),
 (1, 5),
 (2, 1),
-(6, 2),
-(6, 7);
+(7, 1),
+(7, 6),
+(7, 9);
 
 -- --------------------------------------------------------
 
@@ -168,7 +169,8 @@ CREATE TABLE `club_competicion` (
 INSERT INTO `club_competicion` (`idClub`, `idCompeticion`) VALUES
 (1, 1),
 (2, 1),
-(6, 1);
+(7, 1),
+(7, 2);
 
 -- --------------------------------------------------------
 
@@ -226,7 +228,7 @@ CREATE TABLE `jugador` (
 --
 
 INSERT INTO `jugador` (`nombre`, `apellido`, `cedula`, `idClub`, `fechaNacimiento`, `genero`, `idCategoria`, `masa`, `altura`, `velocidad`) VALUES
-('Pepe', 'Hernandez', '23848043', 1, '2017-10-10', 'M', 5, 70.00, 1.50, 6.00),
+('Pepe', 'Hernandez', '23848043', 7, '2016-12-12', 'M', 4, 80.00, 1.70, 7.00),
 ('italo', 'ruis', '57705017', 1, '2014-12-08', 'M', 1, 70.00, 1.70, 6.00);
 
 -- --------------------------------------------------------
@@ -280,9 +282,9 @@ CREATE TABLE `sancion` (
 --
 
 INSERT INTO `sancion` (`idSancion`, `tipo`, `cedulaJugador`, `motivo`, `fechaSuspencion`, `clubSancion`) VALUES
-(5, 'Amarilla', '23848043', 'Golpeó a un rival.', 3, '1'),
 (6, 'Amarilla', '57705017', 'Golpeó a un rival.', 4, '1'),
-(7, 'Amarilla', '57705017', 'Golpeó a un rival.', 6, '1');
+(8, 'Amarilla', '57705017', 'Golpeó a un rival.', 0, '1'),
+(9, 'Roja', '23848043', 'Golpeó a un rival.', 2, '7');
 
 --
 -- Índices para tablas volcadas
@@ -403,7 +405,7 @@ ALTER TABLE `categoria`
 -- AUTO_INCREMENT de la tabla `club`
 --
 ALTER TABLE `club`
-  MODIFY `idClub` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
+  MODIFY `idClub` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
 
 --
 -- AUTO_INCREMENT de la tabla `competicion`
@@ -427,7 +429,7 @@ ALTER TABLE `partido`
 -- AUTO_INCREMENT de la tabla `sancion`
 --
 ALTER TABLE `sancion`
-  MODIFY `idSancion` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
+  MODIFY `idSancion` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=10;
 
 --
 -- Restricciones para tablas volcadas
