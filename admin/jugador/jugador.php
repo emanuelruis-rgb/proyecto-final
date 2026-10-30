@@ -17,7 +17,7 @@ $categorias = mysqli_fetch_all(mysqli_query($con, "SELECT idCategoria, `año` FR
 sino que también los del club. asi ponemos, en vez de idclub, ponemos nombreClub */
 /*
     Cálculo de la fuerza peso:
-    P = m x g, donde m es la masa en kg y g = 9,81 m/s².
+    P = m x g, donde m es la masa en kg y g = 9,80665 m/s².
     El resultado se expresa en Newtons (N), por eso se muestra como fuerzaPeso.
 */
 $idCategoriaFiltro = (int)($_GET['categoria'] ?? 0);
@@ -69,7 +69,7 @@ $query = mysqli_query($con, "
         jugador.masa,
         jugador.altura,
         jugador.velocidad,
-        jugador.masa * 9.81 AS fuerzaPeso
+        jugador.masa * 9.80665 AS fuerzaPeso
     FROM jugador
     INNER JOIN club
         ON jugador.idClub = club.idClub
