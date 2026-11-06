@@ -10,6 +10,7 @@ mysqli_report(MYSQLI_REPORT_ERROR | MYSQLI_REPORT_STRICT); // los errores de MyS
 
 $nombre     = $_POST['nombre'] ?? '';
 $clave      = $_POST['contraseña'] ?? '';
+$clave      = password_hash($clave, PASSWORD_DEFAULT);
 $presidente = $_POST['presidente'] ?? '';
 $anio       = (int)($_POST['año-fundacion'] ?? 0);
 $estadio    = $_POST['estadio'] ?? '';
@@ -56,13 +57,17 @@ if (isset($_FILES['logoClub']) && $_FILES['logoClub']['error'] !== UPLOAD_ERR_NO
 // Registra el club y sus asociaciones como una única operación.
 mysqli_begin_transaction($con);
 try {
-    $stmt = mysqli_prepare($con, "INSERT INTO club (nombreClub, contraseñaClub, nombrePresidente, añoCreacion, estadio, logoClub)
-        VALUES (?, ?, ?, ?, ?, ?)");
+    $tablaActual = 'club';
+
+    $stmt = mysqli_prepare($con, "INSERT INTO club (nombreClub, contraseñaClub, nombrePresidente, añoCreacion, estadio, logoClub, activo)
+        VALUES (?, ?, ?, ?, ?, ?, 1)");
     mysqli_stmt_bind_param($stmt, "sssiss", $nombre, $clave, $presidente, $anio, $estadio, $rutaLogo);
     mysqli_stmt_execute($stmt);
     $idClub = mysqli_insert_id($con);
 
     foreach ($relaciones as $tabla => [$columna, $ids]) {
+        $tablaActual = $tabla;
+
         $stmt = mysqli_prepare($con, "INSERT INTO $tabla (idClub, $columna) VALUES (?, ?)");
         foreach ($ids as $idRelacion) {
             mysqli_stmt_bind_param($stmt, "ii", $idClub, $idRelacion);
@@ -79,5 +84,5 @@ try {
     if ($rutaLogo && file_exists($carpeta . basename($rutaLogo))) {
         unlink($carpeta . basename($rutaLogo));
     }
-    die("Error al registrar el club: " . $e->getMessage());
+    die("Error en la tabla $tablaActual: " . $e->getMessage());
 }
