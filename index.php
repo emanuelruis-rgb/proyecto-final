@@ -50,31 +50,6 @@ unset($_SESSION['error'], $_SESSION['exito']);
             <!-- Envía las credenciales de acceso. -->
             <button class="botonlogin" type="submit">Ingresar</button>
         </form>
-
-        <!-- Expone el cambio de credenciales solo después de comprobar las actuales. -->
-        <details class="cambio-credenciales">
-            <!-- Permite mostrar u ocultar el formulario de actualización. -->
-            <summary>Cambiar usuario o contraseña de administrador</summary>
-            <!-- Envía la actualización al mismo procesador seguro del login. -->
-            <form action="logueo/login.php" method="post">
-                <!-- Indica la acción que debe procesar el servidor. -->
-                <input type="hidden" name="accion" value="cambiar_credenciales">
-                <!-- Reutiliza el token de sesión para proteger este formulario. -->
-                <input type="hidden" name="csrf_token" value="<?= htmlspecialchars($_SESSION['csrf_token'], ENT_QUOTES, 'UTF-8') ?>">
-                <!-- Solicita el usuario actual para autenticar al administrador. -->
-                <input class="formulario" type="text" name="usuario_actual" placeholder="Usuario actual" maxlength="20" autocomplete="username" required>
-                <!-- Solicita la contraseña actual antes de permitir cambios. -->
-                <input class="formulario" type="password" name="contrasena_actual" placeholder="Contraseña actual" maxlength="20" autocomplete="current-password" required>
-                <!-- Recibe el nombre de usuario nuevo dentro del límite de la base de datos. -->
-                <input class="formulario" type="text" name="nuevo_usuario" placeholder="Nuevo usuario" maxlength="20" autocomplete="username" required>
-                <!-- Solicita una contraseña nueva de al menos ocho caracteres. -->
-                <input class="formulario" type="password" name="nueva_contrasena" placeholder="Nueva contraseña (8 a 20 caracteres)" minlength="8" maxlength="20" autocomplete="new-password" required>
-                <!-- Confirma la contraseña nueva para evitar errores de escritura. -->
-                <input class="formulario" type="password" name="confirmar_contrasena" placeholder="Confirmar nueva contraseña" minlength="8" maxlength="20" autocomplete="new-password" required>
-                <!-- Envía la solicitud de cambio de credenciales. -->
-                <button class="botonlogin" type="submit">Actualizar credenciales</button>
-            </form>
-        </details>
     </div>    
 </body>
 </html>

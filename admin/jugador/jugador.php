@@ -308,8 +308,9 @@ if ($fila = mysqli_fetch_assoc($resultado)) {
                         <th><a href="actualizar-jug.php?id=<?= $row['cedula'] ?>" class="users-table--edit"><i class="bi bi-pencil-square"></i></a></th>
                         <th><a href="eliminar-jug.php?id=<?= $row['cedula'] ?>" class="users-table--delete" ><i class="bi bi-trash3-fill"></i></a></th>
                         <td>
-                            <!-- esto genera el boton para poder ver el carnet. urlencode es para generar un link, formatea -->
-                            <a href="/proyecto-final/club/carnet/ver-carnet.php?cedula=<?= urlencode($row['cedula']) ?>"
+                            <!-- esto genera el boton para poder ver el carnet. urlencode es para generar un link, formatea 
+                             origen es para q el enlace sepa que sos un admin y te mande de vuelta a jugador.php-->
+                            <a href="/proyecto-final/club/carnet/ver-carnet.php?cedula=<?= urlencode($row['cedula']) ?>&origen=admin"
                             class="botones-carnet">Ver carnet</a>
                         </td>
                         <td>
